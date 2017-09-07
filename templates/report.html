@@ -1,0 +1,47 @@
+{% extends "index.html" %}
+
+{% block body %}
+<form action="" class="form-horizontal" method="post" >
+<div class="input-group" style="margin-top:20px">
+  <input type="text" name="temat" class="form-control" placeholder="Temat" aria-describedby="basic-addon1">
+  <span class="input-group-addon" id="basic-addon1">Temat</span>
+</div>
+ <div class="form-group">
+  <label for="one">Comment:</label>
+  <textarea class="form-control" rows="5" id="comment" name="text1"></textarea>
+</div>
+<div class="form-group">
+  <label for="sad">Comment:</label>
+  <textarea class="form-control" rows="5" id="comment" name="text2"></textarea>
+</div>
+{% if admin %}
+<div class="form-group">
+  <label for="sad">Comment:</label>
+  <textarea class="form-control" rows="5" id="comment" name="text3"></textarea>
+</div>
+{% endif %}
+
+    <p><h3> <a role="presentation" data-toggle="modal" data-target="#exampleModal" href="#"><span class="glyphicon glyphicon-send"></span> Wyślij </a></h3>
+			<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			  <div class="modal-dialog" style="margin-top: 100px">
+				<div class="modal-content">
+				  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title" id="exampleModalLabel">Potwierdzenie</h4>
+				  </div>
+				  <div class="modal-body">
+					  <div class="container-fluid">
+                        Czy napewno chcesz wysłać zgłoszenie?<br>
+						<button type="sumbit" class="btn btn-success">Wyślij</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Wróć</button>
+					</div>
+				  </div>
+				</div>
+			  </div>
+			</div>
+        </p>
+
+     </form>
+<br>
+<p>{{ xx }}</p>
+{% endblock %}

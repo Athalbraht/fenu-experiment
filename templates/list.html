@@ -1,0 +1,13 @@
+
+ {% extends "index.html" %}
+
+{% block body %}
+ <div class="btn-group btn-group-justified">
+  <a href="/list/{{ username }}/send" class="btn btn-primary"> Wysłane</a>
+     {% if admin %}
+  <a href="/list/{{ username }}/new" class="btn btn-primary">Nowe <span class="badge">5</span></a>
+  <a href="/list/{{ username }}/considered" class="btn btn-primary"> Rozpatrzone</a>
+{% endif %}
+ </div>
+ {% block list %}{% endblock %}
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends "list.html" %}
+
+{% block list %}
+<div class="container">
+  <br>
+  <div class="panel-group">
+
+	{% for i in topic  %}
+    <div class="panel panel-info">
+      <div class="panel-heading">{{ i[0] }}</div>
+      <div class="panel-body">{{ i[1] }}</div>
+    </div>
+	{% endfor %}
+  </div>
+</div>
+{% endblock %}
