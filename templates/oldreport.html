@@ -1,0 +1,85 @@
+{% extends "index.html" %}
+
+{% block body %}
+
+<form action="" class="form-horizontal" method="post" >
+
+  <div class="form-group">
+    <label class="col-sm-2 control-label">Komórka zlecająca</label>
+    <div class="col-sm-10">
+      <input class="form-control" id="focusedInput" type="text" name="kom" value="{{ info[13] }}" disabled>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="disabledInput" class="col-sm-2 control-label">Adresat</label>
+    <div class="col-sm-10">
+      <input class="form-control" name="adresat" id="disabledInput" type="text" value="{{ info[12] }}"  disabled>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="disabledInput" class="col-sm-2 control-label">Data wystawienia zlecenia</label>
+    <div class="col-sm-10">
+      <input class="form-control" name="data_zlecenia" id="disabledInput" type="text" value="{{ info[2] }}"  disabled>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="disabledInput" class="col-sm-2 control-label">Data przyjęcia zlecenia</label>
+    <div class="col-sm-10">
+      <input class="form-control" name="data_przyjecia" id="disabledInput" type="text" value="{{ info[3] }}"  disabled>
+    </div>
+  </div>
+
+ <div class="form-group", style="margin-top: 20px">
+  <label for="one">Treść zlecenia</label>
+  <textarea class="form-control" rows="8" id="comment" name="tresc"  disabled>{{ info[4] }}</textarea>
+</div>
+
+<div class="form-group">
+  <label for="sad">Uzasadnienie potrzeby realizacji zlecenia</label>
+  <textarea class="form-control" rows="5" id="comment" name="uzasadnienie_realizacji" disabled>{{ info[5] }}</textarea>
+</div>
+
+<div class="form-group">
+  <label for="sad">Opis wykonanych prac lub wniosek o zakup</label>
+  <textarea class="form-control" rows="5" id="comment" name="opis_prac" disabled>{{ info[6] }}</textarea>
+</div>
+
+<div class="form-group">
+    <label class="col-sm-2 control-label">Data prac</label>
+    <div class="col-sm-10">
+      <input class="form-control" id="focusedInput" type="text" name="data_prac" value="{{ info[7] }}"  disabled>
+    </div>
+</div>
+
+<div class="form-group">
+  <label for="sad">Uzasadznienie zakupu</label>
+  <textarea class="form-control" rows="5" id="comment" name="uzasadnienie_zakupu" disabled>{{ info[8] }}</textarea>
+</div>
+
+  <div class="form-group">
+    <label class="col-sm-2 control-label">Data akceptacji Dyrektora</label>
+    <div class="col-sm-10">
+      <input class="form-control" id="focusedInput" type="text" name="data_akceptacji_dyrektora" value="{{ info[9] }}"  disabled>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-sm-2 control-label">Data potwierdzenia wykonanych prac</label>
+    <div class="col-sm-10">
+      <input class="form-control" id="focusedInput" type="text" name="data_potwierdzenia" value="{{ info[10] }}"  disabled>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-sm-2 control-label">Data zakończenia zlecenia</label>
+    <div class="col-sm-10">
+      <input class="form-control" id="focusedInput" type="text" name="data_zakonczenia" value="{{ info[11] }}"  disabled>
+    </div>
+  </div>
+</form>
+<br>
+<p>{{ xx }}</p>
+{% endblock %}

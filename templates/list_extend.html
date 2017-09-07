@@ -3,13 +3,12 @@
 {% block list %}
 <div class="container">
   <br>
-  <div class="panel-group">
+ <div class="list-group">
 
 	{% for i in topic  %}
-    <div class="panel panel-info">
-      <div class="panel-heading">{{ i[0] }}</div>
-      <div class="panel-body">{{ i[1] }}</div>
-    </div>
+
+  <a href="/list/{{ username }}/old/{{ i[1] }}" class="list-group-item">{{ i[0][:100] }}</a>
+
 	{% endfor %}
   </div>
 </div>

@@ -1,24 +1,86 @@
 {% extends "index.html" %}
 
 {% block body %}
+
 <form action="" class="form-horizontal" method="post" >
-<div class="input-group" style="margin-top:20px">
-  <input type="text" name="temat" class="form-control" placeholder="Temat" aria-describedby="basic-addon1">
-  <span class="input-group-addon" id="basic-addon1">Temat</span>
+
+  <div class="form-group">
+    <label class="col-sm-2 control-label">Komórka zlecająca</label>
+    <div class="col-sm-10">
+      <input class="form-control" id="focusedInput" type="text" name="kom" value="{{ branch }}">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="disabledInput" class="col-sm-2 control-label">Adresat</label>
+    <div class="col-sm-10">
+      <input class="form-control" name="adresat" id="disabledInput" type="text" value="Ośrodek Informatyki" >
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="disabledInput" class="col-sm-2 control-label">Data wystawienia zlecenia</label>
+    <div class="col-sm-10">
+      <input class="form-control" name="data_zlecenia" id="disabledInput" type="text" value="{{ date }}" >
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="disabledInput" class="col-sm-2 control-label">Data przyjęcia zlecenia</label>
+    <div class="col-sm-10">
+      <input class="form-control" name="data_przyjecia" id="disabledInput" type="text" value="{{ date }}"  >
+    </div>
+  </div>
+
+ <div class="form-group", style="margin-top: 20px">
+  <label for="one">Treść zlecenia</label>
+  <textarea class="form-control" rows="9" id="comment" name="tresc"></textarea>
 </div>
- <div class="form-group">
-  <label for="one">Comment:</label>
-  <textarea class="form-control" rows="5" id="comment" name="text1"></textarea>
-</div>
+
 <div class="form-group">
-  <label for="sad">Comment:</label>
-  <textarea class="form-control" rows="5" id="comment" name="text2"></textarea>
+  <label for="sad">Uzasadnienie potrzeby realizacji zlecenia</label>
+  <textarea class="form-control" rows="5" id="comment" name="uzasadnienie_realizacji"></textarea>
 </div>
+
 {% if admin %}
+
 <div class="form-group">
-  <label for="sad">Comment:</label>
-  <textarea class="form-control" rows="5" id="comment" name="text3"></textarea>
+  <label for="sad">Opis wykonanych prac lub wniosek o zakup</label>
+  <textarea class="form-control" rows="5" id="comment" name="opis_prac"></textarea>
 </div>
+
+<div class="form-group">
+    <label class="col-sm-2 control-label">Data prac</label>
+    <div class="col-sm-10">
+      <input class="form-control" id="focusedInput" type="text" name="data_prac" value="">
+    </div>
+</div>
+
+<div class="form-group">
+  <label for="sad">Uzasadznienie zakupu</label>
+  <textarea class="form-control" rows="5" id="comment" name="uzasadnienie_zakupu"></textarea>
+</div>
+
+  <div class="form-group">
+    <label class="col-sm-2 control-label">Data akceptacji Dyrektora</label>
+    <div class="col-sm-10">
+      <input class="form-control" id="focusedInput" type="text" name="data_akceptacji_dyrektora" value="">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-sm-2 control-label">Data potwierdzenia wykonanych prac</label>
+    <div class="col-sm-10">
+      <input class="form-control" id="focusedInput" type="text" name="data_potwierdzenia" value="">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-sm-2 control-label">Data zakończenia zlecenia</label>
+    <div class="col-sm-10">
+      <input class="form-control" id="focusedInput" type="text" name="data_zakonczenia" value="">
+    </div>
+  </div>
 {% endif %}
 
     <p><h3> <a role="presentation" data-toggle="modal" data-target="#exampleModal" href="#"><span class="glyphicon glyphicon-send"></span> Wyślij </a></h3>
@@ -31,7 +93,7 @@
 				  </div>
 				  <div class="modal-body">
 					  <div class="container-fluid">
-                        Czy napewno chcesz wysłać zgłoszenie?<br>
+                        Czy napewno chcesz wysłać zlecenie?<br><br>
 						<button type="sumbit" class="btn btn-success">Wyślij</button>
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Wróć</button>
 					</div>
@@ -41,7 +103,7 @@
 			</div>
         </p>
 
-     </form>
+</form>
 <br>
 <p>{{ xx }}</p>
 {% endblock %}

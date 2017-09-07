@@ -5,7 +5,7 @@
 # Version:      1.0b              #
 ###################################
 
-import sys
+import sys, time
 from db_func import *
 from flask import Flask, render_template, flash, request, session, redirect, url_for
 
@@ -20,7 +20,7 @@ app.debug = True
 
 #Routing
 
-@app.route('/home',methods=['GET', 'POST'])
+@app.route('/home',methods = ['GET', 'POST'])
 def home():
     if request.method == 'POST':
         user = request.form['username']
@@ -37,55 +37,99 @@ def home():
                     session['permissions'] = True
                 else:
                     session['permissions'] = False
-                return redirect(url_for('report', username=user, logoutt=True))
+                return redirect(url_for('report', username = user, logoutt = True))
         except Exception as e:
-            return render_template('home.html', username=str(e))
-        return render_template('home.html', username=user)
+            return render_template('home.html', username = str(e))
+        return render_template('home.html', username = user)
     else:
         #rendering home page for guest session
-        return render_template('home.html', username="Gosc".decode('utf-8'))
+        return render_template('home.html', username = "Gosc".decode('utf-8'))
 
 
-@app.route('/report/<username>', methods=['GET','POST'])
+@app.route('/report/<username>', methods = ['GET','POST'])
 def report(username):
-    if request.method=='POST':
-        topic = request.form['temat'].encode()
-        text1 = request.form['text1'].encode()
-        text2 = request.form['text2'].encode()
-        text3 = 'None'
+    date = str(time.strftime('%d.%m.%y'))
+    branch = get_branch(username)
+
+    if request.method == 'POST':
+        kom = request.form['kom'].encode()
+        adresat = request.form['adresat'].encode()
+        data_zlecenia = request.form['data_zlecenia'].encode()
+        data_przyjecia = request.form['data_przyjecia'].encode()
+        tresc = request.form['tresc'].encode()
+        uzasadnienie_realizacji = request.form['uzasadnienie_realizacji'].encode()
+
+        opis_prac = ""
+        data_prac = ""
+        uzasadnienie_zakupu = ""
+        data_akceptacji_dyrektora = ""
+        data_potwierdzenia = ""
+        data_zakonczenia =""
+
         #getting text from 3th area for admin users
         if session['permissions']:
-            text3 = request.form['text3'].encode()
+            opis_prac = request.form['opis_prac'].encode()
+            data_prac = request.form['data_prac'].encode()
+            uzasadnienie_zakupu = request.form['uzasadnienie_zakupu'].encode()
+            data_akceptacji_dyrektora = request.form['data_akceptacji_dyrektora'].encode()
+            data_potwierdzenia = request.form['data_potwierdzenia'].encode()
+            data_zakonczenia = request.form['data_zakonczenia'].encode()
+
         #Sending messenges to db
         result = send_notification(get_user_id(session['username']),
-                                   topic, text1, text2,text3)
+                                   data_zlecenia, data_przyjecia, tresc, uzasadnienie_realizacji,
+                                   opis_prac, data_prac, uzasadnienie_zakupu, data_akceptacji_dyrektora,
+                                   data_potwierdzenia, data_zakonczenia, adresat, kom)
+
         flash(str(result))#flashing db ans
-        return render_template('report.html',username=session['username'],
-                               usernav=True,
-                               logoutt=True,
-                               admin=session['permissions'])
+        return render_template('report.html',username = session['username'],
+                               usernav = True,
+                               logoutt = True,
+                               date = date,
+                               branch = branch,
+                               admin = session['permissions'])
     else:
         return render_template('report.html',
-                               username=session['username'],
-                               usernav=True,
-                               logoutt=True,
-                               admin=session['permissions'])
+                               username = session['username'],
+                               usernav = True,
+                               logoutt = True,
+                               date=date,
+                               branch=branch,
+                               admin = session['permissions'])
 
 
-@app.route('/user/<username>', methods=['GET','POST'])
+@app.route('/user/<username>', methods = ['GET','POST'])
 def user(username):
     return render_template('user.html',
-                           username=session['username'],
-                           usernav=True,
-                           logout=True)
+                           username = session['username'],
+                           usernav = True,
+                           date=date,
+                           branch=branch,
+                           logout = True)
 
 @app.route('/list/<username>')
 def list_username(username):
-    return render_template('list.html',
-                           username=session['username'],
-                           usernav=True,
-                           logoutt=True,
-                           admin=session['permissions'])
+    topic = get_topics(session['username'])
+    done = get_done(session['username'])
+    tr2 = 0
+    if session['permissions']:
+        new = get_all_topics(session['username'])
+        all_done = get_all_done(session['username'])
+        return render_template('list.html',
+                               username = session['username'],
+                               usernav = True,
+                               logoutt = True,
+                               tr = len(topic),
+                               tr2=len(new),
+                               admin = session['permissions'])
+    else:
+        return render_template('list.html',
+                               username = session['username'],
+                               usernav = True,
+                               logoutt = True,
+                               tr = len(topic),
+                               #tr2=len(new),
+                               admin = session['permissions'])
 
 @app.route('/logout')
 def logout():
@@ -96,13 +140,160 @@ def logout():
 @app.route('/list/<username>/send')
 def database_test(username):
     topic = get_topics(session['username'])
-    return render_template('list_extend.html',
-                           username=session['username'],
-                           usernav=True,
-                           logoutt=True,
-                           admin=session['permissions'],
-                           topic = topic[::-1],
+    done = get_done(session['username'])
+    tr2 = 0
+    if session['permissions']:
+        new = get_all_topics(session['username'])
+        all_done = get_all_done(session['username'])
+        return render_template('list_extend.html',
+                               username = session['username'],
+                               usernav = True,
+                               logoutt = True,
+                               tr = len(topic),
+                               tr2=len(new),
+                               topic=topic[::-1],
+                               admin = session['permissions'])
+    else:
+        return render_template('list_extend.html',
+                               username = session['username'],
+                               usernav = True,
+                               logoutt = True,
+                               tr=len(topic),
+                               #tr2=len(done),
+                               admin = session['permissions'],
+                               topic = topic[::-1],
+                               )
+
+@app.route('/adminpanel/<username>')
+def adminpanel(username):
+    return render_template('adminpanel.html',
+                           username = session['username'],
+                           usernav = True,
+                           logoutt = True,
+                           admin = session['permissions'],
+                           inverse = True)
+
+@app.route('/list/<username>/old/<nid>')
+def old(username, nid):
+    notify = get_notification(nid)[0]
+    return render_template('oldreport.html',
+                           username = session['username'],
+                           usernav = True,
+                           logoutt = True,
+                           admin = session['permissions'],
+                           info = notify)
+
+
+@app.route('/list/<username>/done')
+def done(username):
+    topic = get_topics(session['username'])
+    done = get_done(session['username'])
+    tr2 = 0
+    if session['permissions']:
+        new = get_all_topics(session['username'])
+        all_done = get_all_done(session['username'])
+        return render_template('list_extend.html',
+                               username = session['username'],
+                               usernav = True,
+                               logoutt = True,
+                               tr = len(topic),
+                               tr2=len(new),
+                               topic=done[::-1],
+                               admin = session['permissions'])
+    else:
+        return render_template('list_extend.html',
+                               username = session['username'],
+                               usernav = True,
+                               logoutt = True,
+                               tr = len(topic),
+                               #tr2 = len(new),
+                               admin = session['permissions'],
+                               topic = done[::-1],
+                               )
+
+@app.route('/list/<username>/new')
+def news(username):
+    topic = get_topics(session['username'])
+    done = get_done(session['username'])
+    new = get_all_topics(session['username'])
+    all_done = get_all_done(session['username'])
+    return render_template('listadmin_extend.html',
+                           username = session['username'],
+                           usernav = True,
+                           logoutt = True,
+                           tr = len(topic),
+                           tr2 = len(new),
+                           admin = session['permissions'],
+                           topic = new[::-1],
                            )
+
+@app.route('/list/<username>/all_done')
+def all_done(username):
+    topic = get_topics(session['username'])
+    done = get_done(session['username'])
+    new = get_all_topics(session['username'])
+    all_done = get_all_done(session['username'])
+    return render_template('listadmin_extend.html',
+                           username = session['username'],
+                           usernav = True,
+                           logoutt = True,
+                           tr = len(topic),
+                           tr2 = len(new),
+                           admin = session['permissions'],
+                           topic = all_done[::-1],
+                           )
+
+@app.route('/list/<username>/new/<nid>', methods = ['GET','POST'])
+def news_edit(username, nid):
+    notify = get_notification(nid)[0]
+    date = str(time.strftime('%d.%m.%y'))
+    branch = get_branch(username)
+
+    if request.method == 'POST':
+        kom = request.form['kom'].encode()
+        adresat = request.form['adresat'].encode()
+        data_zlecenia = request.form['data_zlecenia'].encode()
+        data_przyjecia = request.form['data_przyjecia'].encode()
+        tresc = request.form['tresc'].encode()
+        uzasadnienie_realizacji = request.form['uzasadnienie_realizacji'].encode()
+
+        opis_prac = "brak".encode()
+        data_prac = "brak".encode()
+        uzasadnienie_zakupu = "brak".encode()
+        data_akceptacji_dyrektora = "brak".encode()
+        data_potwierdzenia = "brak".encode()
+        data_zakonczenia =" brak".encode()
+
+        #getting text from 3th area for admin users
+        if session['permissions']:
+            opis_prac = request.form['opis_prac'].encode()
+            data_prac = request.form['data_prac'].encode()
+            uzasadnienie_zakupu = request.form['uzasadnienie_zakupu'].encode()
+            data_akceptacji_dyrektora = request.form['data_akceptacji_dyrektora'].encode()
+            data_potwierdzenia = request.form['data_potwierdzenia'].encode()
+            data_zakonczenia = request.form['data_zakonczenia'].encode()
+
+        #Sending messenges to db
+        result = send_notification(get_user_id_from_nid(nid),
+                                   data_zlecenia, data_przyjecia, tresc, uzasadnienie_realizacji,
+                                   opis_prac, data_prac, uzasadnienie_zakupu, data_akceptacji_dyrektora,
+                                   data_potwierdzenia, data_zakonczenia, adresat, kom)
+        result2 = delete_nid(nid)
+        flash(str(result))#flashing db ans
+        return render_template('oldreport_admin.html',
+                               username=session['username'],
+                               usernav=True,
+                               logoutt=True,
+                               admin=session['permissions'],
+                               info=notify)
+    else:
+        return render_template('oldreport_admin.html',
+                               username=session['username'],
+                               usernav=True,
+                               logoutt=True,
+                               admin=session['permissions'],
+                               info=notify)
+
 
 
 if __name__ == "__main__":
