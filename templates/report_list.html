@@ -1,0 +1,18 @@
+{% extends "index.html" %}
+
+{% block body %}
+
+
+<div class="btn-group btn-group-justified">
+
+    {% for i in headers %}
+
+  <a href="/list/{{ username }}/send" class="btn btn-primary"> {{ i }} <span class="badge">{{ tr }}</span></a>
+
+    {% endfor %}
+
+</div>
+
+{% block list %}{% endblock %}
+
+{% endblock %}

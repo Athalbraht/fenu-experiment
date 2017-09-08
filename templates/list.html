@@ -1,14 +1,16 @@
-
- {% extends "index.html" %}
+{% extends "index.html" %}
 
 {% block body %}
+
+
 <div class="btn-group btn-group-justified">
+      {% if nadmin %}
   <a href="/list/{{ username }}/send" class="btn btn-primary"> Trwające <span class="badge">{{ tr }}</span></a>
   <a href="/list/{{ username }}/done" class="btn btn-primary"> Zakończone </a>
-
+   {% endif %}
    {% if admin %}
-
-  <a href="/list/{{ username }}/new" class="btn btn-primary">Nowe <span class="badge">{{ tr2 }}</span></a>
+  <a href="/list/{{ username }}/new" class="btn btn-primary">Nowe do mnie <span class="badge">{{ tr2 }}</span></a>
+  <a href="/list/{{ username }}/new" class="btn btn-primary"> Nowe wszystkie <span class="badge">{{ tr2 }}</span></a>
   <a href="/list/{{ username }}/all_done" class="btn btn-primary"> Rozpatrzone</a>
 
    {% endif %}

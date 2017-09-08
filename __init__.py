@@ -8,6 +8,7 @@
 import sys, time
 from db_func import *
 from flask import Flask, render_template, flash, request, session, redirect, url_for
+from notifications import *
 
 #setting  default char coding as unicode
 if sys.version_info.major < 3:
@@ -20,6 +21,7 @@ app.debug = True
 
 
 #Routing
+###################################################################################################################
 
 @app.route('/home',methods = ['GET', 'POST'])
 def home():
@@ -36,18 +38,41 @@ def home():
                 #checking permissions
                 if get_user_permissions(user) == 'admin':
                     session['permissions'] = True
+                    session['nadmin'] = False
                 else:
                     session['permissions'] = False
-                return redirect(url_for('report', username = user, logoutt = True))
+                    session['nadmin'] = True
+                return redirect(url_for('list_username',
+                                        username = user,
+                                        logoutt = True))
         except Exception as e:
-            return render_template('home.html', username = str(e))
-        return render_template('home.html', username = user)
+            return render_template('home.html',
+                                   username = str(e))
+        return render_template('home.html',
+                               username = user)
     else:
         #rendering home page for guest session
-        return render_template('home.html', username = "Gosc".decode('utf-8'))
+        return render_template('home.html',
+                               username = "Gosc".decode('utf-8'))
+
+@app.route('/logout')
+def logout():
+    flash("Wylogowano")
+    session.clear()  # removing current user session
+    return redirect(url_for('home'))
+
+##################################################################################################################
+@app.route('/report/<username>/', methods = ['GET','POST'])
+def report_list(username):
+    headers = get_headers()
+    return render_template('report_list.html', username=session['username'],
+                           usernav=True,
+                           logoutt=True,
+                           headers = headers,
+                           admin=session['permissions'])
 
 
-@app.route('/report/<username>', methods = ['GET','POST'])
+@app.route('/report/<username>/<typ>', methods = ['GET','POST'])
 def report(username):
     date = str(time.strftime('%d.%m.%y'))
     branch = get_branch(username)
@@ -98,15 +123,7 @@ def report(username):
                                branch=branch,
                                admin = session['permissions'])
 
-
-@app.route('/user/<username>', methods = ['GET','POST'])
-def user(username):
-    return render_template('user.html',
-                           username = session['username'],
-                           usernav = True,
-                           date=date,
-                           branch=branch,
-                           logout = True)
+########################################################################################################################
 
 @app.route('/list/<username>')
 def list_username(username):
@@ -122,7 +139,8 @@ def list_username(username):
                                logoutt = True,
                                tr = len(topic),
                                tr2=len(new),
-                               admin = session['permissions'])
+                               admin = session['permissions'],
+                               nadmin = session['nadmin'])
     else:
         return render_template('list.html',
                                username = session['username'],
@@ -130,13 +148,9 @@ def list_username(username):
                                logoutt = True,
                                tr = len(topic),
                                #tr2=len(new),
-                               admin = session['permissions'])
+                               admin = session['permissions'],
+                               nadmin = session['nadmin'])
 
-@app.route('/logout')
-def logout():
-    flash("Wylogowano")
-    session.clear()#removing current user session
-    return redirect(url_for('home'))
 
 @app.route('/list/<username>/send')
 def database_test(username):
@@ -153,7 +167,8 @@ def database_test(username):
                                tr = len(topic),
                                tr2=len(new),
                                topic=topic[::-1],
-                               admin = session['permissions'])
+                               admin = session['permissions'],
+                               nadmin = session['nadmin'])
     else:
         return render_template('list_extend.html',
                                username = session['username'],
@@ -163,19 +178,8 @@ def database_test(username):
                                #tr2=len(done),
                                admin = session['permissions'],
                                topic = topic[::-1],
+                               nadmin = session['nadmin']
                                )
-
-@app.route('/adminpanel/<username>')
-def adminpanel(username):
-    _users = get_users()
-    len_users = len(_users)
-    return render_template('adminpanel.html',
-                           username = session['username'],
-                           usernav = True,
-                           logoutt = True,
-                           admin = session['permissions'],
-                           inverse = True,
-                           lenusers = len_users)
 
 @app.route('/list/<username>/old/<nid>')
 def old(username, nid):
@@ -203,7 +207,8 @@ def done(username):
                                tr = len(topic),
                                tr2=len(new),
                                topic=done[::-1],
-                               admin = session['permissions'])
+                               admin = session['permissions'],
+                               nadmin = session['nadmin'])
     else:
         return render_template('list_extend.html',
                                username = session['username'],
@@ -213,7 +218,7 @@ def done(username):
                                #tr2 = len(new),
                                admin = session['permissions'],
                                topic = done[::-1],
-                               )
+                               nadmin = session['nadmin'])
 
 @app.route('/list/<username>/new')
 def news(username):
@@ -229,7 +234,7 @@ def news(username):
                            tr2 = len(new),
                            admin = session['permissions'],
                            topic = new[::-1],
-                           )
+                           nadmin = session['nadmin'])
 
 @app.route('/list/<username>/all_done')
 def all_done(username):
@@ -245,7 +250,7 @@ def all_done(username):
                            tr2 = len(new),
                            admin = session['permissions'],
                            topic = all_done[::-1],
-                           )
+                           nadmin = session['nadmin'])
 
 @app.route('/list/<username>/new/<nid>', methods = ['GET','POST'])
 def news_edit(username, nid):
@@ -298,6 +303,21 @@ def news_edit(username, nid):
                                admin=session['permissions'],
                                info=notify)
 
+####################################################################################################################
+
+@app.route('/adminpanel/<username>')
+def adminpanel(username):
+    _users = get_users()
+    len_users = len(_users)
+    return render_template('adminpanel.html',
+                           username = session['username'],
+                           usernav = True,
+                           logoutt = True,
+                           admin = session['permissions'],
+                           inverse = True,
+                           lenusers = len_users)
+
+
 @app.route('/users')
 def users():
     _users = get_users()
@@ -310,7 +330,34 @@ def users():
                            inverse = True,
                            users = _users,
                            lenusers = len_users)
+#######################################################################################################################
+'''@app.route('/users/<login>', methods=['GET','POST'])
+def user_edit(login):
+    notify = get_notification(nid)[0]
+    date = str(time.strftime('%d.%m.%y'))
+    branch = get_branch(username)
+
+    if request.method == 'POST':
+        kom = request.form['kom'].encode()
 
 
+        #Sending messenges to db
+        result =
+
+
+        return render_template('user_edit.html',
+                               username=session['username'],
+                               usernav=True,
+                               logoutt=True,
+                               admin=session['permissions'],
+                               info=notify)
+    else:
+        return render_template('user_edit.html',
+                               username=session['username'],
+                               usernav=True,
+                               logoutt=True,
+                               admin=session['permissions'],
+                               info=notify)'''
+#######################################################################################################################
 if __name__ == "__main__":
     app.run()
