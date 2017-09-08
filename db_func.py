@@ -10,6 +10,35 @@ if sys.version_info.major < 3:
     reload(sys)
 sys.setdefaultencoding('utf8')
 
+
+class User_tools():
+    def __init__(self):
+        pass
+
+    def delete(self, login):
+        c, cnn = connection()
+        c.execute("DELETE FROM users WHERE login=(%s)", (login,))
+        cnn.commit()
+        c.close()
+        cnn.close()
+        return None
+
+    def add(self, name, surname, login, passwd, branch, function, permissions):
+        c, cnn = connection()
+        c.execute("""INSERT INTO users (name, surname, login, passwd, branch, function, uprawnienia) VALUES (%s, %s, %s, %s, $s, %s, %s)""",
+                       (name, surname, login, passwd, branch, function, permissions))
+        cnn.commit()
+        c.close()
+        cnn.close()
+
+    def edit(self, name, surname, login, passwd, branch, function, permissions):
+        c, cnn = connection()
+        c.execute("""UPDATE `users` `name` = %s, `surname` = %s, `login` = %s, `passwd` = %s, `branch` = %s, `function` = %s, `uprawnienia` = %s WHERE login=(%s)""",
+                  (name, surname, login, passwd, branch, function, permissions,login))
+        cnn.commit()#accepting db changes
+        c.close()
+        cnn.close()
+
 #verify user password
 def check_passwd(login, passwd):
     c, cnn = connection()#creating cursor
@@ -195,6 +224,18 @@ def get_user_id_from_nid(nid):
               (nid,))
     try:
         temp = c.fetchall()[0][0]
+        return temp
+    except:
+        return None
+    finally:
+        c.close()
+        cnn.close()
+
+def get_users():
+    c, cnn = connection()
+    c.execute("""SELECT name, surname, login, passwd, branch, function, uprawnienia FROM users""")
+    try:
+        temp = c.fetchall()
         return temp
     except:
         return None

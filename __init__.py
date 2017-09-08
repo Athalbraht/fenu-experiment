@@ -18,6 +18,7 @@ sys.setdefaultencoding('utf8')
 app = Flask(__name__)
 app.debug = True
 
+
 #Routing
 
 @app.route('/home',methods = ['GET', 'POST'])
@@ -166,12 +167,15 @@ def database_test(username):
 
 @app.route('/adminpanel/<username>')
 def adminpanel(username):
+    _users = get_users()
+    len_users = len(_users)
     return render_template('adminpanel.html',
                            username = session['username'],
                            usernav = True,
                            logoutt = True,
                            admin = session['permissions'],
-                           inverse = True)
+                           inverse = True,
+                           lenusers = len_users)
 
 @app.route('/list/<username>/old/<nid>')
 def old(username, nid):
@@ -294,6 +298,18 @@ def news_edit(username, nid):
                                admin=session['permissions'],
                                info=notify)
 
+@app.route('/users')
+def users():
+    _users = get_users()
+    len_users = len(_users)
+    return render_template('user.html',
+                           username = session['username'],
+                           usernav = True,
+                           logoutt = True,
+                           admin = session['permissions'],
+                           inverse = True,
+                           users = _users,
+                           lenusers = len_users)
 
 
 if __name__ == "__main__":

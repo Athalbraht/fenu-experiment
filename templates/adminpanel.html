@@ -1,12 +1,10 @@
 {% extends "index.html" %}
 {% block body %}
 
- <div class="btn-group btn-group-justified">
-  <a href="/list/{{ username }}/send" class="btn btn-primary"> Użytkownicy </a>
-
 {% if admin %}
+ <div class="btn-group btn-group-justified">
 
-  <a href="/list/{{ username }}/new" class="btn btn-primary"> Aktywne sesje <span class="badge">5</span></a>
+  <a href="/users" class="btn btn-primary"> Użytkownicy <span class="badge">{{ lenusers }}</span></a>
   <a href="/list/{{ username }}/considered" class="btn btn-primary"> Debug </a>
 
 {% endif %}
