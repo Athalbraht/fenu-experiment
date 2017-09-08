@@ -63,11 +63,11 @@ def show_current_users():
 def send_notification(uid, data_zlecenia, data_przyjecia, tresc,
                       uzasadnienie_realizacji, opis_prac, data_prac,
                       uzasadnienie_zakupu, data_akceptacji_dyrektora,
-                      data_potwierdzenia, data_zakonczenia, adresat, kom):
+                      data_potwierdzenia, data_zakonczenia, adresat, kom, typ):
     try:
         c, cnn = connection()
-        c.execute("""INSERT INTO notifications (uid, data_zlecenia, data_przyjecia, tresc, uzasadnienie_realizacji, opis_prac, data_prac,uzasadnienie_zakupu, data_akceptacji_dyrektora, data_potwierdzenia, data_zakonczenia, adresat, kom) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)""",
-                  (uid, data_zlecenia, data_przyjecia, tresc,uzasadnienie_realizacji, opis_prac, data_prac,uzasadnienie_zakupu, data_akceptacji_dyrektora, data_potwierdzenia, data_zakonczenia, adresat, kom))
+        c.execute("""INSERT INTO notifications (uid, data_zlecenia, data_przyjecia, tresc, uzasadnienie_realizacji, opis_prac, data_prac,uzasadnienie_zakupu, data_akceptacji_dyrektora, data_potwierdzenia, data_zakonczenia, adresat, kom, typ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)""",
+                  (uid, data_zlecenia, data_przyjecia, tresc,uzasadnienie_realizacji, opis_prac, data_prac,uzasadnienie_zakupu, data_akceptacji_dyrektora, data_potwierdzenia, data_zakonczenia, adresat, kom, typ))
         cnn.commit()#accepting db changes
         return "Wyslane"
     except Exception as e:
@@ -194,11 +194,11 @@ def savee_notification(nid, uid, data_zlecenia, data_przyjecia, tresc,
 def save_notifiation(uid, data_zlecenia, data_przyjecia, tresc,
                       uzasadnienie_realizacji, opis_prac, data_prac,
                       uzasadnienie_zakupu, data_akceptacji_dyrektora,
-                      data_potwierdzenia, data_zakonczenia, adresat, kom):
+                      data_potwierdzenia, data_zakonczenia, adresat, kom, typ):
     try:
         c, cnn = connection()
-        c.execute("""INSERT INTO notifications (uid, data_zlecenia, data_przyjecia, tresc, uzasadnienie_realizacji, opis_prac, data_prac,uzasadnienie_zakupu, data_akceptacji_dyrektora, data_potwierdzenia, data_zakonczenia, adresat, kom) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)""",
-                  (uid, data_zlecenia, data_przyjecia, tresc,uzasadnienie_realizacji, opis_prac, data_prac,uzasadnienie_zakupu, data_akceptacji_dyrektora, data_potwierdzenia, data_zakonczenia, adresat, kom))
+        c.execute("""INSERT INTO notifications (uid, data_zlecenia, data_przyjecia, tresc, uzasadnienie_realizacji, opis_prac, data_prac,uzasadnienie_zakupu, data_akceptacji_dyrektora, data_potwierdzenia, data_zakonczenia, adresat, kom, typ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)""",
+                  (uid, data_zlecenia, data_przyjecia, tresc,uzasadnienie_realizacji, opis_prac, data_prac,uzasadnienie_zakupu, data_akceptacji_dyrektora, data_potwierdzenia, data_zakonczenia, adresat, kom, typ))
         cnn.commit()#accepting db changes
         return "Wyslane"
     except Exception as e:

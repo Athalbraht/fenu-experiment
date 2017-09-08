@@ -65,15 +65,16 @@ def logout():
 @app.route('/report/<username>/', methods = ['GET','POST'])
 def report_list(username):
     headers = get_headers()
+    j = zip(headers, range(len(headers)))
     return render_template('report_list.html', username=session['username'],
                            usernav=True,
                            logoutt=True,
-                           headers = headers,
+                           headers = j,
                            admin=session['permissions'])
 
 
 @app.route('/report/<username>/<typ>', methods = ['GET','POST'])
-def report(username):
+def report(username,typ):
     date = str(time.strftime('%d.%m.%y'))
     branch = get_branch(username)
 
@@ -91,6 +92,7 @@ def report(username):
         data_akceptacji_dyrektora = ""
         data_potwierdzenia = ""
         data_zakonczenia =""
+        _typ = typ
 
         #getting text from 3th area for admin users
         if session['permissions']:
@@ -105,7 +107,7 @@ def report(username):
         result = send_notification(get_user_id(session['username']),
                                    data_zlecenia, data_przyjecia, tresc, uzasadnienie_realizacji,
                                    opis_prac, data_prac, uzasadnienie_zakupu, data_akceptacji_dyrektora,
-                                   data_potwierdzenia, data_zakonczenia, adresat, kom)
+                                   data_potwierdzenia, data_zakonczenia, adresat, kom, typ)
 
         flash(str(result))#flashing db ans
         return render_template('report.html',username = session['username'],
