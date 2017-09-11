@@ -300,6 +300,7 @@ def newsall(username):
                            topic = new[::-1],
                            nadmin = session['nadmin'])
 
+
 @app.route('/list/<username>/freeze')
 def freeze(username):
     topic = get_topics(session['username'])
