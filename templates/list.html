@@ -6,15 +6,16 @@
 <div class="btn-group btn-group-justified">
       {% if nadmin %}
   <a href="/list/{{ username }}/send" class="btn btn-primary"> Wysłane <span class="badge">{{ tr }}</span></a>
-  <a href="/list/{{ username }}/send" class="btn btn-primary"> W trakcie <span class="badge">{{ tr }}</span></a>  
+  <a href="/list/{{ username }}/sendt" class="btn btn-primary"> W trakcie <span class="badge">{{ tr }}</span></a>  
   <a href="/list/{{ username }}/done" class="btn btn-primary"> Zakończone </a>
    {% endif %}
    {% if admin %}
   <a href="/list/{{ username }}/new" class="btn btn-primary">Nowe(do mnie)<span class="badge">{{ tr }}</span></a>
-  <a href="/list/{{ username }}/new" class="btn btn-primary"> Nowe(wszystkie)<span class="badge">{{ nw }}</span></a>
-  <a href="/list/{{ username }}/new" class="btn btn-primary"> Moje(w trakcie)<span class="badge">{{ tm }}</span></a>
-  <a href="/list/{{ username }}/new" class="btn btn-primary"> Wszystkie(w trakcie)<span class="badge">{{ tw }}</span></a>
-  <a href="/list/{{ username }}/all_done" class="btn btn-primary">Zakończone</a>  
+  <a href="/list/{{ username }}/newall" class="btn btn-primary"> Nowe(wszystkie)<span class="badge">{{ nw }}</span></a>
+  <a href="/list/{{ username }}/during" class="btn btn-primary"> Moje(w trakcie)<span class="badge">{{ tm }}</span></a>
+  <a href="/list/{{ username }}/during/a" class="btn btn-primary"> Wszystkie(w trakcie)<span class="badge">{{ tw }}</span></a>
+  <a href="/list/{{ username }}/freeze" class="btn btn-primary"> Zamrożone<span class="badge">{{ fr }}</span></a>  
+  <a href="/list/{{ username }}/oldm" class="btn btn-primary">Zakończone</a>  
   <a href="/list/{{ username }}/all_done" class="btn btn-primary">Zakończone(wszystkie)</a>
   {% endif %}
 

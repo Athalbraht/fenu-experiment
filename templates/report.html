@@ -2,7 +2,7 @@
 
 {% block body %}
 
-<form action="" class="form-horizontal" method="post" >
+<form action="" class="form-horizontal" method="post"  enctype="multipart/form-data">
 {% if admin %}
 	<div class="form-group">
 		<label class="col-sm-2 control-label">Priorytet</label>
@@ -34,7 +34,7 @@
 {% endif %}
 
 	<p>Nadawca: {{ name }} {{ surname }}</p>
-	
+
 	<div class="form-group">
 		<label class="col-sm-2 control-label">Komórka zlecająca</label>
 		<div class="col-sm-10">
@@ -68,10 +68,14 @@
 		<textarea class="form-control" rows="9" id="comment" name="tresc"></textarea>
 	</div>
 
+	<label for="one">Dodaj załącznik</label>
+	<input type="file" name="file" ><br>
+
 	<div class="form-group">
 		<label for="sad">Uzasadnienie potrzeby realizacji zlecenia</label>
 		<textarea class="form-control" rows="5" id="comment" name="uzasadnienie_realizacji"></textarea>
 	</div>
+	
 
 {% if admin %}
 	<div class="form-group">

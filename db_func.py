@@ -118,7 +118,7 @@ def get_topics(login):
 
 def get_all_topics(login):
     c, cnn = connection()
-    c.execute("""SELECT tresc, nid FROM notifications WHERE data_zakonczenia="" """)
+    c.execute("""SELECT tresc, nid, uid, typ FROM notifications WHERE data_zakonczenia="" """)
     temp = c.fetchall()
     try:
         return temp
@@ -142,7 +142,7 @@ def get_done(login):
 
 def get_all_done(login):
     c, cnn = connection()
-    c.execute("""SELECT tresc, nid FROM notifications WHERE data_zakonczenia > "" """)
+    c.execute("""SELECT tresc, nid, uid, typ FROM notifications WHERE data_zakonczenia > "" """)
     temp = c.fetchall()
     try:
         return temp
@@ -177,23 +177,37 @@ def get_branch(login):
         c.close()
         cnn.close()
 
-def savee_notification(nid, uid, data_zlecenia, data_przyjecia, tresc,
+def get_type_from_nid(nid):
+    c, cnn = connection()
+    c.execute("""SELECT typ FROM notifications WHERE nid=(%s)""",
+              (nid,))
+    try:
+        temp = c.fetchall()[0][0]
+        return temp
+    except:
+        return None
+    finally:
+        c.close()
+        cnn.close()
+
+def save_notification(nid, uid, data_zlecenia, data_przyjecia, tresc,
                       uzasadnienie_realizacji, opis_prac, data_prac,
                       uzasadnienie_zakupu, data_akceptacji_dyrektora,
-                      data_potwierdzenia, data_zakonczenia, adresat, kom):
+                      data_potwierdzenia, data_zakonczenia, adresat, kom, _typ,
+                      priorytet, ostatniamodyfikacja, delegacja, zalacznik):
     try:
         c, cnn = connection()
-        c.execute("""UPDATE `notifications` `uid` = %s, `data_zlecenia` = %s, `data_przyjecia` = %s, `tresc` = %s, `uzasadnienie_realizacji` = %s, `opis_prac` = %s, `data_prac` = %s, `uzasadnienie_zakupu` = %s, `data_akceptacji_dyrektora` = %s, `data_potwierdzenia` = %s, `data_zakonczenia` = %s, `adresat` = %s, `kom` = %s WHERE `notifications`.`nid` = %s""",
-                  (uid, data_zlecenia, data_przyjecia, tresc,uzasadnienie_realizacji, opis_prac, data_prac,uzasadnienie_zakupu, data_akceptacji_dyrektora, data_potwierdzenia, data_zakonczenia, adresat, kom, nid))
+        c.execute("""UPDATE notifications SET uid = %s, data_zlecenia = %s, data_przyjecia = %s, tresc = %s, uzasadnienie_realizacji = %s, opis_prac = %s, data_prac = %s, uzasadnienie_zakupu = %s, data_akceptacji_dyrektora = %s, data_potwierdzenia = %s, data_zakonczenia = %s, adresat = %s, kom = %s, typ = %s, priorytet = %s, ostatniamodyfikacja = %s, delegacja = %s, zalacznik = %s WHERE nid = %s""",
+                  (uid, data_zlecenia, data_przyjecia, tresc,uzasadnienie_realizacji, opis_prac, data_prac,uzasadnienie_zakupu, data_akceptacji_dyrektora, data_potwierdzenia, data_zakonczenia, adresat, kom, _typ, priorytet, ostatniamodyfikacja, delegacja, zalacznik,nid))
         cnn.commit()#accepting db changes
-        return "Wyslane"
+        return "Zapisano"
     except Exception as e:
         return str(e)
     finally:
         c.close()
         cnn.close()
 
-def save_notifiation(uid, data_zlecenia, data_przyjecia, tresc,
+def savee_notifiation(uid, data_zlecenia, data_przyjecia, tresc,
                       uzasadnienie_realizacji, opis_prac, data_prac,
                       uzasadnienie_zakupu, data_akceptacji_dyrektora,
                       data_potwierdzenia, data_zakonczenia, adresat, kom, typ):
@@ -253,6 +267,68 @@ def get_users_data(login):
         return temp
     except:
         return None
+    finally:
+        c.close()
+        cnn.close()
+
+def get_user_login(uid):
+    c, cnn = connection()
+    c.execute("""SELECT login FROM users WHERE uid=(%s)""",
+              (uid,))
+    try:
+        temp = c.fetchall()[0][0]
+        return temp
+    except:
+        return None
+    finally:
+        c.close()
+        cnn.close()
+
+def get_all_topics_forme(login):
+    c, cnn = connection()
+    c.execute("""SELECT tresc, nid, uid, typ, kom FROM notifications WHERE data_zakonczenia="" and delegacja=(%s) """,(get_user_id(login),))
+    temp = c.fetchall()
+    try:
+        return temp
+    except:
+        return ['blad'], ['odczytu']
+    finally:
+        c.close()
+        cnn.close()
+
+def get_all_topics_all():
+    c, cnn = connection()
+    c.execute("""SELECT tresc, nid, uid, typ, kom FROM notifications WHERE data_zakonczenia="" """)
+    temp = c.fetchall()
+    try:
+        return temp
+    except:
+        return ['blad'], ['odczytu']
+    finally:
+        c.close()
+        cnn.close()
+
+def get_done_forme(login):
+    c, cnn = connection()
+    c.execute("""SELECT tresc, nid, uid, typ FROM notifications WHERE data_zakonczenia > "" and delegacja = (%s)""", (get_user_id(login),))
+    temp = c.fetchall()
+    try:
+        return temp
+    except:
+        return ['blad'], ['odczytu']
+    finally:
+        c.close()
+        cnn.close()
+
+
+def get_freeze():
+    c, cnn = connection()
+    c.execute("""SELECT tresc, nid, uid, typ, kom FROM notifications WHERE data_zakonczenia="freeze" """)
+    temp = c.fetchall()
+    try:
+        return temp
+    except:
+        return ['blad'], ['odczytu']
     finally:
         c.close()
         cnn.close()
