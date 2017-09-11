@@ -1,15 +1,11 @@
 {% extends "list.html" %}
 
 {% block list %}
-<div class="container">
-  <br>
- <div class="list-group">
-
+<div class="container"><br>
+	<div class="list-group">
 	{% for i in topic  %}
-
-  <a href="/list/{{ username }}/new/{{ i[1] }}" class="list-group-item">{{ i[0][:100] }}</a>
-
+		<a href="/list/{{ username }}/new/{{ i[1] }}" class="list-group-item">{{ i[0][:100] }}</a>
 	{% endfor %}
-  </div>
+	</div>
 </div>
 {% endblock %}

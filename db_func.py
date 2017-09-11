@@ -63,11 +63,13 @@ def show_current_users():
 def send_notification(uid, data_zlecenia, data_przyjecia, tresc,
                       uzasadnienie_realizacji, opis_prac, data_prac,
                       uzasadnienie_zakupu, data_akceptacji_dyrektora,
-                      data_potwierdzenia, data_zakonczenia, adresat, kom, typ):
+                      data_potwierdzenia, data_zakonczenia, adresat, kom, typ,
+                      priorytet, ostatniamodyfikacja, delegacja, zalacznik):
     try:
         c, cnn = connection()
-        c.execute("""INSERT INTO notifications (uid, data_zlecenia, data_przyjecia, tresc, uzasadnienie_realizacji, opis_prac, data_prac,uzasadnienie_zakupu, data_akceptacji_dyrektora, data_potwierdzenia, data_zakonczenia, adresat, kom, typ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)""",
-                  (uid, data_zlecenia, data_przyjecia, tresc,uzasadnienie_realizacji, opis_prac, data_prac,uzasadnienie_zakupu, data_akceptacji_dyrektora, data_potwierdzenia, data_zakonczenia, adresat, kom, typ))
+        c.execute("""INSERT INTO notifications (uid, data_zlecenia, data_przyjecia, tresc, uzasadnienie_realizacji, opis_prac, data_prac,uzasadnienie_zakupu, data_akceptacji_dyrektora, data_potwierdzenia, data_zakonczenia, adresat, kom, typ, priorytet, ostatniamodyfikacja, delegacja, zalacznik) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)""",
+                  (uid, data_zlecenia, data_przyjecia, tresc,uzasadnienie_realizacji, opis_prac, data_prac,uzasadnienie_zakupu, data_akceptacji_dyrektora, data_potwierdzenia, data_zakonczenia, adresat, kom, typ,
+                      priorytet, ostatniamodyfikacja, delegacja, zalacznik))
         cnn.commit()#accepting db changes
         return "Wyslane"
     except Exception as e:
@@ -234,6 +236,18 @@ def get_user_id_from_nid(nid):
 def get_users():
     c, cnn = connection()
     c.execute("""SELECT name, surname, login, passwd, branch, function, uprawnienia FROM users""")
+    try:
+        temp = c.fetchall()
+        return temp
+    except:
+        return None
+    finally:
+        c.close()
+        cnn.close()
+
+def get_users_data(login):
+    c, cnn = connection()
+    c.execute("""SELECT name, surname, login, passwd, branch, function, uprawnienia FROM users WHERE login=(%s)""", (login,))
     try:
         temp = c.fetchall()
         return temp

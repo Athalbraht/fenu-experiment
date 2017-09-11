@@ -64,19 +64,32 @@ def logout():
 ##################################################################################################################
 @app.route('/report/<username>/', methods = ['GET','POST'])
 def report_list(username):
-    headers = get_headers()
-    j = zip(headers, range(len(headers)))
+    headers = get_headers()[1:]
+    j = zip(headers, range(1,len(headers)+1))
     return render_template('report_list.html', username=session['username'],
                            usernav=True,
                            logoutt=True,
                            headers = j,
                            admin=session['permissions'])
 
+@app.route('/report/<username>/<typ>/incydenty')
+def incydenty(username, typ):
+    incydenty = get_incidents()
+
+    return render_template('incydenty.html', username=session['username'],
+                           usernav=True,
+                           logoutt=True,
+                           incydenty = incydenty,
+                           admin=session['permissions'])
 
 @app.route('/report/<username>/<typ>', methods = ['GET','POST'])
 def report(username,typ):
     date = str(time.strftime('%d.%m.%y'))
     branch = get_branch(username)
+    priorytet = '0'
+    ostatniamodyfikacja = date
+    delegacja = '0'
+    user_data = get_users_data(username)
 
     if request.method == 'POST':
         kom = request.form['kom'].encode()
@@ -94,6 +107,8 @@ def report(username,typ):
         data_zakonczenia =""
         _typ = typ
 
+        zalacznik = ''
+
         #getting text from 3th area for admin users
         if session['permissions']:
             opis_prac = request.form['opis_prac'].encode()
@@ -102,12 +117,16 @@ def report(username,typ):
             data_akceptacji_dyrektora = request.form['data_akceptacji_dyrektora'].encode()
             data_potwierdzenia = request.form['data_potwierdzenia'].encode()
             data_zakonczenia = request.form['data_zakonczenia'].encode()
-
+            priorytet = request.form['priorytet'].encode()
+            ostatniamodyfikacja = request.form['ostatniamodyfikacja'].encode()
+            delegacja = request.form['delegacja'].encode()
+            zalacznik = request.form['zalacznik'].encode()
         #Sending messenges to db
         result = send_notification(get_user_id(session['username']),
                                    data_zlecenia, data_przyjecia, tresc, uzasadnienie_realizacji,
                                    opis_prac, data_prac, uzasadnienie_zakupu, data_akceptacji_dyrektora,
-                                   data_potwierdzenia, data_zakonczenia, adresat, kom, typ)
+                                   data_potwierdzenia, data_zakonczenia, adresat, kom, typ, priorytet, ostatniamodyfikacja,
+                                   delegacja, zalacznik)
 
         flash(str(result))#flashing db ans
         return render_template('report.html',username = session['username'],
@@ -115,6 +134,11 @@ def report(username,typ):
                                logoutt = True,
                                date = date,
                                branch = branch,
+                               priorytet = priorytet,
+                               ostatniamodyfikacja = ostatniamodyfikacja,
+                               delegacja = delegacja,
+                               name = user_data[0][0],
+                               surname = user_data[0][1],
                                admin = session['permissions'])
     else:
         return render_template('report.html',
@@ -123,6 +147,11 @@ def report(username,typ):
                                logoutt = True,
                                date=date,
                                branch=branch,
+                               priorytet=priorytet,
+                               delegacja = delegacja,
+                               ostatniamodyfikacja=ostatniamodyfikacja,
+                               name=user_data[0][0],
+                               surname=user_data[0][1],
                                admin = session['permissions'])
 
 ########################################################################################################################
