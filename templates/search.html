@@ -1,0 +1,30 @@
+{% extends "index.html" %}
+
+{% block body %}
+ <form>
+	 <h3>Wyszukiwarka</h3>
+  <div class="input-group">
+    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+    <input id="email" type="text" class="form-control" name="name" placeholder="Nazwisko">
+  </div>
+  <div class="input-group">
+    <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+    <input id="email" type="text" class="form-control" name="Data" placeholder="Data">
+  </div>
+  <div class="input-group">
+    <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+    <input id="email" type="text" class="form-control" name="branch" placeholder="Funkcja">
+  </div>
+   <div class="form-group">
+  <label for="sel1">Dział:</label>
+  <select class="form-control" id="sel1">
+    <option>1</option>
+    <option>2</option>
+    <option>3</option>
+    <option>4</option>
+  </select>
+</div> 
+ <button type="sumbit" class="btn btn-success btn-block">Szukaj</button> 
+</form> 
+
+{% endblock %}

@@ -332,3 +332,15 @@ def get_freeze():
     finally:
         c.close()
         cnn.close()
+
+def get_info(sentence, table, sector, value):
+    try:
+        c, cnn = connection()
+        c.execute("SELECT {} FROM {} WHERE {} = (%s)".format(sentence, table, sector),(value,))
+        temp = c.fetchall()
+        return temp
+    except Exception as e:
+        return str(e)
+    finally:
+        c.close()
+        cnn.close()

@@ -71,6 +71,14 @@ def logout():
     session.clear()  # removing current user session
     return redirect(url_for('home'))
 
+@app.route('/search', methods = ['GET','POST'])
+def search():
+    return render_template('search.html',
+                           username=session['username'],
+                           usernav=True,
+                           logoutt=True,
+                           admin=session['permissions'])
+
 ##################################################################################################################
 @app.route('/report/<username>/', methods = ['GET','POST'])
 def report_list(username):
@@ -95,18 +103,15 @@ def incydenty(username, typ):
 @app.route('/report/<username>/<typ>', methods = ['GET','POST'])
 def report(username,typ):
     date = str(time.strftime('%d.%m.%y'))
-    branch = get_branch(username)
     priorytet = '0'
     ostatniamodyfikacja = date
     delegacja = '0'
-    user_data = get_users_data(username)
+    user_data = get_info('*',
+                         'users',
+                         'login',
+                         username)
 
     if request.method == 'POST':
-
-        if 'datafile' not in request.files:
-            flash('No file part')
-            return redirect(request.url)
-        file = request.files['file']
         kom = request.form['kom'].encode()
         adresat = request.form['adresat'].encode()
         data_zlecenia = request.form['data_zlecenia'].encode()
@@ -121,7 +126,6 @@ def report(username,typ):
         data_potwierdzenia = ""
         data_zakonczenia =""
         _typ = typ
-
         zalacznik = ''
 
         #getting text from 3th area for admin users
@@ -137,7 +141,6 @@ def report(username,typ):
             delegacja = request.form['delegacja'].encode()
             zalacznik = request.form['zalacznik'].encode()
 
-
         #Sending messenges to db
         result = send_notification(get_user_id(session['username']),
                                    data_zlecenia, data_przyjecia, tresc, uzasadnienie_realizacji,
@@ -150,12 +153,12 @@ def report(username,typ):
                                usernav = True,
                                logoutt = True,
                                date = date,
-                               branch = branch,
+                               branch = user_data[0][5],
                                priorytet = priorytet,
                                ostatniamodyfikacja = ostatniamodyfikacja,
                                delegacja = delegacja,
-                               name = user_data[0][0],
-                               surname = user_data[0][1],
+                               name = user_data[0][1],
+                               surname = user_data[0][2],
                                admin = session['permissions'])
     else:
         return render_template('report.html',
@@ -163,12 +166,12 @@ def report(username,typ):
                                usernav = True,
                                logoutt = True,
                                date=date,
-                               branch=branch,
+                               branch=user_data[0][5],
                                priorytet=priorytet,
                                delegacja = delegacja,
                                ostatniamodyfikacja=ostatniamodyfikacja,
-                               name=user_data[0][0],
-                               surname=user_data[0][1],
+                               name=user_data[0][1],
+                               surname=user_data[0][2],
                                admin = session['permissions'])
 
 ########################################################################################################################
@@ -354,8 +357,15 @@ def all_done(username):
 def news_edit(username, nid):
     notify = get_notification(nid)[0]
     date = str(time.strftime('%d.%m.%y'))
-    branch = get_branch(username)
-    uid = get_user_id_from_nid(nid)
+    uid = get_info('uid',
+                   'notifications',
+                   'nid',
+                   nid)
+    branch = get_info('branch',
+                      'users',
+                      'uid',
+                      uid)
+
     data = get_users_data(get_user_login(uid))
 
     if request.method == 'POST':
@@ -365,13 +375,14 @@ def news_edit(username, nid):
         data_przyjecia = request.form['data_przyjecia'].encode()
         tresc = request.form['tresc'].encode()
         uzasadnienie_realizacji = request.form['uzasadnienie_realizacji'].encode()
-
+        chb = request.form.getlist('checkbox')
+        flash(chb)
         opis_prac = ''
         data_prac = ''
         uzasadnienie_zakupu = ''
         data_akceptacji_dyrektora = ''
         data_potwierdzenia = ''
-        data_zakonczenia = ''
+
 
         #getting text from 3th area for admin users
         if session['permissions']:
@@ -385,7 +396,10 @@ def news_edit(username, nid):
         ostatniamodyfikacja = date.encode()
         delegacja = request.form['delegacja'].encode()
         zalacznik = request.form['zalacznik'].encode()
-
+        if len(chb) != 0:
+            data_zakonczenia = 'freeze'
+        else:
+            data_zakonczenia = ''
         #Sending messenges to db
         result = save_notification(nid, uid, data_zlecenia, data_przyjecia, tresc,
                                    uzasadnienie_realizacji, opis_prac, data_prac, uzasadnienie_zakupu,
