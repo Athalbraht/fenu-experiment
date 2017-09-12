@@ -1,0 +1,14 @@
+{% extends "index.html" %}
+
+{% block body %}
+<div class="container">
+  <h3>Aktualności</h3>
+  {% for i in news %}
+  <b><p>{{ i[0] }}:</p></b>
+  <blockquote>
+    <p>{{ i[1] }}</p>
+    <footer>{{ i[3] }} {{ i[2] }}</footer>
+  </blockquote>
+  {% endfor %}
+</div>
+{% endblock %}

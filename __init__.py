@@ -74,12 +74,12 @@ def logout():
 @app.route('/search', methods = ['GET','POST'])
 def search():
     branches = get_branches()
-    results = [[' ',' ',' ','']]
+    results = [['','','','']]
     if request.method == 'POST':
-        select = request.form['dzialy']
-        surname = request.form['surname']
-        date = request.form['date']
-        func = request.form['func']
+        select = request.form['dzialy'].encode()
+        surname = request.form['surname'].encode()
+        date = request.form['date'].encode()
+        func = request.form['func'].encode()
         #flash(searching(surname, date, func, select))
         results = searching(surname, date, func, select)
     return render_template('searching_result.html',
@@ -90,7 +90,16 @@ def search():
                            branches = branches,
                            admin=session['permissions'])
 
-
+@app.route('/aktualnosci')
+def aktualnosci():
+    _news = get_info('tytul, tresc, autor, data_publikacji', 'news', '0','0')
+    _news = _news[::-1][:5]
+    return render_template('news.html',
+                           username=session['username'],
+                           usernav=True,
+                           logoutt=True,
+                           news = _news,
+                           admin=session['permissions'])
 ##################################################################################################################
 @app.route('/report/<username>/', methods = ['GET','POST'])
 def report_list(username):
@@ -463,6 +472,57 @@ def users():
                            inverse = True,
                            users = _users,
                            lenusers = len_users)
+
+
+@app.route('/users/add', methods = ['GET','POST'])
+def new_user():
+    branches = load_branches()
+    if request.method == 'POST':
+        name = request.form['name'].encode()
+        surname = request.form['surname'].encode()
+        login = request.form['login'].encode()
+        passwd = request.form['passwd'].encode()
+        function = request.form['function'].encode()
+        branch = request.form['branch'].encode()
+        permissions = request.form['permissions'].encode()
+        if check_login(login):
+            result = add_user(name, surname, login, passwd, function, branch, permissions)
+            flash('Dodano')
+        else:
+            flash('Istnieje taki login')
+    return render_template('new_user.html',
+                           username=session['username'],
+                           usernav=True,
+                           logoutt=True,
+                           branches = branches,
+                           admin=session['permissions'])
+
+@app.route('/users/<uid>', methods = ['GET','POST'])
+def user_edit(uid):
+    branches = load_branches()
+    user_data = get_info('name, surname, login, passwd, function, uprawnienia, branch','users','uid',uid)
+    if request.method == 'POST':
+        name = request.form['name'].encode()
+        surname = request.form['surname'].encode()
+        login = request.form['login'].encode()
+        passwd = request.form['passwd'].encode()
+        function = request.form['function'].encode()
+        branch = request.form['branch'].encode()
+        permissions = request.form['permissions'].encode()
+
+        if check_login(login):
+            result = edit_user(uid, name, surname, login, passwd, function, branch, permissions)
+            flash(result)
+        else:
+            flash('Istnieje taki login')
+
+    return render_template('user_edit.html',
+                           username=session['username'],
+                           usernav=True,
+                           us = user_data[0],
+                           logoutt=True,
+                           branches = branches,
+                           admin=session['permissions'])
 #######################################################################################################################
 '''@app.route('/users/<login>', methods=['GET','POST'])
 def user_edit(login):

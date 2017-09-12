@@ -37,3 +37,9 @@ def get_branches():
         branches.append(branch[0])
     all_branches = list(set(branches))
     return all_branches
+
+def load_branches():
+    with open('/var/www/FlaskApp/FlaskApp/config_files/branches.data') as file:
+        branches = file.readlines()
+        _branches = [ i[:-1] for i in branches ]
+        return _branches

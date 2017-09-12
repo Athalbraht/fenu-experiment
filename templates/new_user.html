@@ -2,36 +2,36 @@
 
 {% block body %}
  <form method="post">
-	 <h3>Edycja</h3>
+	 <h3>Nowy użytkownik:</h3>
   <div class="input-group">
     <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-    <input id="email" type="text" class="form-control" name="name" placeholder="Imię" value ="{{ us[0] }}">
+    <input id="email" type="text" class="form-control" name="name" placeholder="Imię">
   </div>
   <div class="input-group">
     <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-    <input id="email" type="text" class="form-control" name="surname" placeholder="Nazwisko" value ="{{ us[1] }}">
+    <input id="email" type="text" class="form-control" name="surname" placeholder="Nazwisko">
   </div>
   <div class="input-group">
     <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-    <input id="email" type="text" class="form-control" name="login" placeholder="Login" value ="{{ us[2] }}">
+    <input id="email" type="text" class="form-control" name="login" placeholder="Login">
   </div>
   <div class="input-group">
     <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-    <input id="email" type="text" class="form-control" name="passwd" placeholder="Hasło" value ="{{ us[3] }}">
+    <input id="email" type="text" class="form-control" name="passwd" placeholder="Hasło">
   </div>  
   <div class="input-group">
     <span class="input-group-addon"><i class="glyphicon glyphicon-cog"></i></span>
-    <input id="email" type="text" class="form-control" name="function" placeholder="Funkcja" value ="{{ us[4] }}">
+    <input id="email" type="text" class="form-control" name="function" placeholder="Funkcja">
   </div>    
   <div class="input-group">
     <span class="input-group-addon"><i class="glyphicon glyphicon-bookmark"></i></span>
-    <input id="email" type="text" class="form-control" name="permissions" placeholder="Uprawnienia" value ="{{ us[5] }}">
+    <input id="email" type="text" class="form-control" name="permissions" placeholder="Uprawnienia">
   </div>    
    <div class="form-group">
 	   <br>
   <label for="sel1">Oddział:</label>
   <select class="form-control" id="sel1" name="branch">
-    <option>{{ us[6] }}</option>
+    <option></option>
     {% for i in branches %}
     <option>{{ i }}</option>
     {% endfor %}
@@ -40,6 +40,6 @@
 <button type="sumbit" class="btn btn-success">Zapisz</button>
 </form> 
 
-
+{% block searching %}{% endblock %}
 
 {% endblock %}

@@ -270,7 +270,7 @@ def get_user_id_from_nid(nid):
 
 def get_users():
     c, cnn = connection()
-    c.execute("""SELECT name, surname, login, passwd, branch, function, uprawnienia FROM users""")
+    c.execute("""SELECT name, surname, login, passwd, branch, function, uprawnienia, uid FROM users""")
     try:
         temp = c.fetchall()
         return temp
@@ -360,6 +360,46 @@ def get_info(sentence, table, sector, value):
         c.execute("SELECT {} FROM {} WHERE {} = (%s)".format(sentence, table, sector),(value,))
         temp = c.fetchall()
         return temp
+    except Exception as e:
+        return str(e)
+    finally:
+        c.close()
+        cnn.close()
+
+def add_user(name, surname, login, passwd, function, branch, permissions):
+    try:
+        c, cnn = connection()
+        c.execute("INSERT INTO users (name, surname, login, passwd, function, branch, uprawnienia) VALUES (%s,%s,%s, %s, %s, %s,%s)",
+                  (name,surname,login,passwd,function,branch,permissions))
+        cnn.commit()
+        return 'Dodano'
+    except Exception as e:
+        return str(e)
+    finally:
+        c.close()
+        cnn.close()
+
+def edit_user(uid, name, surname, login, passwd, function, branch, permissions):
+    try:
+        c,cnn = connection()
+        c.execute("""UPDATE users SET name=%s, surname=%s, login=%s, passwd=%s, function=%s, branch=%s, uprawnienia=%s WHERE uid=(%s)""",
+                  (name, surname, login, passwd, function, branch, permissions, uid))
+        cnn.commit()
+        return 'Zapisano'
+    except Exception as e:
+        return str(e)
+    finally:
+        c.close()
+        cnn.close()
+
+def check_login(login):
+    try:
+        c, cnn = connection()
+        a = c.execute("SELECT uid FROM users WHERE login=%s",(login,))
+        if a == 0:
+            return True
+        else:
+            return False
     except Exception as e:
         return str(e)
     finally:
