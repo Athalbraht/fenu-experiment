@@ -28,3 +28,12 @@ def get_incidents():
                     a += 1
                     b = 0
         return temp
+
+def get_branches():
+    import db_func as db
+    _branches = db.get_info('branch', 'users', '0','0')
+    branches = []
+    for branch in _branches:
+        branches.append(branch[0])
+    all_branches = list(set(branches))
+    return all_branches

@@ -1,0 +1,27 @@
+{% extends "search.html" %}
+
+{% block searching %}
+
+<div class="container">
+  <p>Wyniki:</p>            
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Treść</th>
+        <th>Typ</th>
+        <th>Ostatnie zmiany</th>
+      </tr>
+    </thead>
+    {% for i in results %}
+    <tbody>
+      <tr>
+        <td><a href="/list/{{ username }}/new/{{ i[0] }}" >{{ i[1][:20] }}</a></td>
+        <td>{{ i[2] }}</td>
+        <td>{{ i[3] }}</td>
+      </tr>
+	{% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% endblock %}

@@ -10,6 +10,27 @@ if sys.version_info.major < 3:
     reload(sys)
 sys.setdefaultencoding('utf8')
 
+def searching(surname = '%', date = '%', function = '%', branch = '%'):
+    try:
+        c, cnn = connection()
+        if surname == '':
+            surname = '%'
+        if date == '':
+            date = '%'
+        if function == '':
+            function = '%'
+        if branch == '':
+            branch = '%'
+        c.execute("SELECT n.nid, n.tresc, n.typ, n.ostatniamodyfikacja FROM notifications AS n, users as u WHERE n.uid=u.uid AND {} LIKE (%s) AND {} LIKE (%s) AND {} LIKE (%s) AND {} LIKE (%s)".format('u.surname','n.ostatniamodyfikacja','u.function','u.branch'),
+                  (surname, date, function, branch))
+        temp = c.fetchall()
+        return temp
+    except Exception as e:
+        return str(e)
+    finally:
+        c.close()
+        cnn.close()
+
 
 class User_tools():
     def __init__(self):

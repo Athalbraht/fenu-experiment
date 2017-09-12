@@ -73,11 +73,23 @@ def logout():
 
 @app.route('/search', methods = ['GET','POST'])
 def search():
-    return render_template('search.html',
+    branches = get_branches()
+    results = [[' ',' ',' ','']]
+    if request.method == 'POST':
+        select = request.form['dzialy']
+        surname = request.form['surname']
+        date = request.form['date']
+        func = request.form['func']
+        #flash(searching(surname, date, func, select))
+        results = searching(surname, date, func, select)
+    return render_template('searching_result.html',
                            username=session['username'],
                            usernav=True,
                            logoutt=True,
+                           results = results,
+                           branches = branches,
                            admin=session['permissions'])
+
 
 ##################################################################################################################
 @app.route('/report/<username>/', methods = ['GET','POST'])
