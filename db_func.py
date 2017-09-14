@@ -249,6 +249,18 @@ def delete_nid(nid):
         c, cnn = connection()
         c.execute("""DELETE FROM notifications WHERE nid=(%s)""",(nid,))
         cnn.commit()
+        return 'Usuniete'
+    except Exception as e:
+        return srt(e)
+    finally:
+        c.close()
+        cnn.close()
+
+def delete_user(uid):
+    try:
+        c, cnn = connection()
+        c.execute("""DELETE FROM users WHERE uid=(%s)""",(uid,))
+        cnn.commit()
     except Exception as e:
         return srt(e)
     finally:
@@ -270,7 +282,7 @@ def get_user_id_from_nid(nid):
 
 def get_users():
     c, cnn = connection()
-    c.execute("""SELECT name, surname, login, passwd, branch, function, uprawnienia, uid FROM users""")
+    c.execute("""SELECT name, surname, login, passwd, branch, function, uprawnienia, uid FROM users WHERE passwd!=(%s)""",('none',))
     try:
         temp = c.fetchall()
         return temp
@@ -378,6 +390,20 @@ def add_user(name, surname, login, passwd, function, branch, permissions):
     finally:
         c.close()
         cnn.close()
+
+def add_temporary_user(name, surname, branch):
+    try:
+        c, cnn = connection()
+        c.execute("INSERT INTO temporary_users (name, surname, branch) VALUES (%s,%s,%s)",
+                  (name,surname,branch))
+        cnn.commit()
+        return None
+    except Exception as e:
+        return str(e)
+    finally:
+        c.close()
+        cnn.close()
+
 
 def edit_user(uid, name, surname, login, passwd, function, branch, permissions):
     try:

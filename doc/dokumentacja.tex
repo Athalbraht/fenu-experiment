@@ -1,0 +1,224 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\setlength{\headheight}{12pt} 
+\setlength{\textheight}{25cm}
+\setlength{\textwidth}{17cm}
+\setlength{\footskip}{10mm}
+\setlength{\oddsidemargin}{0mm}
+\setlength{\evensidemargin}{0mm}
+\setlength{\topmargin}{0mm}
+\setlength{\headsep}{10mm}
+\usepackage{geometry}
+\usepackage{fancyhdr}
+\usepackage[T1]{fontenc}
+\usepackage[polish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\selectlanguage{polish}
+\newgeometry{rmargin=2cm,lmargin=2cm,bmargin=2cm}
+\pagestyle{fancy} %naglowek
+\rhead{Albert Szadziński}
+\chead{}
+\lhead{\thepage\hspace{0.5cm} FlaskApp}
+\lfoot{ }
+\usepackage{listings}
+\cfoot{ }
+\rfoot{}
+\begin{document}
+
+\thispagestyle{empty}
+\begin{center}
+{\huge \textbf{Dokumentacja}\\[2.7in]}
+
+\textbf{{\LARGE Aplikacja HelpDesk\\ FlaskApp}}\\
+
+{\large v1.5}\\[4.7in]
+\end{center}
+\begin{flushright}
+\begin{large}
+16 wrzesień 2017\\
+Albert Szadziński
+
+\end{large}
+\end{flushright}
+
+
+\newpage
+\tableofcontents
+\newpage
+
+\section{Instalacja}
+\subsection{Wersje oprogramowania}
+\begin{itemize}
+\item \textbf{System operacyjny} \\
+\textit{Ubuntu 16.04 xenial - wersja serwerowa\\
+Linux ubuntu 4.4.0-87-generic}
+\item \textbf{apache2}\\
+\textit{Server version: Apache/2.4.18 (Ubuntu)\\
+Server built:   2017-07-27T14:34:01}
+\item \textbf{MySQL}\\
+\textit{mysql 14.14 Distrib 5.7.19}
+\item \textbf{pip}\\
+\textit{pip 8.1.1 from /usr/lib/python2.7/dist-packages (python 2.7)}
+\item \textbf{Flask} \\
+\textit{Flask 0.12.2\\
+Python 2.7.12 (default, Nov 19 2016, 06:48:10) \\}
+\end{itemize}
+
+
+\subsection{Konfiguracja środowiska do wirtualizacji}
+\quad
+
+Po instalacji aktualnej wersji \textbf{VirtualBoxa} należy przejść do \textit{File>Import} w przypadku posiadania obrazu systemu \textbf{.ova } lub do \textit{File>New } aby rozpocząć instalację nowego systemu z obrazu \textbf{.iso}. W obu przypadkach należy zatwierdzić domyślne konfiguracje.\\
+
+Przed uruchomieniem maszyny wirtualnej należy upewnić się, czy włączone jest mostkowanie karty sieciowej na aktualnie używanym interfejsie sieciowym. 
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.4]{d}
+\end{figure}
+\newpage
+
+\subsection{Instalacja pakietów}
+\quad
+W przypadku importowania maszyny z pliku .ova wszystkie niezbędne pakiety są zainstalowane, a poniższe instrukcje należy zastosować w momencie wystąpienia problemów w działaniu aplikacji od punktu \textbf{(1.4.3)} po wcześniejszym wykonaniu:
+\begin{lstlisting}
+$: rm -rf /var/www/FlaskApp/FlaskApp  #jako root
+\end{lstlisting}
+\quad
+
+Po uzyskaniu dostępu do VM (maszyna wirtualna) poprzez VBox lub SSH należy przejść na użytkownika \textit{root}:\\
+\begin{lstlisting}
+$: sudo su #lub
+$: su
+\end{lstlisting}
+
+Domyślne hasła:
+\begin{itemize}
+\item server:0e48e4Jmmr
+\item root:4oo1Jmmr
+\end{itemize}
+
+\textbf{Aktualizacja listy oraz pakietów:}
+\begin{lstlisting}
+$: apt-get update
+$: apt-get upgrade
+\end{lstlisting}
+
+\textbf{Instalacja niezbędnych pakietów:}
+\begin{lstlisting}
+$: apt-get install apache2 mysql-client mysql-server libapache2-mod-wsgi
+ libmysqlclient-dev python-dev python-pip phpmyadmin 
+ texlive texlive-lang-polish texlive-fonts-extra python-mysqldb
+\end{lstlisting}
+
+\subsection{Konfiguracja serwera}
+
+\subsubsection{Tworzenie katalogu na aplikacje}
+\begin{lstlisting}
+$: mkdir /var/www/FlaskApp
+\end{lstlisting}
+\subsubsection{Pobieranie kodu źródłowego aplikacji wraz z szablonami}
+\begin{lstlisting}
+$: cd /var/www/FlaskApp
+$: git clone https://github.com/aszadzinski/help-desk-panel
+$: mv help-desk-panel/ FlaskApp/
+\end{lstlisting}
+\subsubsection{Tworzenie wirtualnego środowiska dla webaplikacji}
+\begin{lstlisting}
+$: pip install virtualenv
+$: cd /var/www/FlaskApp/FlaskApp
+$: virtualenv venv
+\end{lstlisting}
+\newpage
+\subsubsection{Instalacja lokalnych modułów dla Pythona i test aplikacji}
+\begin{lstlisting}
+$: source venv/bin/activate
+(venv)$: pip install flask
+(venv)$: pip install mysql-python
+(venv)$: pip install mysql 
+(venv)$: python __init__.py
+\end{lstlisting}
+Po wykonaniu ostatniego polecenia w terminalu powinny pojawić się informacje o rozpoczęciu nasłuchiwania na localhoscie:
+\begin{lstlisting}
+(venv) root@ubuntu:/var/www/FlaskApp/FlaskApp# python __init__.py 
+ * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 717-628-278
+\end{lstlisting}
+po otrzymaniu takiej odpowiedzi należy je anulować CTRL+C oraz wyjść z virtualenv:
+\begin{lstlisting}
+(venv)$: deactivate
+\end{lstlisting}
+W przypadku otrzymania błędu należy doinstalować brakujące moduły widoczne w komunikacjie błędu jako np: 
+\begin{lstlisting}
+Line 12: import MySQLdb 
+module not found
+\end{lstlisting}
+poprzez wpisanie w środowisku wirtualnym:
+\begin{lstlisting}
+$: pip install <modul>
+\end{lstlisting} 
+lub przez manager pakietów:
+\begin{lstlisting}
+$: apt-get install python-<modul>
+\end{lstlisting}
+
+\subsubsection{Konfiguracja apache2}
+
+Po uzyskaniu poprawnego działania na localhoscie należy dodać aplikacje FlaskApp do stron apache'a oraz uruchomić mod \textit{wsgi}.\\
+
+Aktywacia wsgi:
+\begin{lstlisting}
+$: a2enmod wsgi
+$: service apache2 restart
+$: touch /var/www/FlaskApp/flaskapp.wsgi
+\end{lstlisting}
+do pliku flaskapp.wsgi wkleić należy:
+\begin{lstlisting}
+import sys
+import logging
+logging.basicConfig(stream=sys.stderr)
+sys.path.insert(0,"/var/www/FlaskApp/")
+from FlaskApp import app as application
+application.secret_key = 'foobarspameggs'
+\end{lstlisting}
+\newpage
+
+Następnie po stowrzeniu pliku:
+\begin{lstlisting}
+$: touch /etc/apache2/sites-available/FlaskApp.conf
+\end{lstlisting}
+
+z zawartością:
+\begin{lstlisting}
+<VirtualHost *:80>
+                ServerName <aktualny adres IP VM>
+                ServerAdmin jakis@mail.com
+                WSGIScriptAlias / /var/www/FlaskApp/flaskapp.wsgi
+                <Directory /var/www/FlaskApp/FlaskApp/>
+                        Order allow,deny
+                        Allow from all
+                </Directory>
+                Alias /static /var/www/FlaskApp/FlaskApp/static
+                <Directory /var/www/FlaskApp/FlaskApp/static/>
+                        Order allow,deny
+                        Allow from all
+                </Directory>
+                ErrorLog ${APACHE_LOG_DIR}/error.log
+                LogLevel warn
+                CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
+\end{lstlisting}     
+ 
+należy dodać aplikację do aktywnych: 
+\begin{lstlisting}
+$: a2ensite FlaskApp
+$: service apache2 reload
+\end{lstlisting}
+\newpage
+\section{Konfiguracja aplikacji}
+s
+
+\end{document}

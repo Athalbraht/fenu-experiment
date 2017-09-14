@@ -35,15 +35,22 @@ filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
 
 @app.route('/home',methods = ['GET', 'POST'])
 def home():
+    session['guest'] = True
+    session['username'] = '_Guest'
+    session['permissions'] = False
+    session['logged_in'] = False
+    session['nadmin'] = False
     if request.method == 'POST':
         user = request.form['username']
         password = request.form['password']
         result = check_passwd(user, password)#getting request from db
         flash(result)#showing db request
+
         try:
             if result == 'Zalogowano':
                 #creating new user session
                 session['logged_in'] = True
+                session['guest'] = False
                 session['username'] = user
                 #checking permissions
                 if get_user_permissions(user) == 'admin':
@@ -59,11 +66,13 @@ def home():
             return render_template('home.html',
                                    username = str(e))
         return render_template('home.html',
-                               username = user)
+                               username = user,
+                               guest = session['guest'])
     else:
         #rendering home page for guest session
         return render_template('home.html',
-                               username = "Gosc".decode('utf-8'))
+                               username = "Gosc".decode('utf-8'),
+                               guest = session['guest'])
 
 @app.route('/logout')
 def logout():
@@ -84,7 +93,7 @@ def search():
         results = searching(surname, date, func, select)
     return render_template('searching_result.html',
                            username=session['username'],
-                           usernav=True,
+                           usernav= True,
                            logoutt=True,
                            results = results,
                            branches = branches,
@@ -96,9 +105,10 @@ def aktualnosci():
     _news = _news[::-1][:5]
     return render_template('news.html',
                            username=session['username'],
-                           usernav=True,
+                           usernav= session['logged_in'],
                            logoutt=True,
                            news = _news,
+                           guest = session['guest'],
                            admin=session['permissions'])
 ##################################################################################################################
 @app.route('/report/<username>/', methods = ['GET','POST'])
@@ -111,6 +121,17 @@ def report_list(username):
                            headers = j,
                            admin=session['permissions'])
 
+@app.route('/guest_report/', methods = ['GET','POST'])
+def guest_report_list():
+    headers = get_headers()[1:]
+    j = zip(headers, range(1,len(headers)+1))
+    return render_template('guest_report_list.html', username=session['username'],
+                           usernav=session['logged_in'],
+                           logoutt=True,
+                           headers = j,
+                           guest = session['guest'],
+                           admin=session['permissions'])
+
 @app.route('/report/<username>/<typ>/incydenty')
 def incydenty(username, typ):
     incydenty = get_incidents()
@@ -120,6 +141,79 @@ def incydenty(username, typ):
                            logoutt=True,
                            incydenty = incydenty,
                            admin=session['permissions'])
+
+@app.route('/guest_report/<typ>/incydenty')
+def guest_incydenty(typ):
+    incydenty = get_incidents()
+
+    return render_template('guest_report_incidents.html', username=session['username'],
+                           usernav=session['logged_in'],
+                           logoutt=True,
+                           incydenty = incydenty,
+                           guest=session['guest'],
+                           admin=session['permissions'])
+
+@app.route('/guest_report/<typ>', methods = ['GET','POST'])
+def guest_report(typ):
+    date = str(time.strftime('%d.%m.%y'))
+    priorytet = '0'
+    ostatniamodyfikacja = date
+    delegacja = '0'
+    branches = load_branches()
+
+    if request.method == 'POST':
+        name = request.form['name'].encode()
+        surname = request.form['surname'].encode()
+        kom = request.form['dzialy'].encode()
+        adresat = request.form['adresat'].encode()
+        data_zlecenia = date.encode()
+        data_przyjecia = date.encode()
+        tresc = request.form['tresc'].encode()
+        uzasadnienie_realizacji = request.form['uzasadnienie_realizacji'].encode()
+
+        opis_prac = ""
+        data_prac = ""
+        uzasadnienie_zakupu = ""
+        data_akceptacji_dyrektora = ""
+        data_potwierdzenia = ""
+        data_zakonczenia =""
+        _typ = typ
+        zalacznik = ''
+
+        a = str(int(time.time()))
+        add_user(name, surname, a.encode(), 'none'.encode(),''.encode(), kom, 'brak'.encode())
+        uid = get_info('uid','users','login',a)
+
+        #Sending messenges to db
+        result = send_notification(uid,
+                                   data_zlecenia, data_przyjecia, tresc, uzasadnienie_realizacji,
+                                   opis_prac, data_prac, uzasadnienie_zakupu, data_akceptacji_dyrektora,
+                                   data_potwierdzenia, data_zakonczenia, adresat, kom, typ, priorytet, ostatniamodyfikacja,
+                                   delegacja, zalacznik)
+
+        flash(str(result))#flashing db ans
+        return render_template('report.html',username = session['username'],
+                               usernav = session['logged_in'],
+                               logoutt = True,
+                               date = date,
+                               guest=session['guest'],
+                               priorytet = priorytet,
+                               ostatniamodyfikacja = ostatniamodyfikacja,
+                               delegacja = delegacja,
+                               branches = branches,
+                               admin = session['permissions'])
+    else:
+        return render_template('guest_report.html',
+                               username = session['username'],
+                               usernav = session['logged_in'],
+                               logoutt = True,
+                               date=date,
+                               guest=session['guest'],
+                               priorytet=priorytet,
+                               branches = branches,
+                               delegacja = delegacja,
+                               ostatniamodyfikacja=ostatniamodyfikacja,
+                               admin = session['permissions'])
 
 @app.route('/report/<username>/<typ>', methods = ['GET','POST'])
 def report(username,typ):
@@ -473,6 +567,12 @@ def users():
                            users = _users,
                            lenusers = len_users)
 
+
+@app.route('/delete_user/<uid>')
+def delete_userr(uid):
+    delete_user(uid)
+    flash('Usunieto')
+    return redirect(url_for('users'))
 
 @app.route('/users/add', methods = ['GET','POST'])
 def new_user():
