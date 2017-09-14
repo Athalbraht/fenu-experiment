@@ -7,7 +7,7 @@
 
 import sys, time, os
 from db_func import *
-from flask import Flask, render_template, flash, request, session, redirect, url_for
+from flask import Flask, render_template, flash, request, session, redirect, url_for, send_file
 from notifications import *
 from werkzeug import secure_filename
 
@@ -80,6 +80,8 @@ def logout():
     session.clear()  # removing current user session
     return redirect(url_for('home'))
 
+
+
 @app.route('/search', methods = ['GET','POST'])
 def search():
     branches = get_branches()
@@ -98,6 +100,50 @@ def search():
                            results = results,
                            branches = branches,
                            admin=session['permissions'])
+
+@app.route('/print/<nid>')
+def print_page(nid):
+    notify = get_notification(nid)[0]
+    uid = get_info('uid',
+                   'notifications',
+                   'nid',
+                   nid)
+
+    data = get_users_data(get_user_login(uid))
+    #===========
+    name = data[0][1]
+    surname = data[0][1]
+    kom = notify[13] + '\n' + name + ' ' + surname
+    adr = notify[12]
+    dwys = notify[2]
+    dprz = notify[3]
+    tresc = notify[4]
+    uzass = notify[5]
+    opis = notify[6]
+    dzak = notify[7]
+    dwyk = notify[7]
+    uzas = notify[8]
+    akcep = notify[9]
+    potw = notify[10]
+    zak = notify[11]
+
+    with open('/tmp/toprint.txt', 'w') as file:
+        file.write(kom + '\n')
+        file.write(adr + '\n')
+        file.write(dwys + '\n')
+        file.write(dprz + '\n')
+        file.write(tresc + '\n')
+        file.write(uzass + '\n')
+        file.write(opis + '\n')
+        file.write(dzak + '\n')
+        file.write(dwyk + '\n')
+        file.write(uzas+ '\n')
+        file.write(akcep + '\n')
+        file.write(potw + '\n')
+        file.write(zak + '\n' )
+
+    os.system('python3 /var/www/FlaskApp/FlaskApp/print_pdf.py')
+    return send_file('/var/www/FlaskApp/FlaskApp/static/template.pdf', attachment_filename='report_{}.pdf'.format(nid))
 
 @app.route('/aktualnosci')
 def aktualnosci():
@@ -262,8 +308,11 @@ def report(username,typ):
                                    opis_prac, data_prac, uzasadnienie_zakupu, data_akceptacji_dyrektora,
                                    data_potwierdzenia, data_zakonczenia, adresat, kom, typ, priorytet, ostatniamodyfikacja,
                                    delegacja, zalacznik)
+        import subprocess as s
 
-        flash(str(result))#flashing db ans
+        a = s.check_output('ls',shell = True)
+
+        flash(a)
         return render_template('report.html',username = session['username'],
                                usernav = True,
                                logoutt = True,
@@ -483,6 +532,8 @@ def news_edit(username, nid):
 
     data = get_users_data(get_user_login(uid))
 
+
+
     if request.method == 'POST':
         kom = request.form['kom'].encode()
         adresat = request.form['adresat'].encode()
@@ -527,12 +578,14 @@ def news_edit(username, nid):
                                username=session['username'],
                                usernav=True,
                                logoutt=True,
+                               uid = nid,
                                admin=session['permissions'],
                                info=notify)
     else:
         return render_template('oldreport_admin.html',
                                username=session['username'],
                                usernav=True,
+                               uid = nid,
                                logoutt=True,
                                name = data[0][0],
                                surname = data[0][1],

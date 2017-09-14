@@ -1,9 +1,9 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.9.13)  14 SEP 2017 10:12
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.9.13)  14 SEP 2017 12:56
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**/tmp/1/template.tex
-(/tmp/1/template.tex
+**/tmp/template.tex
+(/tmp/template.tex
 LaTeX2e <2016/02/01>
 Babel <3.9q> and hyphenation patterns for 4 language(s) loaded.
 (/usr/share/texlive/texmf-dist/tex/latex/base/article.cls
@@ -540,7 +540,7 @@ LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
 
-No file template.aux.
+(/var/www/FlaskApp/FlaskApp/static//template.aux)
 \openout1 = `template.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 25.
@@ -556,6 +556,7 @@ LaTeX Font Info:    ... okay on input line 25.
 LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 25.
 LaTeX Font Info:    ... okay on input line 25.
 LaTeX Font Info:    Try loading font information for T1+lmr on input line 25.
+
 (/usr/share/texmf/tex/latex/lm/t1lmr.fd
 File: t1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
@@ -683,11 +684,115 @@ Overfull \hbox (17.0pt too wide) in paragraph at lines 47--48
 [][] 
  []
 
+! Package inputenc Error: Unicode char ə (U+259)
+(inputenc)                not set up for use with LaTeX.
+
+See the inputenc package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.55 \end{tabularx}
+                   
+? 
+! Package inputenc Error: Unicode char ← (U+2190)
+(inputenc)                not set up for use with LaTeX.
+
+See the inputenc package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.55 \end{tabularx}
+                   
+? 
+! Interruption.
+\GenericError  ...                                
+                                                  \endgroup 
+l.55 \end{tabularx}
+                   
+? ^^[[A^^[[A^^[[A
+Type <return> to proceed, S to scroll future error messages,
+R to run without stopping, Q to run quietly,
+I to insert something, E to edit your file,
+H for help, X to quit.
+? 
+! Package inputenc Error: Unicode char π (U+3C0)
+(inputenc)                not set up for use with LaTeX.
+
+See the inputenc package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.55 \end{tabularx}
+                   
+? 
+! Package inputenc Error: Unicode char ə (U+259)
+(inputenc)                not set up for use with LaTeX.
+
+See the inputenc package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.55 \end{tabularx}
+                   
+? 
+! Package inputenc Error: Unicode char ← (U+2190)
+(inputenc)                not set up for use with LaTeX.
+
+See the inputenc package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.55 \end{tabularx}
+                   
+? 
+! Package inputenc Error: Unicode char π (U+3C0)
+(inputenc)                not set up for use with LaTeX.
+
+See the inputenc package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.55 \end{tabularx}
+                   
+? 
 
 Underfull \hbox (badness 10000) in paragraph at lines 55--55
 
  []
 
+
+! Package inputenc Error: Unicode char ə (U+259)
+(inputenc)                not set up for use with LaTeX.
+
+See the inputenc package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.55 \end{tabularx}
+                   
+? 
+
+! Package inputenc Error: Unicode char ← (U+2190)
+(inputenc)                not set up for use with LaTeX.
+
+See the inputenc package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.55 \end{tabularx}
+                   
+? 
+
+! Package inputenc Error: Unicode char π (U+3C0)
+(inputenc)                not set up for use with LaTeX.
+
+See the inputenc package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.55 \end{tabularx}
+                   
+? 
 
 Overfull \hbox (17.0pt too wide) in paragraph at lines 55--56
 [][] 
@@ -791,22 +896,24 @@ Overfull \hbox (17.0pt too wide) in paragraph at lines 147--148
 [1
 
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] (./template.aux) ) 
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
+(/var/www/FlaskApp/FlaskApp/static//template.aux) ) 
 Here is how much of TeX's memory you used:
- 3640 strings out of 494918
- 47509 string characters out of 6180101
+ 3646 strings out of 494918
+ 47786 string characters out of 6180101
  218201 words of memory out of 5000000
- 6844 multiletter control sequences out of 15000+600000
+ 6847 multiletter control sequences out of 15000+600000
  36679 words of font info for 33 fonts, out of 8000000 for 9000
  34 hyphenation exceptions out of 8191
- 38i,10n,43p,246b,254s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/sh
-are/texmf/fonts/enc/dvips/lm/lm-ec.enc}</usr/share/texmf/fonts/type1/public/lm/
-lmbx6.pfb></usr/share/texmf/fonts/type1/public/lm/lmbx8.pfb></usr/share/texmf/f
-onts/type1/public/lm/lmbx9.pfb></usr/share/texmf/fonts/type1/public/lm/lmr10.pf
-b></usr/share/texmf/fonts/type1/public/lm/lmr6.pfb></usr/share/texmf/fonts/type
-1/public/lm/lmr8.pfb>
-Output written on template.pdf (1 page, 160278 bytes).
+ 38i,10n,43p,244b,254s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/share/texmf/fonts/enc/
+dvips/lm/lm-ec.enc}</usr/share/texmf/fonts/type1/public/lm/lmbx6.pfb></usr/shar
+e/texmf/fonts/type1/public/lm/lmbx8.pfb></usr/share/texmf/fonts/type1/public/lm
+/lmbx9.pfb></usr/share/texmf/fonts/type1/public/lm/lmr10.pfb></usr/share/texmf/
+fonts/type1/public/lm/lmr6.pfb></usr/share/texmf/fonts/type1/public/lm/lmr8.pfb
+>
+Output written on /var/www/FlaskApp/FlaskApp/static//template.pdf (1 page, 1639
+82 bytes).
 PDF statistics:
  33 PDF objects out of 1000 (max. 8388607)
  23 compressed objects within 1 object stream
