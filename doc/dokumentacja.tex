@@ -83,7 +83,7 @@ Przed uruchomieniem maszyny wirtualnej należy upewnić się, czy włączone jes
 \quad
 W przypadku importowania maszyny z pliku .ova wszystkie niezbędne pakiety są zainstalowane, a poniższe instrukcje należy zastosować w momencie wystąpienia problemów w działaniu aplikacji od punktu \textbf{(1.4.3)} po wcześniejszym wykonaniu:
 \begin{lstlisting}
-$: rm -rf /var/www/FlaskApp/FlaskApp  #jako root
+$: rm -rf /var/www/FlaskApp/FlaskApp/venv  #jako root
 \end{lstlisting}
 \quad
 
@@ -219,6 +219,47 @@ $: service apache2 reload
 \end{lstlisting}
 \newpage
 \section{Konfiguracja aplikacji}
-s
+\subsection{Pliki konfiguracyjne aplikacji}
+\subsubsection{Zarządzanie działami i typami zleceń}
+\quad
+W katalogu aplikacji \textit{/var/www/FlaskApp/FlaskApp}  w folderze \textit{config\_files} zdajdują się pliki konfiguracyjne odpowiedzialne za:
+\begin{itemize}
+\item Działy (\textit{branches.data}):\\
+Każda linia tego pliku interpretowana jest przez program jako nowy dział
+\item Typy zleceń (\textit{typy\_zleceń.config}\\
+jak wyżej
+\item Incydenty (incydenty.config)\\
+Linie rozpoczynające się od \# oraz od znaku nowej lini są ignorowane.\\
+Linie rozpoczynające się od spacji traktowane są jako opcja wyboru do najbliższej lini nad ną nie rozpoczynającej się od spacji
+\end{itemize}
+\subsubsection{Podpinanie bazy danych pod aplikacje}
+Pośrednikiem między aplikacją FlaskApp a bazą MySQL jest skrytp \textit{database\_connect.py} do którego odwołuje się skrypt \textit{db\_func.py} z zapytaniami sql. Aby zmienić aktualną bazę należy zmodyfikować parametry metody MySQLdb.connect w pliku database\_connect.py:
+\begin{lstlisting}
+conn = MySQLdb.connect(host="localhost", user = "root",
+                     passwd = "3y0q5rZkn", db = "helpdesk")
+\end{lstlisting}
+
+\subsection{Zarządzanie bazą danych}
+Domyślne hasło bazy MySQL na pliku .ova:\\
+root: 3y0q5rZkn
+
+\subsubsection{Zarządzanie użytkownikami}
+\quad
+Aplikacjia umożliwia dostęp do bazy użytkownikow z poziomu panelu admina po zalogowaniu lub przez phpmyadmin (tabela users). \\
+
+Domyślne hasło admina:\\
+admin: changeme
+
+Pole "Uprawnienia" jest istotne dla programu tylko w momencie gdy przyjmuje wartość " admin", inne wartości są ignorowane i przydzielają użytkownika do grupy bez uprawnień.\\
+
+\subsubsection{Wiadomości i aktualności(tabele news i notifications)}
+\quad
+W przypadku posiadania przez użytkownika uprawnień admina może od publikować wiadomości z zakładki aktualności widoczne dla każdego użytkownika oraz zarządzać przychodzacymi zleceniami.
+Każdy admin w zakładce Lista zleceń ma dostęp do edycji, zamrażania(ukrycie zlecenia, widoczne tylko w zakładce 'zamrożone') oraz delegowania do innych użytkowników z uprawnieniami admina (widoczne w zakładce 'nowe(do mnie)').\\
+
+W momencie wpisania dowolnej treści w pole 'data zakonczenia' zlecenie przenoszone jest do zakładki 'zakończone'
+  
+
+
 
 \end{document}

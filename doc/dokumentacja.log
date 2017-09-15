@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Arch Linux) (preloaded format=pdflatex 2017.8.2)  13 SEP 2017 19:28
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Arch Linux) (preloaded format=pdflatex 2017.8.2)  15 SEP 2017 16:10
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -734,24 +734,39 @@ Underfull \hbox (badness 10000) in paragraph at lines 170--171
 
  []
 
-[5] [6] [7] (./dokumentacja.aux) ) 
+[5] [6]
+Underfull \hbox (badness 10000) in paragraph at lines 247--249
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 253--254
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 256--259
+
+ []
+
+[7] [8] (./dokumentacja.aux) ) 
 Here is how much of TeX's memory you used:
- 4908 strings out of 492990
- 63947 string characters out of 6138689
+ 4916 strings out of 492990
+ 64051 string characters out of 6138689
  148730 words of memory out of 5000000
- 8376 multiletter control sequences out of 15000+600000
+ 8384 multiletter control sequences out of 15000+600000
  47007 words of font info for 36 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  41i,10n,43p,338b,988s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/share/texmf-dist/fonts/enc/dvips/lm/lm-
-ec.enc}{/usr/share/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}</usr/share/texm
-f-dist/fonts/type1/public/lm/lmbx12.pfb></usr/share/texmf-dist/fonts/type1/publ
-ic/lm/lmr12.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmri12.pfb></usr/s
-hare/texmf-dist/fonts/type1/public/lm/lmsy10.pfb>
-Output written on dokumentacja.pdf (7 pages, 140594 bytes).
+{/usr/share/texmf-dist/fonts/enc/dvips/lm/lm-ec.e
+nc}{/usr/share/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}</usr/share/texmf-di
+st/fonts/type1/public/lm/lmbx12.pfb></usr/share/texmf-dist/fonts/type1/public/l
+m/lmr12.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmri12.pfb></usr/share
+/texmf-dist/fonts/type1/public/lm/lmsy10.pfb>
+Output written on dokumentacja.pdf (8 pages, 144873 bytes).
 PDF statistics:
- 49 PDF objects out of 1000 (max. 8388607)
- 33 compressed objects within 1 object stream
+ 52 PDF objects out of 1000 (max. 8388607)
+ 35 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  6 words of extra memory for PDF output out of 10000 (max. 10000000)
 
