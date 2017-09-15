@@ -444,3 +444,15 @@ def add_news(topic, content, author, pub_date):
     finally:
         c.close()
         cnn.close()
+
+def get_nd():
+    try:
+        c, cnn = connection()
+        c.execute("SELECT tresc, nid, uid, typ, kom FROM notifications WHERE delegacja=(%s) AND data_zakonczenia=(%s)",('0',''))
+        temp = c.fetchall()
+        return temp
+    except Exception as e:
+        return str(e)
+    finally:
+        c.close()
+        cnn.close()

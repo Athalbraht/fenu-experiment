@@ -43,3 +43,18 @@ def load_branches():
         branches = file.readlines()
         _branches = [ i[:-1] for i in branches ]
         return _branches
+
+
+def decode_headers():
+    headers = get_headers()
+    inc = get_incidents()
+    j = zip(headers, range(1, len(headers) + 1))
+    incidents = []
+    for i in inc:
+        if len(i[1]) == 0:
+            incidents.append(('0'+str(i[0][1]), i[0][0] ))
+        else:
+            for j in i[1]:
+                incidents.append(('0'+str(i[0][1])+str(j[1]),str(i[0][0])+' '+str(j[0])))
+    print headers
+    print incidents

@@ -26,7 +26,7 @@
 	</div>			
 <label class="col-sm-2 control-label">Deleguj do:</label>	
   <select class="form-control" id="sel1" name="delegacja">
-    <option></option>
+    <option>{{ deleg }}</option>
     {% for i in admins %}
     <option>{{ i[1] }}</option>
     {% endfor %}

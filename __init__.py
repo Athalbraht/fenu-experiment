@@ -170,6 +170,16 @@ def aktualnosci():
                            news = _news,
                            guest = session['guest'],
                            admin=session['permissions'])
+
+
+
+@app.route('/<username>/stats')
+def stats(username):
+    return render_template('working.html', username=session['username'],
+                           usernav=True,
+                           logoutt=True,
+                           admin=session['permissions'])
+
 ##################################################################################################################
 @app.route('/report/<username>/', methods = ['GET','POST'])
 def report_list(username):
@@ -358,16 +368,23 @@ def report(username,typ):
 def list_username(username):
     topic = get_topics(session['username'])
     done = get_done(session['username'])
+
     tr2 = 0
     if session['permissions']:
         new = get_all_topics(session['username'])
         all_done = get_all_done(session['username'])
+        fr = get_freeze()
+        nm = get_all_topics_forme(session['username'])
+        nw = get_all_topics_all()
+        nd = get_nd()
         return render_template('list.html',
                                username = session['username'],
                                usernav = True,
                                logoutt = True,
-                               tr = len(topic),
-                               tr2=len(new),
+                               fr = len(fr),
+                               nm=len(nm),
+                               nw = len(nw),
+                               nd = len(nd),
                                admin = session['permissions'],
                                nadmin = session['nadmin'])
     else:
@@ -376,7 +393,7 @@ def list_username(username):
                                usernav = True,
                                logoutt = True,
                                tr = len(topic),
-                               #tr2=len(new),
+                               tr2=len(done),
                                admin = session['permissions'],
                                nadmin = session['nadmin'])
 
@@ -394,7 +411,7 @@ def database_test(username):
                                usernav = True,
                                logoutt = True,
                                tr = len(topic),
-                               tr2=len(new),
+                               tr2=len(done),
                                topic=topic[::-1],
                                admin = session['permissions'],
                                nadmin = session['nadmin'])
@@ -404,7 +421,7 @@ def database_test(username):
                                usernav = True,
                                logoutt = True,
                                tr=len(topic),
-                               #tr2=len(done),
+                               tr2=len(done),
                                admin = session['permissions'],
                                topic = topic[::-1],
                                nadmin = session['nadmin']
@@ -434,7 +451,7 @@ def done(username):
                                usernav = True,
                                logoutt = True,
                                tr = len(topic),
-                               tr2=len(new),
+                               tr2=len(done),
                                topic=done[::-1],
                                admin = session['permissions'],
                                nadmin = session['nadmin'])
@@ -444,7 +461,7 @@ def done(username):
                                usernav = True,
                                logoutt = True,
                                tr = len(topic),
-                               #tr2 = len(new),
+                               tr2 = len(done),
                                admin = session['permissions'],
                                topic = done[::-1],
                                nadmin = session['nadmin'])
@@ -453,32 +470,42 @@ def done(username):
 def news(username):
     topic = get_topics(session['username'])
     done = get_done(session['username'])
-    new = get_all_topics_forme(session['username'])
+    fr = get_freeze()
+    nm = get_all_topics_forme(session['username'])
+    nw = get_all_topics_all()
+    nd = get_nd()
     all_done = get_all_done(session['username'])
     return render_template('listadmin_extend.html',
                            username = session['username'],
                            usernav = True,
                            logoutt = True,
-                           tr = len(topic),
-                           tr2 = len(new),
+                           fr = len(fr),
+                           nm = len(nm),
+                           nw = len(nw),
+                           nd = len(nd),
                            admin = session['permissions'],
-                           topic = new[::-1],
+                           topic = nm[::-1],
                            nadmin = session['nadmin'])
 
 @app.route('/list/<username>/newall')
 def newsall(username):
     topic = get_topics(session['username'])
     done = get_done(session['username'])
-    new = get_all_topics_all()
+    fr = get_freeze()
+    nd = get_nd()
+    nm = get_all_topics_forme(session['username'])
+    nw = get_all_topics_all()
     all_done = get_all_done(session['username'])
     return render_template('listadmin_extend.html',
                            username = session['username'],
                            usernav = True,
                            logoutt = True,
-                           tr = len(topic),
-                           tr2 = len(new),
+                           fr = len(fr),
+                           nw = len(nw),
+                           nm = len(nm),
+                           nd = len(nd),
                            admin = session['permissions'],
-                           topic = new[::-1],
+                           topic = nw[::-1],
                            nadmin = session['nadmin'])
 
 
@@ -486,32 +513,44 @@ def newsall(username):
 def freeze(username):
     topic = get_topics(session['username'])
     done = get_done(session['username'])
-    new = get_freeze()
+    fr = get_freeze()
+    nd = get_nd()
+    nm = get_all_topics_forme(session['username'])
+    nw = get_all_topics_all()
     all_done = get_all_done(session['username'])
     return render_template('listadmin_extend.html',
                            username = session['username'],
                            usernav = True,
                            logoutt = True,
-                           tr = len(topic),
-                           tr2 = len(new),
+                           fr = len(fr),
+                           nm = len(nm),
+                           nw =len(nw),
+                           nd = len(nd),
+                           tr2 = len(topic),
                            admin = session['permissions'],
-                           topic = new[::-1],
+                           topic = fr[::-1],
                            nadmin = session['nadmin'])
 
 @app.route('/list/<username>/oldm')
 def oldmine(username):
     topic = get_topics(session['username'])
     done = get_done(session['username'])
+    fr = get_freeze()
+    nd = get_nd()
+    nm = get_all_topics_forme(session['username'])
+    nw = get_all_topics_all()
     new = get_done_forme(session['username'])
     all_done = get_all_done(session['username'])
     return render_template('listadmin_extend.html',
                            username = session['username'],
                            usernav = True,
                            logoutt = True,
-                           tr = len(topic),
-                           tr2 = len(new),
+                           nm = len(nm),
+                           nw = len(nw),
+                           nd = len(nd),
+                           fr = len(fr),
                            admin = session['permissions'],
-                           topic = new[::-1],
+                           topic = nd[::-1],
                            nadmin = session['nadmin'])
 
 
@@ -575,9 +614,11 @@ def news_edit(username, nid):
             data_zakonczenia = request.form['data_zakonczenia'].encode()
         priorytet = request.form['priorytet'].encode()
         ostatniamodyfikacja = date.encode()
+
         _delegacja = request.form['delegacja'].encode()
         delegacja = get_info('uid', 'users','surname',_delegacja)
-        zalacznik = request.form['zalacznik'].encode()
+
+        zalacznik = 'NONE'.encode()
         if len(chb) != 0:
             data_zakonczenia = 'freeze'
         else:
@@ -608,7 +649,8 @@ def news_edit(username, nid):
                                name = data[0][0],
                                surname = data[0][1],
                                admin=session['permissions'],
-                               info=notify)
+                               info=notify,
+                               deleg = get_info('surname', 'users','login',session['username'])[0][0])
 
 ####################################################################################################################
 
