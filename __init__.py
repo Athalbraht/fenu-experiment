@@ -145,14 +145,28 @@ def print_page(nid):
     os.system('python3 /var/www/FlaskApp/FlaskApp/print_pdf.py')
     return send_file('/var/www/FlaskApp/FlaskApp/static/template.pdf', attachment_filename='report_{}.pdf'.format(nid))
 
-@app.route('/aktualnosci')
+@app.route('/aktualnosci', methods=['GET','POST'])
 def aktualnosci():
+    date = str(time.strftime('%d.%m.%y'))
+    if request.method == "POST":
+
+        temat = request.form['temat'].encode()
+        tresc = request.form['tresc'].encode()
+        autor = request.form['autor'].encode()
+        data_publikacji = request.form['data_publikacji'].encode()
+
+        result = add_news(temat, tresc, autor, data_publikacji)
+
+        flash(result)
+
+
     _news = get_info('tytul, tresc, autor, data_publikacji', 'news', '0','0')
-    _news = _news[::-1][:5]
+    _news = _news[::-1][:10]
     return render_template('news.html',
                            username=session['username'],
                            usernav= session['logged_in'],
                            logoutt=True,
+                           date = date,
                            news = _news,
                            guest = session['guest'],
                            admin=session['permissions'])
@@ -521,6 +535,7 @@ def all_done(username):
 def news_edit(username, nid):
     notify = get_notification(nid)[0]
     date = str(time.strftime('%d.%m.%y'))
+    admins = get_info('uid, surname','users','uprawnienia','admin')
     uid = get_info('uid',
                    'notifications',
                    'nid',
@@ -542,7 +557,7 @@ def news_edit(username, nid):
         tresc = request.form['tresc'].encode()
         uzasadnienie_realizacji = request.form['uzasadnienie_realizacji'].encode()
         chb = request.form.getlist('checkbox')
-        flash(chb)
+
         opis_prac = ''
         data_prac = ''
         uzasadnienie_zakupu = ''
@@ -560,7 +575,8 @@ def news_edit(username, nid):
             data_zakonczenia = request.form['data_zakonczenia'].encode()
         priorytet = request.form['priorytet'].encode()
         ostatniamodyfikacja = date.encode()
-        delegacja = request.form['delegacja'].encode()
+        _delegacja = request.form['delegacja'].encode()
+        delegacja = get_info('uid', 'users','surname',_delegacja)
         zalacznik = request.form['zalacznik'].encode()
         if len(chb) != 0:
             data_zakonczenia = 'freeze'
@@ -579,6 +595,7 @@ def news_edit(username, nid):
                                usernav=True,
                                logoutt=True,
                                uid = nid,
+                               admins = admins,
                                admin=session['permissions'],
                                info=notify)
     else:
@@ -587,6 +604,7 @@ def news_edit(username, nid):
                                usernav=True,
                                uid = nid,
                                logoutt=True,
+                               admins = admins,
                                name = data[0][0],
                                surname = data[0][1],
                                admin=session['permissions'],

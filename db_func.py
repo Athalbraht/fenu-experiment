@@ -431,3 +431,16 @@ def check_login(login):
     finally:
         c.close()
         cnn.close()
+
+def add_news(topic, content, author, pub_date):
+    try:
+        c, cnn = connection()
+        c.execute("INSERT INTO news (tytul, tresc, autor, data_publikacji) VALUES (%s,%s,%s, %s)",
+                  (topic, content, author, pub_date))
+        cnn.commit()
+        return 'Dodano'
+    except Exception as e:
+        return str(e)
+    finally:
+        c.close()
+        cnn.close()
