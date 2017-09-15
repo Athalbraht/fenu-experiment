@@ -1,3 +1,8 @@
+##################################
+# This file is a part of         #
+# HelpDesk project               #
+##################################
+
 import sys
 
 if sys.version_info.major < 3:

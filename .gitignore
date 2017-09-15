@@ -2,3 +2,5 @@ venv/
 *.pyc
 template.pdf
 template.aux
+*.log
+*.toc
