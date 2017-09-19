@@ -3,3 +3,4 @@ venv/
 template.pdf
 template.aux
 *.toc
+*.swp
