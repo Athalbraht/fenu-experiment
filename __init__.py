@@ -5,7 +5,7 @@
 # Version:      1.7                 #
 #####################################
 
-import sys, time, os
+import sys, time, os, print_pdf
 from db_func import *
 from flask import Flask, render_template, flash, request, session, redirect, url_for, send_file
 from notifications import *
@@ -116,10 +116,10 @@ def print_page(nid):
                    nid)
 
     data = get_users_data(get_user_login(uid))
-    #===========
-    name = data[0][1]
+
+    name = data[0][0]
     surname = data[0][1]
-    kom = notify[13] + '\n' + name + ' ' + surname
+    kom = notify[13]
     adr = notify[12]
     dwys = notify[2]
     dprz = notify[3]
@@ -132,24 +132,22 @@ def print_page(nid):
     akcep = notify[9]
     potw = notify[10]
     zak = notify[11]
-
-    with open('/tmp/toprint.txt', 'w') as file:
-        file.write(kom + '\n')
-        file.write(adr + '\n')
-        file.write(dwys + '\n')
-        file.write(dprz + '\n')
-        file.write(tresc + '\n')
-        file.write(uzass + '\n')
-        file.write(opis + '\n')
-        file.write(dzak + '\n')
-        file.write(dwyk + '\n')
-        file.write(uzas+ '\n')
-        file.write(akcep + '\n')
-        file.write(potw + '\n')
-        file.write(zak + '\n' )
-
-    os.system('python3 /var/www/FlaskApp/FlaskApp/print_pdf.py')
-    return send_file('/var/www/FlaskApp/FlaskApp/static/template.pdf', attachment_filename='report_{}.pdf'.format(nid))
+    return render_template('print_template.html',
+                           kom = kom,
+                           name = name,
+                           surname = surname,
+                           adr = adr,
+                           dwys = dwys,
+                           dprz = dprz,
+                           tresc = tresc,
+                           uzass = uzass,
+                           opis = opis,
+                           dzak = dzak,
+                           dwyk = dwyk,
+                           uzas = uzas,
+                           akcep = akcep,
+                           potw = potw,
+                           zak = zak)
 ########################################################################################################################
 @app.route('/aktualnosci', methods=['GET','POST'])
 def aktualnosci():
