@@ -1,5 +1,6 @@
 \documentclass[12pt,a4paper]{article}
 \usepackage{graphicx}
+\usepackage{hyperref}
 \usepackage{wrapfig}
 \setlength{\headheight}{12pt} 
 \setlength{\textheight}{25cm}
@@ -258,8 +259,75 @@ W przypadku posiadania przez użytkownika uprawnień admina może od publikować
 Każdy admin w zakładce Lista zleceń ma dostęp do edycji, zamrażania(ukrycie zlecenia, widoczne tylko w zakładce 'zamrożone') oraz delegowania do innych użytkowników z uprawnieniami admina (widoczne w zakładce 'nowe(do mnie)').\\
 
 W momencie wpisania dowolnej treści w pole 'data zakonczenia' zlecenie przenoszone jest do zakładki 'zakończone'
-  
+  \\
+\begin{center}
+TODO!!!
+\end{center}
 
+\section{Aktualizacja}
+\subsection{Kopia zapasowa}
+\quad
+Kopie zapasowe można wykonać poprzez:
+\begin{enumerate}
+\item Wyeksportowanie do pliku .ova\\
+Należy wyłączyć serwer a następnie przejść do zakładki file>export w oknie Virtualboxa
+\item Klonowanie maszyny wirtualnej\\
+Po wyłączeniu maszyny klinając na nią PPM wybrać Clone
+\end{enumerate}
 
+\subsection{Aktualizacja}
+\subsubsection{Aktualizacja ze zdalnego repozytorium}
+\quad
+Maszynie Matce należy należy dać dostęp do globalnej sieci a następnie zresetować VM (konieczne wyłączenie statycznego adresu ip w /etc/network/interfaces).\\   
 
+W momencie uzyskania  dostępu do sieci, w katalogu /var/www/FlaskApp/Flask należy wykonać:
+\begin{lstlisting}
+$: cd /var/www/FlaskApp/FlaskApp/
+$: git checkout master
+$: git pull origin master
+$: service apache2 reload
+\end{lstlisting}
+W przypadku błędu, przed poleceniuem pull należy wykonać \textit{git stash}, lub wymusić reset:
+\begin{lstlisting}
+$: git reset --hard origin/master
+\end{lstlisting}
+Wpisując polecenie \textit{git log} wyświetli się lista wszystkich zmian kodu, aby przywrócić poprzedną wersje należy wykonać:
+\begin{lstlisting}
+$: git checkout <id commita>
+\end{lstlisting}
+\quad
+
+Powyższe instrukcje dotyczą głównej gałęzi programu \textit{master}, aby przełączyć się na gałąź testową \textit{testing} należy wykonać:
+\begin{lstlisting}
+$: git branch testing
+$: git checkout testing
+$: git pull origin testing
+$: service apache2 reload
+\end{lstlisting}
+Lub w przypadku wykonania \textit{git reset --hard origin}
+\begin{lstlisting}
+$: git branch #wyswietla dostepne galezie
+$: git checkout testing #wersja testowa
+$: service apache2 reload
+$: git checkout master #powrot do galezi glownej
+\end{lstlisting}
+Po aktualizacji i ponownym podłączeniu do sieci lokalnej należy zresetować VM i przywrócić poprzednią konfiguracje w /etc/network/interfaces
+\subsubsection{Tworzenie lokalnego repozytorium do aktualizacji}
+\begin{center}
+TODO!!!
+\end{center}
+\subsubsection{Pobieranie obrazu VM}
+Obraz serwera do importu można pobrać z \url{https://jeszcze.brak}
+
+\newpage
+\section{Ostatnie zmiany}
+\begin{itemize}
+\item v1.7\\ 
+20.09.17
+\begin{itemize}
+\item aktualizacja dokumentacji (aktualizacja)
+\item tymaczasowe ukrycie opcji załącznik
+\item naprawa opcji drukowanie
+\end{itemize}
+\end{itemize}
 \end{document}
