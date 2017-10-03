@@ -56,20 +56,20 @@
 </form>
 <br>
 <p> 
-  
-   
-	{% endif %}
-
+{% endif %}
 <div class="container">
-	<br>
-  <br>
-  {% for i in news %}
-  <b><p>{{ i[0] }}:</p></b>
-  <blockquote>
-    <p>{{ i[1] }}</p>
-    <footer>{{ i[3] }} {{ i[2] }}</footer>
-  </blockquote>
-  <br>
-  {% endfor %}
+  <div class="panel-group" style="margin-top: 20px">
+<h2>Aktualności</h2><br>
+{% for i in news[:20]  %}
+    <div class="panel panel-default">
+      <div class="panel-heading"><p>{{ i[0] }}</p></div>
+      <div class="panel-body">
+        {{ i[1] }}
+        <br><br>
+        <small style="text-align:right">Opublikowano {{ i[3] }} przez {{ i[2] }}</small>
+      </div>
+    </div><br>
+{% endfor %}
+  </div>
 </div>
 {% endblock %}
