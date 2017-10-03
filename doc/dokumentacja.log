@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Arch Linux) (preloaded format=pdflatex 2017.8.2)  20 SEP 2017 15:51
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Arch Linux) (preloaded format=pdflatex 2017.8.2)  22 SEP 2017 22:04
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -805,7 +805,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 74--75
 
  []
 
-<d.png, id=136, 723.70375pt x 514.92375pt>
+<d.png, id=141, 723.70375pt x 514.92375pt>
 File: d.png Graphic file (type png)
 <use d.png>
 Package pdftex.def Info: d.png  used on input line 79. on input line 79.
@@ -852,38 +852,46 @@ Underfull \hbox (badness 10000) in paragraph at lines 280--282
  []
 
 [8]
-LaTeX Font Info:    Try loading font information for T1+lmtt on input line 320.
+LaTeX Font Info:    Try loading font information for T1+lmtt on input line 321.
 
  (/usr/share/texmf-dist/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
 ) [9]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 333.
- [10]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 333.
+Underfull \hbox (badness 10000) in paragraph at lines 326--327
+
+ []
+
+LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <12> not available
+(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 328.
+[10]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 347.
+ [11]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 347.
  (./dokumentacja.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 333.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 333.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 347.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 347.
 Package rerunfilecheck Info: File `dokumentacja.out' has not changed.
-(rerunfilecheck)             Checksum: 2AD027CEEE7131FD2D6E2CC046184DB4;1979.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 333.
+(rerunfilecheck)             Checksum: E8DC6EB70472A234C2323734F08A5983;2022.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 347.
  ) 
 Here is how much of TeX's memory you used:
- 8591 strings out of 492990
- 119698 string characters out of 6138689
+ 8597 strings out of 492990
+ 119763 string characters out of 6138689
  227066 words of memory out of 5000000
- 11907 multiletter control sequences out of 15000+600000
- 47325 words of font info for 37 fonts, out of 8000000 for 9000
+ 11910 multiletter control sequences out of 15000+600000
+ 47643 words of font info for 38 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  28i,10n,43p,338b,992s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}{/usr/share/texmf-dist/fo
 nts/enc/dvips/lm/lm-mathsy.enc}</usr/share/texmf-dist/fonts/type1/public/lm/lmb
 x12.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmr12.pfb></usr/share/texm
 f-dist/fonts/type1/public/lm/lmri12.pfb></usr/share/texmf-dist/fonts/type1/publ
-ic/lm/lmsy10.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmtt12.pfb>
-Output written on dokumentacja.pdf (10 pages, 174694 bytes).
+ic/lm/lmsy10.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmtk10.pfb></usr/
+share/texmf-dist/fonts/type1/public/lm/lmtt12.pfb>
+Output written on dokumentacja.pdf (11 pages, 207107 bytes).
 PDF statistics:
- 330 PDF objects out of 1000 (max. 8388607)
- 307 compressed objects within 4 object streams
- 137 named destinations out of 1000 (max. 500000)
- 198 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 347 PDF objects out of 1000 (max. 8388607)
+ 322 compressed objects within 4 object streams
+ 139 named destinations out of 1000 (max. 500000)
+ 206 words of extra memory for PDF output out of 10000 (max. 10000000)
 

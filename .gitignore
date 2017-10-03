@@ -1,6 +1,9 @@
 venv/
 *.pyc
-template.pdf
-template.aux
 *.toc
 *.swp
+*.aux
+*.out
+*.toc
+dokumentacja.log
+
