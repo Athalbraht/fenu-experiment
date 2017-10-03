@@ -40,7 +40,7 @@ def start_page():
 def home():
     #setting session variables for guest raporting
     session['guest'] = True
-    session['username'] = '_Guest'
+    session['username'] = 'Anonim'
     session['permissions'] = False
     session['logged_in'] = False
     session['nadmin'] = False
@@ -68,7 +68,7 @@ def home():
                     session['nadmin'] = True
                 return redirect(url_for('list_username',
                                         username = user,
-                                        logoutt = True))
+                                        logoutt = session['logged_in']))
         except Exception as e:
             return render_template('home.html',
                                    username = str(e))
@@ -184,6 +184,22 @@ def stats(username):
     return render_template('working.html', username=session['username'],
                            usernav=True,
                            logoutt=True,
+                           admin=session['permissions'])
+
+@app.route('/dokumentacja')
+def dokumentacja():
+    return send_file('/var/www/FlaskApp/FlaskApp/doc/dokumentacja.pdf', attachment_filename='dokumentacja.pdf')
+
+@app.route('/pgp')
+def pgpkey():
+    return send_file('/var/www/FlaskApp/FlaskApp/static/pgpkey.asc', attachment_filename='pgpkey.asc')
+
+@app.route('/kontakt')
+def kontakt():
+    return render_template('docs.html', username=session['username'],
+                           usernav=session['logged_in'],
+                           logoutt=True,
+                           guest=session['guest'],
                            admin=session['permissions'])
 ######################################## REPORTING ###############################################################
 ##################################################################################################################
