@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Arch Linux) (preloaded format=pdflatex 2017.8.2)  22 SEP 2017 22:04
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Arch Linux) (preloaded format=pdflatex 2017.8.2)  3 OCT 2017 23:18
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -864,21 +864,21 @@ Underfull \hbox (badness 10000) in paragraph at lines 326--327
 LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <12> not available
 (Font)              Font shape `T1/lmtt/b/n' tried instead on input line 328.
 [10]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 347.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 355.
  [11]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 347.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 355.
  (./dokumentacja.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 347.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 347.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 355.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 355.
 Package rerunfilecheck Info: File `dokumentacja.out' has not changed.
 (rerunfilecheck)             Checksum: E8DC6EB70472A234C2323734F08A5983;2022.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 347.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 355.
  ) 
 Here is how much of TeX's memory you used:
- 8597 strings out of 492990
- 119763 string characters out of 6138689
+ 8599 strings out of 492990
+ 119795 string characters out of 6138689
  227066 words of memory out of 5000000
- 11910 multiletter control sequences out of 15000+600000
+ 11912 multiletter control sequences out of 15000+600000
  47643 words of font info for 38 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  28i,10n,43p,338b,992s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -888,7 +888,7 @@ x12.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmr12.pfb></usr/share/texm
 f-dist/fonts/type1/public/lm/lmri12.pfb></usr/share/texmf-dist/fonts/type1/publ
 ic/lm/lmsy10.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmtk10.pfb></usr/
 share/texmf-dist/fonts/type1/public/lm/lmtt12.pfb>
-Output written on dokumentacja.pdf (11 pages, 207107 bytes).
+Output written on dokumentacja.pdf (11 pages, 207305 bytes).
 PDF statistics:
  347 PDF objects out of 1000 (max. 8388607)
  322 compressed objects within 4 object streams
