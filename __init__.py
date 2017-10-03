@@ -32,6 +32,9 @@ filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
 
 ########################################## MAIN ROUTING ###########################################################
 ###################################################################################################################
+@app.route('/')
+def start_page():
+    return redirect(url_for('aktualnosci'))
 
 @app.route('/home',methods = ['GET', 'POST'])
 def home():
