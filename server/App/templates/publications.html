@@ -1,0 +1,40 @@
+{% extends "index.html" %}
+{% block body %}
+	<div class="card text-center" >
+		<div class="card-header">
+			<nav class="nav nav-underline">
+				<a class="nav-link" href="#">
+				  2018
+				  <span class="badge badge-pill badge-info align-text-bottom">0</span>
+				</a>
+				<a class="nav-link" href="#">
+				  2019
+				  <span class="badge badge-pill badge-info align-text-bottom">1</span>
+				</a>
+			</nav>
+		</div>
+		<div class="table-responsive">
+					<table class="table table-striped table-sm">
+						<thead>
+							<tr>
+								<th>Title</th>
+								<th>Author</th>
+								<th>Source</th>
+								<th>DOI</th>
+								<th>Download</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>Three-body breakup in deuteron-deuteron collisions at 160 MeV including quasifree scattering</td>
+								<td>I. Ciepał</td>
+								<td>Phys. Rev.</td>
+								<td><a class="btn btn-primary" href="https://doi.org/10.1103/PhysRevC.100.024003" role="button">DOI</a></td>
+								<td><a class="btn btn-primary" href="publications/test.pdf" role="button">Download</a></td>
+							</tr>
+
+						</tbody>
+					</table>
+				</div>
+	</div>
+{% endblock %}
