@@ -1,4 +1,5 @@
 server/App/uploads/
+server/database/
 venv/
 *__pycache__
 *.pyc

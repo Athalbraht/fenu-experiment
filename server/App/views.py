@@ -2,9 +2,12 @@
 
 import os
 from App import app
+from App import db
+from App.models import User, Post
 from App.extensions import *
 from flask import render_template, request, redirect, url_for,  session, flash, send_file, send_from_directory, g
 exp_img = exp_imgs(app.config["UPLOAD_FOLDER"])
+
 
 #####################
 ###  Main NavBar  ###
