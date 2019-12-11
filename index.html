@@ -1,77 +1,65 @@
 <!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-		<title>BINA</title>
-  </head>
-  <body>
+	<title>BINA</title>
+</head>
+<body>
+	<header>
+		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+			<a class="navbar-brand" href="#">BINA@CCB</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
 
-	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-		<a class="navbar-brand" href="#">BINA@CCB</a>
-		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		</button>
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item active">
+					<a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+				</li>
 
-	<div class="collapse navbar-collapse" id="navbarSupportedContent">
-		<ul class="navbar-nav mr-auto">
-			<li class="nav-item active">
-				<a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
-			</li>
-
-			<li class="nav-item">
-				<a class="nav-link" href="experiments">Experiments</a>
-			</li>
-
-
-
-			<li class="nav-item dropdown">
-				<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					Files
-				</a>
-				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-					<a class="dropdown-item" href="publications">Publications</a>
-					<div class="dropdown-divider"></div>
-					<a class="dropdown-item" href="presentations">Presentations</a>
-					<a class="dropdown-item" href="posters">Posters</a>
-				</div>
-			</li>
-
-			<li class="nav-item">
-				<a class="nav-link" href="members">Members</a>
-			</li>
+				<li class="nav-item">
+					<a class="nav-link" href="experiments">Experiments</a>
+				</li>
 
 
-			<li class="nav-item">
-			<a class="nav-link" href="#links">Links</a>
-			</li>
 
-			<li class="nav-item">
-				<a class="nav-link" href="#" data-toggle="modal" data-target="#ContactsModal">Contact</a>
-			</li>
-		</ul>
+				<li class="nav-item">
+					<a class="nav-link" href="/publications">Publications</a>
+				</li>
 
-
-		<ul class="navbar-nav flex-row ml-md-auto d-none d-md-flex">	
-			<li class="nav-item">
-				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter"> {{username}} </button>
-			</li>
-		</ul>
-	</div>
-	</nav>
+				<li class="nav-item">
+					<a class="nav-link" href="members">Members</a>
+				</li>
 
 
-	<nav aria-label="breadcrumb">
-		<ol class="breadcrumb">
-			<li class="breadcrumb-item"><a href="#">Home</a></li>
-			<li class="breadcrumb-item"><a href="#">Library</a></li>
-			<li class="breadcrumb-item active" aria-current="page">Data</li>
-		</ol>
-	</nav>
+				<li class="nav-item">
+				<a class="nav-link" href="#links">Links</a>
+				</li>
+
+				<li class="nav-item">
+					<a class="nav-link" href="#" data-toggle="modal" data-target="#ContactsModal">Contact</a>
+				</li>
+			</ul>
+
+
+			<ul class="navbar-nav flex-row ml-md-auto d-none d-md-flex">
+				
+				<li class="nav-item">
+					
+					<a class="btn btn-primary" href="/login" role="button"> Log in </a>
+						
+						
+				</li>
+			</ul>
+		</div>
+		</nav>
+	</header>
 
 	<nav class="navbar fixed-bottom navbar-expand-lg navbar-light bg-light">
 		<nav class="navbar navbar-light bg-light">
@@ -86,11 +74,37 @@
 		</li>
 	</nav>
 
+	
+		
+	
+	<div class="container-fluid" style="margin-top: 20px; ">
+		<div class="jumbotron" style="margin-top: 20px; margin-bottom:20px">
+			
+	
+		<div class="container-fluid" align="center" style="min-height:100%">
+			<div class="container" style="min-height:100% width:80%">
+				<div class="row align-items-center">
+					<div class="col"></div>
+					<div class="col-4 ">
+						<form class="form-signin" method="post">
+							<img class="mb-4" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
+							<h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+							<div class="form-group">
+									<input type="password" class="form-control" id="passwd" name="password" placeholder="Password">
+							</div>
+							<button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+						</form>
+					</div>
+					<div class="col"></div>
+				</div>
+			</div>
+		</div>
+		
+		
+	
 
-<div class="jumbotron">
-<a href="http://bina.szadzinski.pl/" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">DEV</a>
-<a href="http://bina.szadzinski.pl/" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">BETA</a>
-</div>
+		</div>
+	</div>
 
 
 	<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -126,11 +140,21 @@
 						</button>
 				</div>
 				<div class="modal-body">
-					TODO
+					<div class="media text-muted pt-3">
+						<img data-src="holder.js/32x32?theme=thumb&bg=007bff&fg=007bff&size=1" alt="" class="mr-2 rounded">
+						<div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+							<div class="d-flex justify-content-between align-items-center w-100">
+								<strong class="text-gray-dark">Full Name</strong>
+							</div>
+							<span class="d-block">username@email.com</span>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+
+
 
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>

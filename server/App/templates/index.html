@@ -29,16 +29,8 @@
 
 
 
-				<li class="nav-item dropdown">
-					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						Files
-					</a>
-					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-						<a class="dropdown-item" href="publications">Publications</a>
-						<div class="dropdown-divider"></div>
-						<a class="dropdown-item" href="presentations">Presentations</a>
-						<a class="dropdown-item" href="posters">Posters</a>
-					</div>
+				<li class="nav-item">
+					<a class="nav-link" href="/publications">Publications</a>
 				</li>
 
 				<li class="nav-item">
@@ -75,11 +67,9 @@
 		</nav>
 	</header>
 
-
-
 	<nav class="navbar fixed-bottom navbar-expand-lg navbar-light bg-light">
 		<nav class="navbar navbar-light bg-light">
-			<a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Last changes: 01.01.73</a>
+			<small><a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true"> <b>v1.2b</b>  Last changes: 11.12.19</a></small>
 	</nav>
 	<ul class="navbar-nav  flex-row ml-md-auto d-none d-md-flex">	
 		<li class="nav-item">
@@ -90,24 +80,18 @@
 		</li>
 	</nav>
 
-
 	{% with messages = get_flashed_messages() %}
 		{% if messages %}
 			{% for message in messages %}
-	<div class="alert alert-primary" role="alert" style="marigin-top:10px">{{message}}</div>
+	<div class="alert alert-primary" role="alert" style="margin-top:20px">{{message}}</div>
 			{% endfor %}
 		{% endif %}
 	{% endwith %}
-		<div class="container-fluid" style="margin-top: 20px">
-
-<div class="jumbotron" style="margin-top: 20px">
-			
-				
-					{% block body %}{% endblock %}
-				
-
+	<div class="container-fluid" style="margin-top: 20px; ">
+		<div class="jumbotron" style="margin-top: 20px; margin-bottom:20px">
+			{% block body %}{% endblock %}
 		</div>
-		</div>
+	</div>
 
 
 	<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -156,6 +140,8 @@
 			</div>
 		</div>
 	</div>
+
+
 
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>

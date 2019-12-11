@@ -1,4 +1,4 @@
-server/App/uploads/*
+server/App/uploads/
 venv/
 *__pycache__
 *.pyc

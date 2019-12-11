@@ -27,20 +27,50 @@
 						<li class="nav-item">
 							<a href="/" role="button" class="btn btn-outline-dark btn-sm btn-block" style="margin-top:5px"><i class="fa fa-backward"> Back to home</i></a>
 						</li>
+						
+						<div class="pos-f-t">
+							<div class="collapse" id="navbarToggleExternalContent">
+								<div class="bg-light p-4">
+									<h5 class="text-black h4">Admin</h5>
+									<small><span class="text-muted">Full permissions</span></small>
+											<ul class="navbar-nav px-3">
+												<li class="nav-item text-nowrap">
+													<a class="nav-link active text-secondary" href="#">Edit information</a>
+												</li>
+												<li class="nav-item text-nowrap">
+													<a class="nav-link active text-secondary" href="#">Change password</a>
+												</li>
+											</ul>
+								</div>
+							</div>
+							<nav class="navbar navbar-dark bg-light">
+								<a class="nav-link active text-secondary dropdown-toggle" id="navbarDropdown" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-haspopup="true" aria-expanded="false"  href="#"><i class="fa fa-drivers-license-o"> Account</i></a>
+							</nav>
+						</div>
+						
 						<h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
 							<small><span> <i class="fa fa-lock"> Internal</i> </span></small>
 							<a class="d-flex align-items-center text-muted" href="#">
 								<span data-feather="plus-circle"></span>
 							</a>
 						</h6>
+
 						<li class="nav-item">
-							<a class="nav-link active text-secondary" href="#">Active</a>
+							<a class="nav-link active text-secondary" href="/dashboard/publications">Files</a>
 						</li>
+						
+						<li class="nav-item">
+							<a class="nav-link active text-secondary" href="/dashboard/calendar">Calendar</a>
+						</li>
+						
+						<li class="nav-item">
+							<a class="nav-link active text-secondary" href="/dashboard/notes">Notes</a>
+						</li>
+						
 					</ul>
-					
 					</ul>
 					<h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-						<small><span> <i class="fa fa-edit"> Edit pages</i> </span></small>
+						<small><span> <i class="fa fa-edit"> Edit pages UNSTABLE</i> </span></small>
 						<a class="d-flex align-items-center text-muted" href="#">
 							<span data-feather="plus-circle"></span>
 						</a>
@@ -50,15 +80,19 @@
 						<li class="nav-item">
 							<a class="nav-link active text-secondary disabled" href="#">Experiments</a>
 						</li>
+						
 						<li class="nav-item">
 							<a class="nav-link active text-secondary disabled" href="#">Files</a>
 						</li>
+						
 						<li class="nav-item">
 							<a class="nav-link active text-secondary disabled" href="#">Members</a>
 						</li>
+						
 						<li class="nav-item">
 							<a class="nav-link active text-secondary disabled" href="#">Contacts</a>
 						</li>
+						
 					</ul>
 				</div>
 			</nav>
@@ -71,8 +105,10 @@
 			{% endfor %}
 		{% endif %}
 	{% endwith %}
-				<div class="jumbotron bg-light" style="margin-top: 20px">
-					{% block dashboard %}{% endblock %}
+				<div class="container-fluid" style="margin-top: 5px; ">
+					
+						{% block dashboard %}{% endblock %}
+					
 				</div>
 			</main>
 		</div>

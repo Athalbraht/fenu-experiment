@@ -1,0 +1,52 @@
+{% extends "dashboard/files.html" %}
+{% block dashboard_files %}
+
+	<div class="card-columns">
+
+		<div class="card">
+			<img class="card-img-top" src="{{url_for('static', filename='img/bina1.jpg')}}" alt="Generic placeholder image" width="140" height="140">
+			<div class="card-body">
+				<h5 class="card-title">BINA detector</h5>
+				
+			</div>
+				<div class="card-footer">
+				<small class="text-muted">Last updated 3 mins ago</small>
+			</div>
+		</div>
+
+		<div class="card">
+			<img class="card-img-top" src="{{url_for('static', filename='img/bina2.jpg')}}" alt="Generic placeholder image" width="140" height="140">
+			<div class="card-body">
+				<h5 class="card-title">Window</h5>
+
+			</div>
+				<div class="card-footer">
+				<small class="text-muted">Last updated 3 mins ago</small>
+			</div>
+		</div>
+		<div class="card">
+			<img class="card-img-top" src="{{url_for('static', filename='img/bina6.jpg')}}" alt="Generic placeholder image" width="140" height="140">
+			<div class="card-body">
+				<h5 class="card-title">Schemes</h5>
+	
+			</div>
+				<div class="card-footer">
+				<small class="text-muted">Last updated 3 mins ago</small>
+			</div>
+		</div>
+
+		<div class="card">
+			<img class="card-img-top" src="{{url_for('static', filename='img/bina4.jpg')}}" alt="Generic placeholder image" width="140" height="140">
+			<div class="card-body">
+				<h5 class="card-title">Other</h5>
+				<p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+			</div>
+				<div class="card-footer">
+				<small class="text-muted">Last updated 3 mins ago</small>
+			</div>
+		</div>
+
+
+	</div>
+
+{% endblock %}
