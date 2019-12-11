@@ -8,6 +8,7 @@ PORT = 8000
 DEBUG = True
 TESTING = False
 ENV = 'dev'
+SQLALCHEMY_DATABASE_URI = "sqlite:////database/sqlite"
 UPLOAD_FOLDER = os.path.join('static', 'img')
 
 
