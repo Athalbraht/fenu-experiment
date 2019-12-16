@@ -5,71 +5,90 @@ from datetime import datetime
 
 class User(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
-	name = db.Column(db.String(64), index=True, unique=True)
-	surname = db.Column(db.String(64), index=True, unique=True)
-	username = db.Column(db.String(64), index=True, unique=True)
-	email = db.Column(db.String(120), index=True, unique=True)
+	email = db.Column(db.String(128), unique=True)
+	username = db.Column(db.String(64), unique=True)
 	password_hash = db.Column(db.String(128))
-	permission = db.Column(db.String(128))
+	name = db.Column(db.String(64))
+	surname = db.Column(db.String(64))
+	affiliation_id = db.Column(db.String(128), db.ForeignKey("organization.id"))
 	orcid = db.Column(db.String(128))
 	rgate = db.Column(db.String(128))
+	admin = db.Column(db.Boolean, nullable=False)
 	timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
 	posts = db.relationship('Post', backref='author', lazy='dynamic')
 	def __repr__(self):
 		return '<User {}>'.format(self.username) 
 
+class Organization(db.Model):
+	id = db.Column(db.Integer, primary_key=True)
+	head = db.Column(db.String(128), unique=True)
+	shortcut = db.Column(db.String(64))
+	users = db.relationship("User", backref="affilation", lazy="dynamic")
+	def __repr__(self):
+		return '<Organization {}>'.format(self.username) 
+
 class Post(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
-	body = db.Column(db.String(300))
-	head = db.Column(db.String(100))
-	author = db.Column(db.String(64), index=True, unique=True)
-	timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+	head = db.Column(db.Text, nullable=False)
+	body = db.Column(db.Text, nullable=False)
 	user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+	timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
 	def __repr__(self):
 		return '<Post {}>'.format(self.body)
 
 class Document(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
-	title = db.Column(db.String(64))
-	author = db.Column(db.String(150))
-	source = db.Column(db.String(150))
-	path = db.Column(db.String(150))
-	doi = db.Column(db.String(150))
+	type = db.Column(db.String(128), nullable=False)
+	title = db.Column(db.Text, nullable=False)
+	author = db.Column(db.Text)
+	reference = db.Column(db.String(256))
+	year = db.Column(db.Float)
+	desc = db.Column(db.Text)
+	doi = db.Column(db.String(128))
+	link = db.Column(db.String(256))
 	timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
 	def __repr__(self):
 		return '<Document {}>'.format(self.body)
 
-class Bina(db.Model):
+class Photo(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
-	head1 = db.Column(db.String(100))
-	head2 = db.Column(db.String(100))
-	head3 = db.Column(db.String(100))
-	body1 = db.Column(db.String(4000))
-	body2 = db.Column(db.String(4000))
-	body3 = db.Column(db.String(4000))
-	body4 = db.Column(db.String(4000))
-	body5 = db.Column(db.String(4000))
-	body6 = db.Column(db.String(4000))
-	author = db.Column(db.String(64), index=True, unique=True)
+	type = db.Column(db.String(128), nullable=False)
+	title = db.Column(db.String(128), nullable=False)
+	path = db.Column(db.String(256))
+	xsize = db.Column(db.Float)
+	ysize = db.Column(db.Float)
+	zoom = db.Column(db.Float)
 	timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
 	def __repr__(self):
-		return '<BINA {}>'.format(self.body)
+		return '<Photo {}>'.format(self.body)
+
+class Bina(db.Model):
+	id = db.Column(db.Integer, primary_key=True)
+	title = db.Column(db.String(128), nullable=False)
+	header1 = db.Column(db.String(128), nullable=False)
+	desc1 = db.Column(db.Text, nullable=False)
+	logo_id1 = db.Column(db.Integer, db.ForeignKey('photo.id'))
+	description1 = db.Column(db.Text, nullable=False)
+	photo_id1 = db.Column(db.Integer, db.ForeignKey('photo.id'))
+	header2 = db.Column(db.String(128), nullable=False)
+	desc2 = db.Column(db.Text, nullable=False)
+	logo_id2 = db.Column(db.Integer, db.ForeignKey('photo.id'))
+	description2 = db.Column(db.Text, nullable=False)
+	photo_id2 = db.Column(db.Integer, db.ForeignKey('photo.id'))
+	header3 = db.Column(db.String(128), nullable=False)
+	desc3 = db.Column(db.Text, nullable=False)
+	logo_id3 = db.Column(db.Integer, db.ForeignKey('photo.id'))
+	description3 = db.Column(db.Text, nullable=False)
+	photo_id3 = db.Column(db.Integer, db.ForeignKey('photo.id'))
+	timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+	def __repr__(self):
+		return '<Exp_page {}>'.format(self.body)
 
 class Note(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
-	body = db.Column(db.String(300))
-	head = db.Column(db.String(100))
-	author = db.Column(db.String(64), index=True, unique=True)
+	head = db.Column(db.Text, nullable=False)
+	body = db.Column(db.Text, nullable=False)
 	timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
 	def __repr__(self):
 		return '<Note {}>'.format(self.body)
 
-class Picture(db.Model):
-	id = db.Column(db.Integer, primary_key=True)
-	path = db.Column(db.String(150))
-	xsize = db.Column(db.String(64))
-	ysize = db.Column(db.String(64))
-	zoom = db.Column(db.String(64))
-	timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
-	def __repr__(self):
-		return '<Picture {}>'.format(self.body)
