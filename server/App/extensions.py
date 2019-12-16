@@ -1,6 +1,7 @@
 #extensions.py
 
 import os
+from App.models import *
 
 def check_password(passwd):
     if passwd == "changeme":
@@ -23,3 +24,7 @@ def exp_imgs(folder):
 	_exp_images2.append("logo.png")
 	exp_img = list(map(lambda x: os.path.join(folder, x), _exp_images+_exp_images2))
 	return exp_img
+
+def test_db():
+	pass
+	
