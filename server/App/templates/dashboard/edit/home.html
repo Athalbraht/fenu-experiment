@@ -1,0 +1,48 @@
+{% extends "dashboard.html" %}
+{% block dashboard %}
+
+<nav aria-label="breadcrumb">
+	<ol class="breadcrumb">
+		<li class="breadcrumb-item"><a href="#">Home</a></li>
+		<li class="breadcrumb-item active" aria-current="page">Editing</li>
+	</ol>
+</nav>
+
+<div class="jumbotron">
+	<p class="lead">{{edit_header}}</p>
+	<hr class="my-4">
+	<form method="post">
+		<div class="form-group">
+			<label for="title">Title</label>
+			<textarea class="form-control" id="title" rows="1" name="title" >{{title}}</textarea>
+		</div>
+		<div class="form-group">
+			<label for="body">Body</label>
+			<textarea class="form-control" id="body" rows="6" name="body">{{body}}</textarea>
+		</div>
+		<button type="submit" class="btn btn-primary">Publish</button>
+	</form>
+</div>
+
+<div class="accordion" id="accordionExample">
+{% for post in posts %}
+	<div class="card">
+		<div class="card-header" id="headingTwo">
+			<h5 class="mb-0">
+				<button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#post{{post.id}}" aria-expanded="false" aria-controls="collapseTwo">
+					{{post.head}}
+				</button>
+				<a type="button" class="btn btn-outline-danger btn-sm float-right" href="/dashboard/edit/home/delete/{{post.id}}" role="button">Delete</a>
+				<a type="button" class="btn btn-outline-info btn-sm float-right" href="/dashboard/edit/home/{{post.id}}" role="button">Edit</a>
+			</h5>
+		</div>
+		<div id="post{{post.id}}" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+			<div class="card-body">
+				{{post.body}}
+			</div>
+		</div>
+	</div>
+{% endfor %}
+</div>
+
+{% endblock %}

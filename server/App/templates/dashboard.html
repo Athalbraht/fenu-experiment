@@ -40,6 +40,9 @@
 												<li class="nav-item text-nowrap">
 													<a class="nav-link active text-secondary" href="#">Change password</a>
 												</li>
+												<li class="nav-item text-nowrap">
+													<a class="nav-link active text-secondary" href="#">Add user</a>
+												</li>
 											</ul>
 								</div>
 							</div>
@@ -70,29 +73,24 @@
 					</ul>
 					</ul>
 					<h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-						<small><span> <i class="fa fa-edit"> Edit pages UNSTABLE</i> </span></small>
+						<small><span> <i class="fa fa-edit"> Edit pages </i> </span></small>
 						<a class="d-flex align-items-center text-muted" href="#">
 							<span data-feather="plus-circle"></span>
 						</a>
 					</h6>
 					<ul class="nav flex-column mb-2">
-						
 						<li class="nav-item">
-							<a class="nav-link active text-secondary disabled" href="#">Experiments</a>
+							<a class="nav-link active text-secondary" href="/dashboard/edit/home">Home</a>
 						</li>
-						
 						<li class="nav-item">
-							<a class="nav-link active text-secondary disabled" href="#">Files</a>
+							<a class="nav-link active text-secondary" href="/dashboard/edit/experiment">Experiments</a>
 						</li>
-						
 						<li class="nav-item">
-							<a class="nav-link active text-secondary disabled" href="#">Members</a>
+							<a class="nav-link active text-secondary" href="/dashboard/edit/files">Add files</a>
 						</li>
-						
 						<li class="nav-item">
-							<a class="nav-link active text-secondary disabled" href="#">Contacts</a>
+							<a class="nav-link active text-secondary" href="/dashboard/edit/members">Members</a>
 						</li>
-						
 					</ul>
 				</div>
 			</nav>
@@ -106,9 +104,7 @@
 		{% endif %}
 	{% endwith %}
 				<div class="container-fluid" style="margin-top: 5px; ">
-					
 						{% block dashboard %}{% endblock %}
-					
 				</div>
 			</main>
 		</div>

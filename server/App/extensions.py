@@ -23,9 +23,12 @@ def list_publications():
 	return(pubs2)
 
 def list_posts():
-	#posts = db.session.query(Post.head, Post.body, Post.timestamp, User.name, User.surname).filter()
-	posts = Post.query.all()
+	posts = Post.query.order_by(Post.id.desc()).all()
 	return posts
+
+def get_post(post_id):
+	post = Post.query.filter(Post.id == post_id).first()
+	return post
 
 def list_members():
 	affiliation = []

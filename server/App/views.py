@@ -10,7 +10,8 @@ exp_img = exp_imgs(app.config["UPLOAD_FOLDER"])
 
 @app.route("/test")
 def test():
-	return str(list_posts())
+	posts = list_posts()
+	return str(get_post(1).head)
 
 #####################
 ###  Main NavBar  ###
@@ -125,6 +126,49 @@ def dashboard_posters():
 @app.route("/dashboard/presentations", methods=['GET', "POST"])
 def dashboard_presentations():
 	return render_template(**permission_check("dashboard/files/presentations.html", **get_var(session)))
+
+#########################
+###   DashBoard EDIT  ###
+#########################
+
+@app.route("/dashboard/edit/home", methods=['GET', "POST"])
+def dashboard_edit_home():
+	if request.method == "POST":
+		head = request.form['title']
+		body = request.form['body']
+		post = Post(head=head, body=body)
+		db.session.add(post)
+		db.session.commit()
+		flash("Added")
+	return render_template(**permission_check("dashboard/edit/home.html", **get_var(session)), posts=list_posts(), edit_header="Add new message")
+
+@app.route("/dashboard/edit/home/<post_id>", methods=['GET', "POST"])
+def dashboard_edit_home_post(post_id):
+	post = get_post(post_id)
+	if request.method == "POST":
+		head = request.form['title']
+		body = request.form['body']
+		post.head = head
+		post.body = body
+		db.session.commit()
+		flash("Updated")
+	return render_template(**permission_check("dashboard/edit/home.html", **get_var(session)), posts=list_posts(), edit_header="Editing {}".format(post.head), title=post.head, body=post.body)
+
+@app.route("/dashboard/edit/members", methods=['GET', "POST"])
+def dashboard_edit_members():
+	if request.method == "POST":
+		head = request.form['title']
+		body = request.form['body']
+		post = Post(head=head, body=body)
+		db.session.add(post)
+		db.session.commit()
+		flash("Added")
+	return render_template(**permission_check("dashboard/edit/members.html", **get_var(session)), posts=list_posts(), edit_header="Add new message", organizations=list_members())
+
+@app.route("/dashboard/edit/files", methods=['GET', "POST"])
+def dashboard_edit_files():
+
+	return render_template(**permission_check("dashboard/edit/files.html", **get_var(session)), posts=list_posts(), edit_header="Add new message", organizations=list_members())
 
 #####################
 ### Sending files ###
