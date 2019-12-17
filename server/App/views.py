@@ -10,9 +10,7 @@ exp_img = exp_imgs(app.config["UPLOAD_FOLDER"])
 
 @app.route("/test")
 def test():
-	u = User.query.get(2)
-	o = Organization.query.get(1)
-	return str(u.affilation.head)
+	return str(list_posts())
 
 #####################
 ###  Main NavBar  ###
@@ -20,7 +18,8 @@ def test():
 
 @app.route("/home")
 def home():
-	return render_template("world/home.html", **get_var(session))
+	print(get_var(session))
+	return render_template("world/home.html", **get_var(session), posts=list_posts())
 
 @app.route("/")
 def main():
@@ -29,15 +28,17 @@ def main():
 @app.route("/login", methods=['GET', "POST"])
 def login():
 	if request.method == "POST":
+		login = request.form['login']
 		password = request.form['password']
-		login = check_password(password)
-		if login[1]:
-			session["user"] = "Admin"
+		user = check_password(login, password)
+		if user[1]:
+			session["user"] = user[2]
+			session["username"] = user[2]
 			session["status"] = "Log out"
-			flash(login[0])
+			flash(user[0])
 			return redirect(url_for('home'))
 		else:
-			flash(login[0])
+			flash(user[0])
 	return render_template("world/login.html", **get_var(session))
 
 @app.route("/logout", methods=['GET', "POST"])
@@ -56,7 +57,7 @@ def presentations():
 
 @app.route("/members", methods=['GET', "POST"])
 def members():
-	return render_template("world/members.html", **get_var(session))
+	return render_template("world/members.html", **get_var(session), organizations=list_members())
 
 @app.route("/posters", methods=['GET', "POST"])
 def posters():
@@ -64,7 +65,7 @@ def posters():
 
 @app.route("/publications", methods=['GET', "POST"])
 def publications():
-	return render_template("world/publications.html", **get_var(session))
+	return render_template("world/publications.html", **get_var(session), publications=list_publications())
 
 @app.route("/links", methods=['GET', "POST"])
 def links():
@@ -87,7 +88,7 @@ def permission_check(template, *args, **kwargs):
 
 @app.route("/dashboard", methods=['GET', "POST"])
 def dashboard():
-	return render_template(**permission_check("dashboard.html", **get_var(session)))
+	return redirect(url_for('dashboard_publications'))
 
 @app.route("/dashboard/files", methods=['GET', "POST"])
 def dashboard_files():
@@ -103,7 +104,7 @@ def dashboard_calendar():
 
 @app.route("/dashboard/publications", methods=['GET', "POST"])
 def dashboard_publications():
-	return render_template(**permission_check("dashboard/files/publications.html", **get_var(session)))
+	return render_template(**permission_check("dashboard/files/publications.html", **get_var(session)), publications=list_publications())
 	
 @app.route("/dashboard/photos", methods=['GET', "POST"])
 def dashboard_photos():
@@ -151,6 +152,7 @@ def before_request():
 		session["guest"] = True
 		session["logged_in"] = False
 		session["admin"] = False
+		session["username"] = "Guest"
 
 @app.errorhandler(404)
 def page_not_found(e):

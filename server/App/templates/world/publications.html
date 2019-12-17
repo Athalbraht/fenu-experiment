@@ -2,55 +2,34 @@
 {% block body %}
 <div class="container">
 	<div class="card text-center" >
-		<div class="card-header">
-			<nav class="nav nav-underline">
-				<a class="nav-link" href="#">
-				  2015
-				  <span class="badge badge-pill badge-info align-text-bottom">0</span>
-				</a>
-				<a class="nav-link" href="#">
-				  2016
-				  <span class="badge badge-pill badge-info align-text-bottom">0</span>
-				</a>
-				<a class="nav-link" href="#">
-				  2017
-				  <span class="badge badge-pill badge-info align-text-bottom">0</span>
-				</a>
-				<a class="nav-link" href="#">
-				  2018
-				  <span class="badge badge-pill badge-info align-text-bottom">0</span>
-				</a>
-				<a class="nav-link" href="#">
-				  2019
-				  <span class="badge badge-pill badge-info align-text-bottom">1</span>
-				</a>
-			</nav>
-		</div>
+
 		<div class="table-responsive">
 					<table class="table table-striped table-sm">
 						<thead>
 							<tr>
+								<th>Year</th>
 								<th>Title</th>
 								<th>Author</th>
 								<th>Download</th>
 							</tr>
 						</thead>
 						<tbody>
-
+{% for pub in publications %}
 							<tr>
-								<td>Three-body breakup in deuteron-deuteron collisions at 160 MeV including quasifree scattering</td>
-								<td>I. Ciepał</td>
+								<td>{{pub.year}}</td>
+								<td>{{pub.title}}</td>
+								<td>{{pub.author}}</td>
 								<td>
 									<div class="dropdown">
 											<a class="nav-link active text-secondary dropdown-toggle" type="button" id="dropdown1" data-toggle="dropdown"><i class="fa fa-cloud-download"></i></a>
 										<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-											<a class="dropdown-item"href="https://doi.org/10.1103/PhysRevC.100.024003">DOI</a>
-											<a class="dropdown-item" href="/publications/test.pdf">Download</a>
+											<a class="dropdown-item"href="{{pub.doi}}">DOI</a>
+											<a class="dropdown-item" href="/publications/{{pub.link}}">Download</a>
 										</div>
 									</div>
 								</td>
 							</tr>
-
+{% endfor %}
 						</tbody>
 					</table>
 				</div>

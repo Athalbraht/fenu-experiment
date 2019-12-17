@@ -4,23 +4,15 @@
       <div class="row">
         <div class="col-md-8 blog-main">
           <h3 class="pb-3 mb-4 font-italic border-bottom">
-            News test
+            News 
           </h3>
-
+{% for post in posts %}
           <div class="blog-post">
-            <h2 class="blog-post-title">Test</h2>
-            <p class="blog-post-meta">December 11, 2019 by <a href="#">Albert</a></p>
-
-            <p>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aenean lacinia bibendum nulla sed consectetur. Etiam porta sem malesuada magna mollis euismod. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-            <hr>
-                        <h3>subsection</h3>
-            <blockquote>
-            <p>Curabitur blandit tempus porttitor. <strong>Nullam quis risus eget urna mollis</strong> ornared elit.</p>
-            </blockquote>
-
-
-          </div><!-- /.blog-post -->
-
+            <h2 class="blog-post-title">{{post.head}}</h2>
+            <p class="blog-post-meta">{{post.timestamp}} by <a href="#">{{post.author.username}}</a></p>
+{{post.body}}
+          </div><hr>
+{% endfor %}
           <div class="blog-post">
             <h2 class="blog-post-title">Hello World</h2>
             <p class="blog-post-meta">December 10, 2019 by <a href="#">Admin</a></p>

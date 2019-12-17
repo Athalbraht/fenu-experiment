@@ -25,7 +25,7 @@ class Organization(db.Model):
 	shortcut = db.Column(db.String(64))
 	users = db.relationship("User", backref="affilation", lazy="dynamic")
 	def __repr__(self):
-		return '<Organization {}>'.format(self.username) 
+		return '<Organization {}>'.format(self.head) 
 
 class Post(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
@@ -34,7 +34,7 @@ class Post(db.Model):
 	user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 	timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
 	def __repr__(self):
-		return '<Post {}>'.format(self.body)
+		return '<Post {}>'.format(self.head)
 
 class Document(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
@@ -48,7 +48,7 @@ class Document(db.Model):
 	link = db.Column(db.String(256))
 	timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
 	def __repr__(self):
-		return '<Document {}>'.format(self.body)
+		return '<Document {}>'.format(self.title)
 
 class Photo(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
@@ -60,7 +60,7 @@ class Photo(db.Model):
 	zoom = db.Column(db.Float)
 	timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
 	def __repr__(self):
-		return '<Photo {}>'.format(self.body)
+		return '<Photo {}>'.format(self.title)
 
 class Bina(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
@@ -82,7 +82,7 @@ class Bina(db.Model):
 	photo_id3 = db.Column(db.Integer, db.ForeignKey('photo.id'))
 	timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
 	def __repr__(self):
-		return '<Exp_page {}>'.format(self.body)
+		return '<Exp_page {}>'.format(self.title)
 
 class Note(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
@@ -90,5 +90,5 @@ class Note(db.Model):
 	body = db.Column(db.Text, nullable=False)
 	timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
 	def __repr__(self):
-		return '<Note {}>'.format(self.body)
+		return '<Note {}>'.format(self.head)
 
