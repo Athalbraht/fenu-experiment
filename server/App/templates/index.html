@@ -18,7 +18,7 @@
 			</button>
 
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
-			<ul class="navbar-nav mr-auto">
+			<ul class="navbar-nav ml-auto ">
 				<li class="nav-item active">
 					<a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
 				</li>
@@ -41,15 +41,15 @@
 				<li class="nav-item">
 					<a class="nav-link" href="#" data-toggle="modal" data-target="#ContactsModal">Contact</a>
 				</li>
-			</ul>
-
-
-			<ul class="navbar-nav flex-row ml-md-auto d-none d-md-flex">
 				{% if admin %}
 				<li class="nav-item">
 					<a class="nav-link" href="/dashboard">Dashboard</a>
 				</li>
 				{% endif %}
+			</ul>
+
+			<ul class="navbar-nav flex-row ml-md-auto d-none d-md-flex">
+
 				<li class="nav-item">
 					{% if guest %}
 					<a class="btn btn-primary" href="/login" role="button"> Log in </a>
@@ -63,19 +63,6 @@
 		</nav>
 	</header>
 
-	<nav class="navbar fixed-bottom navbar-expand-lg navbar-light bg-light">
-		<nav class="navbar navbar-light bg-light">
-			<small><a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">  <img src="https://img.shields.io/github/v/tag/aszadzinski/BINA-CCB.svg" class="figure-img img-fluid rounded" alt="badge-tag"> <img src="https://img.shields.io/github/last-commit/aszadzinski/BINA-CCB.svg" class="figure-img img-fluid rounded" alt="badge-last vommit"></a></small>
-		</nav>
-	<ul class="navbar-nav  flex-row ml-md-auto d-none d-md-flex">	
-		<li class="nav-item">
-			<a class="nav-link" href="https://github.com/BINA-CCB/BINA-CCB.github.io"><i class="fa fa-github"></i> GitHub</a>
-		</li>
-		<li class="nav-item">
-			<a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">© 2019 BINA@CCB</a>
-		</li>
-	</nav>
-
 	{% with messages = get_flashed_messages() %}
 		{% if messages %}
 			{% for message in messages %}
@@ -83,32 +70,9 @@
 			{% endfor %}
 		{% endif %}
 	{% endwith %}
-	<div class="container-fluid" style="margin-top: 20px; ">
+	<div class="container" style="margin-top: 20px; ">
 		<div class="jumbotron" style="margin-top: 20px; margin-bottom:20px">
 			{% block body %}{% endblock %}
-		</div>
-	</div>
-
-
-	<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-		<div class="modal-dialog modal-dialog-centered" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalCenterTitle">Log in</h5>
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-				</div>
-				<div class="modal-body">
-					<form method="post">
-						<div class="form-group">
-							<label for="passwd">Enter password:</label>
-								<input type="password" class="form-control" id="passwd" name="password">
-						</div>
-						<input class="btn btn-primary" type="submit" name="passw" value="Login">
-					</form>
-				</div>
-			</div>
 		</div>
 	</div>
 
@@ -137,7 +101,16 @@
 		</div>
 	</div>
 
-
+	<nav class="navbar sticky-bottom navbar-light bg-white">
+		<small><a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">  <img src="https://img.shields.io/github/v/tag/aszadzinski/BINA-CCB.svg" class="figure-img img-fluid rounded" alt="badge-tag"> <img src="https://img.shields.io/github/last-commit/aszadzinski/BINA-CCB.svg" class="figure-img img-fluid rounded" alt="badge-last vommit"></a></small>
+		<ul class="navbar-nav  flex-row ml-md-auto d-none d-md-flex">	
+		<li class="nav-item">
+			<a class="nav-link" href="https://github.com/BINA-CCB/BINA-CCB.github.io"><i class="fa fa-github"></i> GitHub</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">© 2019 BINA@CCB</a>
+		</li>
+	</nav>
 
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
