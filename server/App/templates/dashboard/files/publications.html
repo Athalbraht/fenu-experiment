@@ -1,36 +1,71 @@
 {% extends "dashboard/files.html" %}
 {% block dashboard_files %}
 <div class="container-fluid">
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th scope="col">Year</th>
-      <th scope="col">Title</th>
-      <th scope="col">Author</th>
-      <th scope="col">Option</th>
-    </tr>
-  </thead>
-  <tbody>
-
-
-{% for pub in publications %}
-							<tr>
-								<td>{{pub.year}}</td>
-								<td>{{pub.title}}</td>
-								<td>{{pub.author}}</td>
-								<td>
-									<div class="dropdown">
-											<a class="nav-link active text-secondary dropdown-toggle" type="button" id="dropdown1" data-toggle="dropdown"><i class="fa fa-cloud-download"></i></a>
-										<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-											<a class="dropdown-item"href="{{pub.doi}}">DOI</a>
-											<a class="dropdown-item" href="/publications/{{pub.link}}">Download</a>
-										</div>
-									</div>
-								</td>
-							</tr>
+	<table class="table table-striped">
+		<thead>
+			<tr>
+{% for head in headers %}
+				<th scope="col">{{head}}</th>
 {% endfor %}
+			</tr>
+		</thead>
+	 
+		<tbody>
+{% for pub in publications %}
+								<tr>
+									<td>{{pub.year}}</td>
+									<td>{{pub.title}}</td>
+									<td>{{pub.author}}</td>
+									<td><a class="nav-link active text-secondary " type="button" data-toggle="modal" data-target="#mod{{pub.id}}"><i class="fa fa-cogs"></i></a></td>
+								</tr>
+								
+<div class="modal fade" id="mod{{pub.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalCenterTitle">Options</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
 
-  </tbody>
-</table>
+ <div align="left">
+<b>ID</b>:
+{{pub.id}}<hr>
+<b>Type</b>:
+{{pub.type}}<hr>
+<b>Title</b>:
+{{pub.title}}<hr>
+<b>Author</b>:
+{{pub.author}}<hr>
+<b>Year</b>:
+{{pub.year}}<hr>
+<b>Ref</b>:
+{{pub.reference}}<hr>
+<b>Description</b>:
+{{pub.desc}}<hr>
+<b>DOI</b>:
+{{pub.doi}}<hr>
+<b>LINK</b>:
+{{pub.link}}<hr>
+</div> 
+
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-info" data-dismiss="modal">Edit</button>
+				<button type="button" class="btn btn-danger">Delete</button>
+			</div>
+		</div>
+	</div>
 </div>
+{% endfor %}
+		</tbody>
+	</table>
+
+</div>
+
+
+
+
 {% endblock %}

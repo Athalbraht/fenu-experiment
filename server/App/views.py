@@ -105,8 +105,14 @@ def dashboard_calendar():
 
 @app.route("/dashboard/publications", methods=['GET', "POST"])
 def dashboard_publications():
-	return render_template(**permission_check("dashboard/files/publications.html", **get_var(session)), publications=list_publications())
-	
+	headers = ["Year", "Title", "author", "Options"]
+	return render_template(**permission_check("dashboard/files/publications.html", **get_var(session)),headers=headers, publications=list_publications())
+
+@app.route("/dashboard/publications2", methods=['GET', "POST"])
+def dashboard_publications2():
+	headers = ["Year", "Title", "author", "Options"]
+	return render_template(**permission_check("dashboard/files/list.html", **get_var(session)), headers=headers, publications=list_publications())
+
 @app.route("/dashboard/photos", methods=['GET', "POST"])
 def dashboard_photos():
 	return render_template(**permission_check("dashboard/files/photos.html", **get_var(session), imgs=exp_img))
@@ -167,8 +173,7 @@ def dashboard_edit_members():
 
 @app.route("/dashboard/edit/files", methods=['GET', "POST"])
 def dashboard_edit_files():
-
-	return render_template(**permission_check("dashboard/edit/files.html", **get_var(session)), posts=list_posts(), edit_header="Add new message", organizations=list_members())
+	return render_template(**permission_check("dashboard/edit/files.html", **get_var(session)))
 
 #####################
 ### Sending files ###
