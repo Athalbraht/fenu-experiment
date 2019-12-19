@@ -1,7 +1,7 @@
-server/App/uploads/
-server/database/
+App/uploads/
+database/
 venv/
-*__pycache__
+*__pycache__*
 *.pyc
 *.toc
 *.swp

@@ -1,2 +1,2 @@
-server/App/static/* linguist-vendored 
-server/App/templates/* linguist-vendored 
+App/static/* linguist-vendored 
+App/templates/* linguist-vendored 

@@ -16,7 +16,7 @@
 						<tbody>
 {% for pub in publications %}
 							<tr>
-								<td>{{pub.year}}</td>
+								<td>{{pub.year|int}}</td>
 								<td>{{pub.title}}</td>
 								<td>{{pub.author}}</td>
 								<td>

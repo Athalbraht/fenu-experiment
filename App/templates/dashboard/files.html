@@ -1,0 +1,52 @@
+{% extends "dashboard.html" %}
+{% block dashboard %}
+
+<nav aria-label="breadcrumb">
+	<ol class="breadcrumb">
+		<li class="breadcrumb-item"><a href="#">Files</a></li>
+		<li class="breadcrumb-item active" aria-current="page">{{crumb}}</li>
+	</ol>
+</nav>
+
+		<div class="card text-center">
+			<div class="card-header">
+				<ul class="nav nav-tabs card-header-tabs">
+					<li class="nav-item">
+						<a class="nav-link" href="/dashboard/data">Data</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="/dashboard/gallery">Gallery</a>
+					</li>
+					<li class="nav-item dropdown">
+						<a class="nav-link  dropdown-toggle" id="navbarDropdown" data-toggle="dropdown"   href="#">Papers</a>
+						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+							<a class="dropdown-item" href="/dashboard/publications">Publications</a>
+							<a class="dropdown-item" href="/dashboard/thesis">Thesis</a>
+							<div class="dropdown-divider"></div>
+							<a class="dropdown-item" href="/dashboard/manuals">Manuals</a>
+							<a class="dropdown-item" href="/dashboard/logbooks">LogBooks</a>
+						</div>
+					</li>
+					<li class="nav-item dropdown">
+						<a class="nav-link  dropdown-toggle" id="navbarDropdown" data-toggle="dropdown"   href="#">Presentations</a>
+						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+							<a class="dropdown-item" href="/dashboard/presentations_m">from Meetings</a>
+							<div class="dropdown-divider"></div>
+							<a class="dropdown-item" href="/dashboard/presentations_c">Presentations</a>
+						</div>
+					</li>
+					<li class="nav-item dropdown">
+						<a class="nav-link  dropdown-toggle" id="navbarDropdown" data-toggle="dropdown"   href="#">Miscellaneous</a>
+						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+							<a class="dropdown-item" href="/dashboard/posters">Posters</a>
+						</div>
+					</li>
+				</ul>
+			</div>
+			<div class="card-body">
+				{% block dashboard_files %}{% endblock %}
+			</div>
+		</div>
+
+
+{% endblock %}

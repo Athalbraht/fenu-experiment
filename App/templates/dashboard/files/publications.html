@@ -1,0 +1,163 @@
+{% extends "dashboard/files.html" %}
+{% block dashboard_files %}
+<div class="container-fluid">
+	<div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups">
+		<div class="btn-group" role="group" aria-label="First group">
+			<button type="button" class="btn btn-success" data-toggle="modal" data-target="#modnew">New</button>
+			<a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">Filter</a>
+		</div>
+		<div class="collapse" id="collapseExample">
+			<div class="input-group"><hr>
+				<select class="custom-select" id="inputGroupSelect01">
+					<option selected>Sort by</option>
+					<option value="1">Author</option>
+					<option value="2">Title</option>
+					<option value="3">Year</option>
+				</select>
+				<select class="custom-select" id="inputGroupSelect01">
+					<option selected>ascending</option>
+					<option value="1">descending</option>
+				</select>
+				<input type="text" class="form-control" placeholder="keyword" aria-label="Input group example" aria-describedby="btnGroupAddon2">
+				<button type="button" class="btn btn-secondary">Apply</button>
+			</div>
+		</div>
+		
+	</div><br>
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th>Author</th>
+				<th>Title</th>
+				<th>Year</th>
+				<th>Options</th>
+			</tr>
+		</thead>
+	 
+		<tbody>
+{% for pub in publications %}
+								<tr>
+									<td>{{pub.author}}</td>
+									<td>{{pub.title}}</td>
+									<td>{{pub.year|int}}</td>
+									<td><a class="nav-link active text-secondary " type="button" data-toggle="modal" data-target="#mod{{pub.id}}"><i class="fa fa-cogs"></i></a></td>
+								</tr>
+								
+<div class="modal fade" id="mod{{pub.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalCenterTitle">Options</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+
+ <div align="left">
+<b>ID</b>:
+{{pub.id}}<hr>
+<b>Type</b>:
+{{pub.type}}<hr>
+<b>Title</b>:
+{{pub.title}}<hr>
+<b>Author</b>:
+{{pub.author}}<hr>
+<b>Year</b>:
+{{pub.year}}<hr>
+<b>Ref</b>:
+{{pub.reference}}<hr>
+<b>Description</b>:
+{{pub.desc}}<hr>
+<b>DOI</b>:
+{{pub.doi}}<hr>
+<b>LINK</b>:
+{{pub.link}}<hr>
+</div> 
+
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-info" data-dismiss="modal">Edit</button>
+				<button type="button" class="btn btn-danger">Delete</button>
+			</div>
+		</div>
+	</div>
+</div>
+{% endfor %}
+		</tbody>
+	</table>
+
+</div>
+
+<div class="modal fade" id="modnew" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">New file</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+		<div class="modal-body">
+			<form class="was-validated">
+				<div class="form-group">
+					<label>Title</label>
+					<input type="text" class="form-control is-valid form-control-sm" id="validationServer01" placeholder="" required>
+					<div class="invalid-feedback">Example invalid custom select feedback</div>
+				</div>
+				<div class="form-row">
+					<div class="form-group col-md-6">
+						<div class="form-group">
+							<label>Author</label>
+							<input type="text" class="form-control is-valid form-control-sm" id="validationServer01" placeholder="" required>
+							<div class="invalid-feedback">Example invalid custom select feedback</div>
+						</div>
+					</div>
+					<div class="form-group col-md-6">
+						<div class="form-group">
+							<label>Year</label>
+							<input type="text" class="form-control is-valid form-control-sm" id="validationServer01" placeholder="" required>
+							<div class="invalid-feedback">Example invalid custom select feedback</div>
+						</div>
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-group col-md-6">
+						<div class="form-group">
+							<label>Reference</label>
+							<input type="text" class="form-control is-valid form-control-sm" id="validationServer01" placeholder="">
+						</div>
+					</div>
+					<div class="form-group col-md-6">
+						<div class="form-group">
+							<label>DOI</label>
+							<input type="text" class="form-control is-valid form-control-sm" id="validationServer01" placeholder="">
+						</div>
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-group col-md-6">
+						<div class="form-group">
+							<label>Link</label>
+							<input type="text" class="form-control is-valid form-control-sm" id="validationServer01" placeholder="" >
+						</div>
+					</div>
+					<div class="form-group col-md-6">
+						<label>Upload</label>
+						<div class="custom-file">
+							<input type="file" class="custom-file-input" id="validatedCustomFile">
+							<label class="custom-file-label" for="validatedCustomFile">Choose file...</label>
+							<div class="invalid-feedback">Example invalid custom file feedback</div>
+						</div>
+					</div>
+				</div>
+				<hr>
+				<button type="submit" class="btn btn-primary">Add</button>
+			</form>
+		</div>
+	</div>
+ </div>
+</div>
+
+
+{% endblock %}

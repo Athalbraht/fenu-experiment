@@ -13,9 +13,11 @@ def test():
 	posts = list_posts()
 	return str(get_post(1).head)
 
-#####################
-###  Main NavBar  ###
-#####################
+										#####################
+										#####################
+										###  Main NavBar  ###
+										#####################
+										#####################
 
 @app.route("/home")
 def home():
@@ -52,29 +54,19 @@ def logout():
 def experimants():
 	return render_template("world/experiments.html", **get_var(session), imagee=exp_img)
 
-@app.route("/presentations", methods=['GET', "POST"])
-def presentations():
-	return render_template("world/presentations.html", **get_var(session))
-
-@app.route("/members", methods=['GET', "POST"])
+@app.route("/members")
 def members():
 	return render_template("world/members.html", **get_var(session), organizations=list_members())
 
-@app.route("/posters", methods=['GET', "POST"])
-def posters():
-	return render_template("world/posters.html", **get_var(session))
-
-@app.route("/publications", methods=['GET', "POST"])
+@app.route("/publications")
 def publications():
 	return render_template("world/publications.html", **get_var(session), publications=list_publications())
 
-@app.route("/links", methods=['GET', "POST"])
-def links():
-	return render_template("world/links.html", **get_var(session))
-
-#####################
-###   DashBoard   ###
-#####################
+										#####################
+										#####################
+										###   DashBoard   ###
+										#####################
+										#####################
 
 def permission_check(template, *args, **kwargs):
 	if session["admin"]:
@@ -87,34 +79,28 @@ def permission_check(template, *args, **kwargs):
 		flash("Permission denied. Log in first.")
 		return _kwargs
 
-@app.route("/dashboard", methods=['GET', "POST"])
+@app.route("/dashboard")
 def dashboard():
 	return redirect(url_for('dashboard_publications'))
 
-@app.route("/dashboard/files", methods=['GET', "POST"])
+		#########
+		# files #
+		#########
+
+@app.route("/dashboard/files")
 def dashboard_files():
 	return render_template(**permission_check("dashboard/files.html", **get_var(session)))
 
-@app.route("/dashboard/notes", methods=['GET', "POST"])
-def dashboard_notes():
-	return render_template(**permission_check("dashboard/notes.html", **get_var(session)))
-
-@app.route("/dashboard/calendar", methods=['GET', "POST"])
-def dashboard_calendar():
-	return render_template(**permission_check("dashboard/calendar.html", **get_var(session)))
-
 @app.route("/dashboard/publications", methods=['GET', "POST"])
 def dashboard_publications():
-	headers = ["Year", "Title", "author", "Options"]
-	return render_template(**permission_check("dashboard/files/publications.html", **get_var(session)),headers=headers, publications=list_publications())
+	return render_template(**permission_check("dashboard/files/publications.html", **get_var(session)), publications=list_publications())
 
-@app.route("/dashboard/publications2", methods=['GET', "POST"])
-def dashboard_publications2():
-	headers = ["Year", "Title", "author", "Options"]
-	return render_template(**permission_check("dashboard/files/list.html", **get_var(session)), headers=headers, publications=list_publications())
+@app.route("/dashboard/thesis", methods=['GET', "POST"])
+def dashboard_thesis():
+	return render_template(**permission_check("dashboard/files/thesis.html", **get_var(session)), publications=list_publications())
 
-@app.route("/dashboard/photos", methods=['GET', "POST"])
-def dashboard_photos():
+@app.route("/dashboard/gallery", methods=['GET', "POST"])
+def dashboard_gallery():
 	return render_template(**permission_check("dashboard/files/photos.html", **get_var(session), imgs=exp_img))
 
 @app.route("/dashboard/data", methods=['GET', "POST"])
@@ -133,9 +119,23 @@ def dashboard_posters():
 def dashboard_presentations():
 	return render_template(**permission_check("dashboard/files/presentations.html", **get_var(session)))
 
-#########################
-###   DashBoard EDIT  ###
-#########################
+		###############
+		# notes & cal #
+		###############
+
+@app.route("/dashboard/notes", methods=['GET', "POST"])
+def dashboard_notes():
+	return render_template(**permission_check("dashboard/notes.html", **get_var(session)))
+
+@app.route("/dashboard/calendar", methods=['GET', "POST"])
+def dashboard_calendar():
+	return render_template(**permission_check("dashboard/calendar.html", **get_var(session)))
+
+										#########################
+										#########################
+										###   DashBoard EDIT  ###
+										#########################
+										#########################
 
 @app.route("/dashboard/edit/home", methods=['GET', "POST"])
 def dashboard_edit_home():
@@ -175,17 +175,21 @@ def dashboard_edit_members():
 def dashboard_edit_files():
 	return render_template(**permission_check("dashboard/edit/files.html", **get_var(session)))
 
-#####################
-### Sending files ###
-#####################
+										#####################
+										#####################
+										### Sending files ###
+										#####################
+										#####################
 
 @app.route("/publications/<filename>", methods=['GET', "POST"])
 def send_pub(filename):
 	return send_from_directory(directory="uploads/publications", filename=filename, as_attachment=False)
 
-###############
-### Session ###
-###############
+										###############
+										###############
+										### Session ###
+										###############
+										###############
 
 @app.before_request
 def before_request():
