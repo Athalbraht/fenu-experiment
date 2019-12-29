@@ -64,14 +64,14 @@
 <b>Author</b>:
 {{pub.author}}<hr>
 <b>Year</b>:
-{{pub.year}}<hr>
+{{pub.year|int}}<hr>
 <b>Ref</b>:
 {{pub.reference}}<hr>
 <b>Description</b>:
 {{pub.desc}}<hr>
-<b>DOI</b>:
+<b>link</b>:
 {{pub.doi}}<hr>
-<b>LINK</b>:
+<b>path to file</b>:
 {{pub.link}}<hr>
 </div> 
 
@@ -99,24 +99,24 @@
 				</button>
 			</div>
 		<div class="modal-body">
-			<form class="was-validated">
+			<form class="was-validated" method="post">
 				<div class="form-group">
 					<label>Title</label>
-					<input type="text" class="form-control is-valid form-control-sm" id="validationServer01" placeholder="" required>
+					<input type="text" class="form-control is-valid form-control-sm" id="validationServer01" placeholder="" name="title" required>
 					<div class="invalid-feedback">Example invalid custom select feedback</div>
 				</div>
 				<div class="form-row">
 					<div class="form-group col-md-6">
 						<div class="form-group">
 							<label>Author</label>
-							<input type="text" class="form-control is-valid form-control-sm" id="validationServer01" placeholder="" required>
+							<input type="text" class="form-control is-valid form-control-sm" id="validationServer01" placeholder="" name="author" required>
 							<div class="invalid-feedback">Example invalid custom select feedback</div>
 						</div>
 					</div>
 					<div class="form-group col-md-6">
 						<div class="form-group">
 							<label>Year</label>
-							<input type="text" class="form-control is-valid form-control-sm" id="validationServer01" placeholder="" required>
+							<input type="text" class="form-control is-valid form-control-sm" id="validationServer01" placeholder="" name="year" required>
 							<div class="invalid-feedback">Example invalid custom select feedback</div>
 						</div>
 					</div>
@@ -125,27 +125,27 @@
 					<div class="form-group col-md-6">
 						<div class="form-group">
 							<label>Reference</label>
-							<input type="text" class="form-control is-valid form-control-sm" id="validationServer01" placeholder="">
+							<input type="text" class="form-control is-valid form-control-sm" id="validationServer01" name="ref" placeholder="">
 						</div>
 					</div>
 					<div class="form-group col-md-6">
 						<div class="form-group">
-							<label>DOI</label>
-							<input type="text" class="form-control is-valid form-control-sm" id="validationServer01" placeholder="">
+							<label>Link</label>
+							<input type="text" class="form-control is-valid form-control-sm" id="validationServer01" name="link" placeholder="">
 						</div>
 					</div>
 				</div>
 				<div class="form-row">
 					<div class="form-group col-md-6">
 						<div class="form-group">
-							<label>Link</label>
-							<input type="text" class="form-control is-valid form-control-sm" id="validationServer01" placeholder="" >
+							<label>Description</label>
+							<input type="text" class="form-control is-valid form-control-sm" id="validationServer01" name="desc" placeholder="" >
 						</div>
 					</div>
 					<div class="form-group col-md-6">
 						<label>Upload</label>
 						<div class="custom-file">
-							<input type="file" class="custom-file-input" id="validatedCustomFile">
+							<input type="file" class="custom-file-input" id="validatedCustomFile" name="file">
 							<label class="custom-file-label" for="validatedCustomFile">Choose file...</label>
 							<div class="invalid-feedback">Example invalid custom file feedback</div>
 						</div>

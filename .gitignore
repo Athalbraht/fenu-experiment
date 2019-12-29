@@ -1,4 +1,5 @@
 App/uploads/
+App/static/uploads/
 database/
 venv/
 *__pycache__*
@@ -8,4 +9,5 @@ venv/
 *.aux
 *.out
 *.toc
+uploads/
 

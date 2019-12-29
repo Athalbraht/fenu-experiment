@@ -1,52 +1,55 @@
 {% extends "dashboard/files.html" %}
 {% block dashboard_files %}
 
-	<div class="card-columns">
-
+<div class="row" style="margin: 5px;">
+	<div class="col-sm-6">
 		<div class="card">
-			<img class="card-img-top" src="{{url_for('static', filename='img/bina1.jpg')}}" alt="Generic placeholder image" width="140" height="140">
+			<img class="card-img-top" src="{{url_for('static', filename='img/detector.jpg')}}" alt="Generic placeholder image" width="140" height="140">
 			<div class="card-body">
-				<h5 class="card-title">BINA detector</h5>
+				<h5 class="card-title"><a  href="/dashboard/gallery/detector">BINA detector</a></h5>
+			</div>
+				<div class="card-footer">
+				<small class="text-muted">Last updated 3 mins ago</small>
+			</div>
+		</div>
+	</div>
+	<div class="col-sm-6">
+		<div class="card">
+			<img class="card-img-top" src="{{url_for('static', filename='img/schemes.jpg')}}" alt="Generic placeholder image" width="140" height="140">
+			<div class="card-body">
+				<h5 class="card-title"><a  href="/dashboard/gallery/schemes">Schemes</a></h5>
+			</div>
+				<div class="card-footer">
+				<small class="text-muted">Last updated 3 mins ago</small>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row" style="margin: 5px;">
+	<div class="col-sm-6">
+		<div class="card">
+			<img class="card-img-top" src="{{url_for('static', filename='img/window.jpg')}}" alt="Generic placeholder image" width="140" height="140">
+			<div class="card-body">
+				<h5 class="card-title"><a  href="/dashboard/gallery/window">Window</a></h5>
+			</div>
+				<div class="card-footer">
+				<small class="text-muted">Last updated 3 mins ago</small>
+			</div>
+		</div>
+	</div>
+	<div class="col-sm-6">
+		<div class="card" >
+			<img class="card-img-top" src="{{url_for('static', filename='img/other.jpg')}}" alt="Generic placeholder image" width="140" height="140">
+			<div class="card-body">
+				<h5 class="card-title"><a  href="/dashboard/gallery/other">Other</a></h5>
 				
 			</div>
 				<div class="card-footer">
 				<small class="text-muted">Last updated 3 mins ago</small>
 			</div>
 		</div>
-
-		<div class="card">
-			<img class="card-img-top" src="{{url_for('static', filename='img/bina2.jpg')}}" alt="Generic placeholder image" width="140" height="140">
-			<div class="card-body">
-				<h5 class="card-title">Window</h5>
-
-			</div>
-				<div class="card-footer">
-				<small class="text-muted">Last updated 3 mins ago</small>
-			</div>
-		</div>
-		<div class="card">
-			<img class="card-img-top" src="{{url_for('static', filename='img/bina6.jpg')}}" alt="Generic placeholder image" width="140" height="140">
-			<div class="card-body">
-				<h5 class="card-title">Schemes</h5>
-	
-			</div>
-				<div class="card-footer">
-				<small class="text-muted">Last updated 3 mins ago</small>
-			</div>
-		</div>
-
-		<div class="card">
-			<img class="card-img-top" src="{{url_for('static', filename='img/bina4.jpg')}}" alt="Generic placeholder image" width="140" height="140">
-			<div class="card-body">
-				<h5 class="card-title">Other</h5>
-				<p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-			</div>
-				<div class="card-footer">
-				<small class="text-muted">Last updated 3 mins ago</small>
-			</div>
-		</div>
-
-
 	</div>
+</div>
+
 
 {% endblock %}

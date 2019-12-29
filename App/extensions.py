@@ -9,6 +9,25 @@ from App.models import *
 # Database query #
 ##################
 
+source = "uploads/"
+
+paths = {
+        "publications":"{}documents/papers/publications/".format(source),
+        "thesis":"{}documents/papers/thesis".format(source),
+        "manuals":"{}documents/papers/manuals".format(source),
+        "loogbooks":"{}documents/papers/logbooks".format(source),
+        "posters":"{}documents/presentations/posters".format(source),
+        "conferences":"{}documents/presentations/conferences".format(source),
+        "meetings":"{}documents/presentations/meetings".format(source),
+        "misce":"{}documents/miscellaneous".format(source),
+        "schemes":"{}gallery/schemes".format(source),
+        "window":"{}gallery/window".format(source),
+        "detector":"{}gallery/detector".format(source),
+        "thumbn":"{}gallery/thumbnails".format(source),
+        "other":"{}gallery/other".format(source),
+        "gallery":"{}gallery".format(source)
+        }
+
 def check_password(login, passwd):
     user = User.query.filter(User.email == login)
     if len(user.all()) == 1 and passwd == user[0].password_hash:
@@ -22,6 +41,45 @@ def list_publications():
     pubs = Document.query.filter(Document.type == "publication")
     pubs2 = pubs.order_by(Document.year.desc()).all()
     return(pubs2)
+
+def list_thesis():
+    pubs = Document.query.filter(Document.type == "thesis")
+    pubs2 = pubs.order_by(Document.year.desc()).all()
+    return(pubs2)
+
+def list_manuals():
+    pubs = Document.query.filter(Document.type == "manual")
+    pubs2 = pubs.order_by(Document.year.desc()).all()
+    return(pubs2)
+
+def list_logbooks():
+    pubs = Document.query.filter(Document.type == "logbook")
+    pubs2 = pubs.order_by(Document.year.desc()).all()
+    return(pubs2)
+
+def list_presentations(_type):
+    pubs = Document.query.filter(Document.type == _type)
+    pubs2 = pubs.order_by(Document.year.desc()).all()
+    return(pubs2)
+
+def list_presentation_groups(_type,wc=True):
+    folders = os.listdir(paths[_type])
+    class Group():
+        def __init__(self, id, filename,path,wc):
+            self.types = _type
+            self.filename = filename
+            self.id = id
+            self.path = path
+            if wc:
+                self.content = os.listdir(self.path)
+                self.content_path = [ os.path.join(path, i) for i in self.content ]
+    groups = [Group(i,folders[i], os.path.join(paths[_type],folders[i]),wc) for i in range(len(folders))]
+    return groups
+    
+
+def upload_publications():
+    
+    return 1
 
 
 def list_posts():

@@ -6,13 +6,14 @@ from App import db
 from App.models import *
 from App.extensions import *
 from flask import render_template, request, redirect, url_for, session, flash, send_file, send_from_directory, g
+from werkzeug.utils import secure_filename
 exp_img = exp_imgs(app.config["UPLOAD_FOLDER"])
 
 
 @app.route("/test")
 def test():
     posts = list_posts()
-    return str(get_post(1).head)
+    return str(paths["conferences"])
 
     #####################
     #####################
@@ -30,15 +31,15 @@ def home():
 
 @app.route("/")
 def main():
-    return redirect(url_for('home'))
+    return redirect(url_for('experiments'))
 
 
 @app.route("/login", methods=['GET', "POST"])
 def login():
     if request.method == "POST":
-        login = request.form['login']
+        #login = request.form['login']
         password = request.form['password']
-        user = check_password(login, password)
+        user = check_password("admin", password)
         if user[1]:
             session["user"] = user[2]
             session["username"] = user[2]
@@ -58,7 +59,7 @@ def logout():
 
 
 @app.route("/experiments", methods=['GET', "POST"])
-def experimants():
+def experiments():
     return render_template("world/experiments.html", **
                            get_var(session), imagee=exp_img)
 
@@ -110,38 +111,163 @@ def dashboard_files():
 
 @app.route("/dashboard/publications", methods=['GET', "POST"])
 def dashboard_publications():
+    if request.method == "POST":
+        title = request.form['title']
+        author = request.form['author']
+        year = request.form['year']
+        ref = request.form['ref']
+        link = request.form['link']
+        desc = request.form['desc']
+
+        publication = Document(type="publication", title=title, author=author, reference=ref, year=year, desc=desc, doi=link, link="todo")
+        db.session.add(publication)
+        db.session.commit()
+        flash("Added {}".format(title))
     return render_template(**permission_check("dashboard/files/publications.html",
                                               **get_var(session)), publications=list_publications())
 
 
 @app.route("/dashboard/thesis", methods=['GET', "POST"])
 def dashboard_thesis():
-    return render_template(**permission_check("dashboard/files/thesis.html",
-                                              **get_var(session)), publications=list_publications())
+    if request.method == "POST":
+        title = request.form['title']
+        author = request.form['author']
+        year = request.form['year']
+        ref = request.form['ref']
+        link = request.form['link']
+        desc = request.form['desc']
 
+        publication = Document(type="thesis", title=title, author=author, reference=ref, year=year, desc=desc, doi=link, link="todo")
+        db.session.add(publication)
+        db.session.commit()
+        flash("Added {}".format(title))
+    return render_template(**permission_check("dashboard/files/thesis.html",
+                                              **get_var(session)), publications=list_thesis())
+
+@app.route("/dashboard/logbooks", methods=['GET', "POST"])
+def dashboard_logbooks():
+    if request.method == "POST":
+        title = request.form['title']
+        author = request.form['author']
+        year = request.form['year']
+        ref = request.form['ref']
+        link = request.form['link']
+        desc = request.form['desc']
+
+        publication = Document(type="logbook", title=title, author=author, reference=ref, year=year, desc=desc, doi=link, link="todo")
+        db.session.add(publication)
+        db.session.commit()
+        flash("Added {}".format(title))
+    return render_template(**permission_check("dashboard/files/logbooks.html",
+                                              **get_var(session)), publications=list_thesis())
+
+@app.route("/dashboard/manuals", methods=['GET', "POST"])
+def dashboard_manuals():
+    if request.method == "POST":
+        title = request.form['title']
+        author = request.form['author']
+        year = request.form['year']
+        ref = request.form['ref']
+        link = request.form['link']
+        desc = request.form['desc']
+
+        publication = Document(type="manual", title=title, author=author, reference=ref, year=year, desc=desc, doi=link, link="todo")
+        db.session.add(publication)
+        db.session.commit()
+        flash("Added {}".format(title))
+    return render_template(**permission_check("dashboard/files/manuals.html",
+                                              **get_var(session)), publications=list_thesis())
+
+@app.route("/dashboard/presentations/meetings", methods=['GET', "POST"])
+def dashboard_presentations_meetings():
+    if request.method == "POST":
+        title = request.form['title']
+        author = request.form['author']
+        year = request.form['year']
+        ref = request.form['ref']
+        link = request.form['link']
+        desc = request.form['desc']
+
+        publication = Document(type="presentation-m", title=title, author=author, reference=ref, year=year, desc=desc, doi=link, link="todo")
+        db.session.add(publication)
+        db.session.commit()
+        flash("Added {}".format(title))
+    return render_template(**permission_check("dashboard/files/presentations.html",
+                                              **get_var(session)), publications=list_presentation_groups("meetings"))
+
+@app.route("/dashboard/presentations/posters", methods=['GET', "POST"])
+def dashboard_presentations_posters():
+    if request.method == "POST":
+        title = request.form['title']
+        author = request.form['author']
+        year = request.form['year']
+        ref = request.form['ref']
+        link = request.form['link']
+        desc = request.form['desc']
+
+        publication = Document(type="presentation-p", title=title, author=author, reference=ref, year=year, desc=desc, doi=link, link="todo")
+        db.session.add(publication)
+        db.session.commit()
+        flash("Added {}".format(title))
+    return render_template(**permission_check("dashboard/files/presentations.html",
+                                              **get_var(session)), publications=list_presentation_groups("posters"))
+
+@app.route("/dashboard/presentations/conferences", methods=['GET', "POST"])
+def dashboard_presentations_conferences():
+    if request.method == "POST":
+        title = request.form['title']
+        author = request.form['author']
+        year = request.form['year']
+        ref = request.form['ref']
+        link = request.form['link']
+        desc = request.form['desc']
+
+        publication = Document(type="presentation-c", title=title, author=author, reference=ref, year=year, desc=desc, doi=link, link="todo")
+        db.session.add(publication)
+        db.session.commit()
+        flash("Added {}".format(title))
+    return render_template(**permission_check("dashboard/files/presentations.html",
+                                              **get_var(session)), publications=list_presentation_groups("conferences"))
 
 @app.route("/dashboard/gallery", methods=['GET', "POST"])
 def dashboard_gallery():
-    return render_template(
-        **permission_check("dashboard/files/photos.html", **get_var(session), imgs=exp_img))
+    if request.method == "POST":
+        title = request.form['title']
+        author = request.form['author']
+        year = request.form['year']
+        ref = request.form['ref']
+        link = request.form['link']
+        desc = request.form['desc']
 
+        #publication = Photo(type="presentation-c", title=title, author=author, reference=ref, year=year, desc=desc, doi=link, link="todo")
+        #db.session.add(publication)
+        #db.session.commit()
+        flash("Added {}".format(title))
+    return render_template(**permission_check("dashboard/files/photos.html",
+                                              **get_var(session)), collection=list_presentation_groups("gallery"), imgs=exp_img)
+
+
+@app.route("/dashboard/gallery/<folder>", methods=['GET', "POST"])
+def dashboard_gallery_open(folder):
+    if request.method == "POST":
+        title = request.form['title']
+        author = request.form['author']
+        year = request.form['year']
+        ref = request.form['ref']
+        link = request.form['link']
+        desc = request.form['desc']
+
+        #publication = Photo(type="presentation-c", title=title, author=author, reference=ref, year=year, desc=desc, doi=link, link="todo")
+        #db.session.add(publication)
+        #db.session.commit()
+        flash("Added {}".format(title))
+    return render_template(**permission_check("dashboard/files/gallery.html",
+                                              **get_var(session)), collection=list_presentation_groups(folder,False), imgs=exp_img)
 
 @app.route("/dashboard/data", methods=['GET', "POST"])
 def dashboard_data():
     return render_template(
         **permission_check("dashboard/files/data.html", **get_var(session)))
-
-
-@app.route("/dashboard/logbooks", methods=['GET', "POST"])
-def dashboard_logboks():
-    return render_template(
-        **permission_check("dashboard/files/logbooks.html", **get_var(session)))
-
-
-@app.route("/dashboard/posters", methods=['GET', "POST"])
-def dashboard_posters():
-    return render_template(
-        **permission_check("dashboard/files/posters.html", **get_var(session)))
 
 
 @app.route("/dashboard/presentations", methods=['GET', "POST"])
@@ -224,10 +350,13 @@ def dashboard_edit_files():
     #####################
 
 
-@app.route("/publications/<filename>", methods=['GET', "POST"])
-def send_pub(filename):
+@app.route("/sendfile/<types>/<folder>/<filename>", methods=['GET', "POST"])
+def send_pub(types,folder,filename):
+    path = paths[types]
+    print(path)
+    print(filename)
     return send_from_directory(
-        directory="uploads/publications", filename=filename, as_attachment=False)
+        directory="../{}/{}/".format(path,folder), filename=filename, as_attachment=False)
 
     ###############
     ###############

@@ -1,4 +1,122 @@
 {% extends "dashboard/files.html" %}
 {% block dashboard_files %}
 
+<div class="container-fluid">
+	<div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups">
+		<div class="btn-group" role="group" aria-label="First group">
+			<button type="button" class="btn btn-success" data-toggle="modal" data-target="#modnew">Send file</button>
+			<a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">Filter</a>
+		</div>
+		<div class="collapse" id="collapseExample">
+			<div class="input-group"><hr>
+				<select class="custom-select" id="inputGroupSelect01">
+					<option selected>Sort by</option>
+					<option value="1">Author</option>
+					<option value="2">Title</option>
+					<option value="3">Year</option>
+				</select>
+				<select class="custom-select" id="inputGroupSelect01">
+					<option selected>ascending</option>
+					<option value="1">descending</option>
+				</select>
+				<input type="text" class="form-control" placeholder="keyword" aria-label="Input group example" aria-describedby="btnGroupAddon2">
+				<button type="button" class="btn btn-secondary">Apply</button>
+			</div>
+		</div>
+	</div><br>
+
+	<div class="container">
+		<div class="accordion" id="accordionExample">
+			{% for group in publications %}
+			<div class="card">
+				<div class="card-header" id="heading{{group.id}}" align="left">
+					<h5 class="mb-0">
+						<button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapse{{group.id}}" aria-expanded="false" aria-controls="collapse{{group.id}}">
+						{{ group.filename }}
+						</button>
+					</h5>
+				</div>
+				<div id="collapse{{group.id}}" class="collapse" aria-labelledby="heading{{group.id}}" data-parent="#accordionExample">
+					<div class="card-body">
+						<div class="container" align=left>
+							{% for file in group.content %}
+							<div class="row">
+								<div class="col">
+									<a class="nav-link active text-dark " href="/sendfile/{{group.types}}/{{group.filename}}/{{file}}">
+										<i class="fa fa-file-pdf-o" style="font-size:30px;color:red"></i>
+										<small><b> {{ file }}</b></small>
+									</a>
+									<hr>
+								</div>
+							</div>
+							{% endfor %}
+						</div>
+					</div>
+				</div>
+			</div>
+			{% endfor %}
+		</div>
+	</div>
+
+
+
+	<div class="modal fade" id="modnew" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">New file</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+			<div class="modal-body">
+				<form class="was-validated" method="post">
+					<div class="form-group">
+						<label>Title</label>
+						<input type="text" class="form-control is-valid form-control-sm" id="validationServer01" placeholder="" name="title" required>
+						<div class="invalid-feedback">Example invalid custom select feedback</div>
+					</div>
+					<div class="form-row">
+						<div class="form-group col-md-6">
+							<div class="form-group">
+								<label>Group</label>
+								<select class="custom-select is-invalid" id="validationServer04" required>
+									<option selected disabled value="">Choose</option>
+									<option value="new">New ---></option>
+									{% for folder in publications %}
+									<option value="{{folder}}">{{folder.filename}}</option>
+									{% endfor %}
+								</select>
+							</div>
+						</div>
+						<div class="form-group col-md-6">
+							<label>New group</label>
+							<input type="text" class="form-control is-valid form-control-sm" id="validationServer01" placeholder="" name="title">
+						</div>
+					</div>
+					<div class="form-row">
+						<div class="form-group col-md-6">
+							<div class="form-group">
+								<label>Description</label>
+								<input type="text" class="form-control is-valid form-control-sm" id="validationServer01" name="desc" placeholder="" >
+							</div>
+						</div>
+						<div class="form-group col-md-6">
+							<label>Upload</label>
+							<div class="custom-file">
+								<input type="file" class="custom-file-input" id="validatedCustomFile" name="file"required>
+								<label class="custom-file-label" for="validatedCustomFile">Choose file...</label>
+								<div class="invalid-feedback">Example invalid custom file feedback</div>
+							</div>
+						</div>
+					</div>
+					<hr>
+					<button type="submit" class="btn btn-primary">Add</button>
+				</form>
+			</div>
+		</div>
+	 </div>
+	</div>
+</div>
+
 {% endblock %}
