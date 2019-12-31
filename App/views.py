@@ -228,6 +228,23 @@ def dashboard_presentations_conferences():
         flash("Added {}".format(title))
     return render_template(**permission_check("dashboard/files/presentations.html",
                                               **get_var(session)), publications=list_presentation_groups("conferences"))
+                                              
+@app.route("/dashboard/miscellaneous", methods=['GET', "POST"])
+def dashboard_miscellaneous():
+    if request.method == "POST":
+        title = request.form['title']
+        author = request.form['author']
+        year = request.form['year']
+        ref = request.form['ref']
+        link = request.form['link']
+        desc = request.form['desc']
+
+        publication = Document(type="misc", title=title, author=author, reference=ref, year=year, desc=desc, doi=link, link="todo")
+        db.session.add(publication)
+        db.session.commit()
+        flash("Added {}".format(title))
+    return render_template(**permission_check("dashboard/files/presentations.html",
+                                              **get_var(session)), publications=list_presentation_groups("miscellaneous"))
 
 @app.route("/dashboard/gallery", methods=['GET', "POST"])
 def dashboard_gallery():

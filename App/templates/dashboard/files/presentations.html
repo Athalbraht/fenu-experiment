@@ -2,36 +2,36 @@
 {% block dashboard_files %}
 
 <div class="container-fluid">
-	<div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups">
-		<div class="btn-group" role="group" aria-label="First group">
-			<button type="button" class="btn btn-success" data-toggle="modal" data-target="#modnew">Send file</button>
-			<a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">Filter</a>
-		</div>
-		<div class="collapse" id="collapseExample">
-			<div class="input-group"><hr>
-				<select class="custom-select" id="inputGroupSelect01">
-					<option selected>Sort by</option>
-					<option value="1">Author</option>
-					<option value="2">Title</option>
-					<option value="3">Year</option>
-				</select>
-				<select class="custom-select" id="inputGroupSelect01">
-					<option selected>ascending</option>
-					<option value="1">descending</option>
-				</select>
-				<input type="text" class="form-control" placeholder="keyword" aria-label="Input group example" aria-describedby="btnGroupAddon2">
-				<button type="button" class="btn btn-secondary">Apply</button>
-			</div>
-		</div>
-	</div><br>
-
 	<div class="container">
+		<div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups">
+			<div class="btn-group" role="group" aria-label="First group">
+				<button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#modnew">Send file</button>
+				<a class="btn btn-outline-info" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">Filter</a>
+			</div>
+			<div class="collapse" id="collapseExample">
+				<div class="input-group"><hr>
+					<select class="custom-select" id="inputGroupSelect01">
+						<option selected>Sort by</option>
+						<option value="1">Author</option>
+						<option value="2">Title</option>
+						<option value="3">Year</option>
+					</select>
+					<select class="custom-select" id="inputGroupSelect01">
+						<option selected>ascending</option>
+						<option value="1">descending</option>
+					</select>
+					<input type="text" class="form-control" placeholder="keyword" aria-label="Input group example" aria-describedby="btnGroupAddon2">
+					<button type="button" class="btn btn-secondary">Apply</button>
+				</div>
+			</div>
+		</div><br>
+
 		<div class="accordion" id="accordionExample">
 			{% for group in publications %}
 			<div class="card">
 				<div class="card-header" id="heading{{group.id}}" align="left">
 					<h5 class="mb-0">
-						<button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapse{{group.id}}" aria-expanded="false" aria-controls="collapse{{group.id}}">
+						<button class="btn btn-outline-dark collapsed" type="button" data-toggle="collapse" data-target="#collapse{{group.id}}" aria-expanded="false" aria-controls="collapse{{group.id}}">
 						{{ group.filename }}
 						</button>
 					</h5>
@@ -44,7 +44,8 @@
 								<div class="col">
 									<a class="nav-link active text-dark " href="/sendfile/{{group.types}}/{{group.filename}}/{{file}}">
 										<i class="fa fa-file-pdf-o" style="font-size:30px;color:red"></i>
-										<small><b> {{ file }}</b></small>
+										<b> {{ file }}</b>
+										<p><small>description description ....description description ....description description ....description description ...description description ....description description ....description description ....</small></p>
 									</a>
 									<hr>
 								</div>

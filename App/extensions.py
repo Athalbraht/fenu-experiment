@@ -19,7 +19,7 @@ paths = {
         "posters":"{}documents/presentations/posters".format(source),
         "conferences":"{}documents/presentations/conferences".format(source),
         "meetings":"{}documents/presentations/meetings".format(source),
-        "misce":"{}documents/miscellaneous".format(source),
+        "miscellaneous":"{}documents/miscellaneous".format(source),
         "schemes":"{}gallery/schemes".format(source),
         "window":"{}gallery/window".format(source),
         "detector":"{}gallery/detector".format(source),

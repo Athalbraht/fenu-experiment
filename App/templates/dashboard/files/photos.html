@@ -1,15 +1,11 @@
 {% extends "dashboard/files.html" %}
 {% block dashboard_files %}
-
 <div class="row" style="margin: 5px;">
 	<div class="col-sm-6">
 		<div class="card">
 			<img class="card-img-top" src="{{url_for('static', filename='img/detector.jpg')}}" alt="Generic placeholder image" width="140" height="140">
 			<div class="card-body">
 				<h5 class="card-title"><a  href="/dashboard/gallery/detector">BINA detector</a></h5>
-			</div>
-				<div class="card-footer">
-				<small class="text-muted">Last updated 3 mins ago</small>
 			</div>
 		</div>
 	</div>
@@ -18,9 +14,6 @@
 			<img class="card-img-top" src="{{url_for('static', filename='img/schemes.jpg')}}" alt="Generic placeholder image" width="140" height="140">
 			<div class="card-body">
 				<h5 class="card-title"><a  href="/dashboard/gallery/schemes">Schemes</a></h5>
-			</div>
-				<div class="card-footer">
-				<small class="text-muted">Last updated 3 mins ago</small>
 			</div>
 		</div>
 	</div>
@@ -32,9 +25,6 @@
 			<div class="card-body">
 				<h5 class="card-title"><a  href="/dashboard/gallery/window">Window</a></h5>
 			</div>
-				<div class="card-footer">
-				<small class="text-muted">Last updated 3 mins ago</small>
-			</div>
 		</div>
 	</div>
 	<div class="col-sm-6">
@@ -44,12 +34,7 @@
 				<h5 class="card-title"><a  href="/dashboard/gallery/other">Other</a></h5>
 				
 			</div>
-				<div class="card-footer">
-				<small class="text-muted">Last updated 3 mins ago</small>
-			</div>
 		</div>
 	</div>
 </div>
-
-
 {% endblock %}
