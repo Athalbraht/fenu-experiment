@@ -61,7 +61,7 @@ def logout():
 @app.route("/experiments", methods=['GET', "POST"])
 def experiments():
     return render_template("world/experiments.html", **
-                           get_var(session), imagee=exp_img)
+                           get_var(session), imagee=exp_img, collection=list_presentation_groups("detector",False))
 
 
 @app.route("/members")
