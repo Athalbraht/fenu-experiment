@@ -1,6 +1,7 @@
 # views.py
 
 import os
+import time
 from App import app
 from App import db
 from App.models import *
@@ -12,8 +13,8 @@ exp_img = exp_imgs(app.config["UPLOAD_FOLDER"])
 
 @app.route("/test")
 def test():
-    posts = list_posts()
-    return str(paths["conferences"])
+    pass
+    return str(0)
 
     #####################
     #####################
@@ -118,8 +119,9 @@ def dashboard_publications():
         ref = request.form['ref']
         link = request.form['link']
         desc = request.form['desc']
-
-        publication = Document(type="publication", title=title, author=author, reference=ref, year=year, desc=desc, doi=link, link="todo")
+        
+        _filename = int(time.time()) 
+        publication = Document(type="publication", title=title, author=author, reference=ref, year=year, desc=desc, link=link, path="{}{}.pdf".format(paths["publications"], _filename))
         db.session.add(publication)
         db.session.commit()
         flash("Added {}".format(title))
@@ -136,8 +138,9 @@ def dashboard_thesis():
         ref = request.form['ref']
         link = request.form['link']
         desc = request.form['desc']
-
-        publication = Document(type="thesis", title=title, author=author, reference=ref, year=year, desc=desc, doi=link, link="todo")
+        
+        _filename = int(time.time()) 
+        publication = Document(type="thesis", title=title, author=author, reference=ref, year=year, desc=desc, link=link, path="{}{}.pdf".format(paths["thesis"], _filename))
         db.session.add(publication)
         db.session.commit()
         flash("Added {}".format(title))
@@ -153,8 +156,9 @@ def dashboard_logbooks():
         ref = request.form['ref']
         link = request.form['link']
         desc = request.form['desc']
-
-        publication = Document(type="logbook", title=title, author=author, reference=ref, year=year, desc=desc, doi=link, link="todo")
+        
+        _filename = int(time.time()) 
+        publication = Document(type="logbook", title=title, author=author, reference=ref, year=year, desc=desc, link=link, path="{}{}.pdf".format(paths["logbooks"], _filename))
         db.session.add(publication)
         db.session.commit()
         flash("Added {}".format(title))
@@ -170,8 +174,9 @@ def dashboard_manuals():
         ref = request.form['ref']
         link = request.form['link']
         desc = request.form['desc']
-
-        publication = Document(type="manual", title=title, author=author, reference=ref, year=year, desc=desc, doi=link, link="todo")
+        
+        _filename = int(time.time()) 
+        publication = Document(type="manual", title=title, author=author, reference=ref, year=year, desc=desc, link=link, path="{}{}.pdf".format(paths["manuals"], _filename))
         db.session.add(publication)
         db.session.commit()
         flash("Added {}".format(title))
@@ -187,8 +192,9 @@ def dashboard_presentations_meetings():
         ref = request.form['ref']
         link = request.form['link']
         desc = request.form['desc']
-
-        publication = Document(type="presentation-m", title=title, author=author, reference=ref, year=year, desc=desc, doi=link, link="todo")
+        
+        _filename = int(time.time()) 
+        publication = Document(type="presentation-m", title=title, author=author, reference=ref, year=year, desc=desc, link=link, path="{}{}.pdf".format(paths["meetings"], _filename))
         db.session.add(publication)
         db.session.commit()
         flash("Added {}".format(title))
@@ -204,8 +210,9 @@ def dashboard_presentations_posters():
         ref = request.form['ref']
         link = request.form['link']
         desc = request.form['desc']
-
-        publication = Document(type="presentation-p", title=title, author=author, reference=ref, year=year, desc=desc, doi=link, link="todo")
+        
+        _filename = int(time.time()) 
+        publication = Document(type="presentation-p", title=title, author=author, reference=ref, year=year, desc=desc, link=link, path="{}{}.pdf".format(paths["posters"], _filename))
         db.session.add(publication)
         db.session.commit()
         flash("Added {}".format(title))
@@ -221,8 +228,9 @@ def dashboard_presentations_conferences():
         ref = request.form['ref']
         link = request.form['link']
         desc = request.form['desc']
-
-        publication = Document(type="presentation-c", title=title, author=author, reference=ref, year=year, desc=desc, doi=link, link="todo")
+        
+        _filename = int(time.time()) 
+        publication = Document(type="presentation-c", title=title, author=author, reference=ref, year=year, desc=desc, link=link, path="{}{}.pdf".format(paths["conferences"], _filename))
         db.session.add(publication)
         db.session.commit()
         flash("Added {}".format(title))
@@ -238,8 +246,9 @@ def dashboard_miscellaneous():
         ref = request.form['ref']
         link = request.form['link']
         desc = request.form['desc']
-
-        publication = Document(type="misc", title=title, author=author, reference=ref, year=year, desc=desc, doi=link, link="todo")
+        
+        _filename = int(time.time()) 
+        publication = Document(type="misc", title=title, author=author, reference=ref, year=year, desc=desc, link=link, path="{}{}.pdf".format(paths["miscellaneous"], _filename))
         db.session.add(publication)
         db.session.commit()
         flash("Added {}".format(title))
@@ -256,7 +265,7 @@ def dashboard_gallery():
         link = request.form['link']
         desc = request.form['desc']
 
-        #publication = Photo(type="presentation-c", title=title, author=author, reference=ref, year=year, desc=desc, doi=link, link="todo")
+        #publication = Photo(type="presentation-c", title=title, author=author, reference=ref, year=year, desc=desc, link=link, path="{}{}.pdf".format(paths[""], _filename))
         #db.session.add(publication)
         #db.session.commit()
         flash("Added {}".format(title))
@@ -274,7 +283,7 @@ def dashboard_gallery_open(folder):
         link = request.form['link']
         desc = request.form['desc']
 
-        #publication = Photo(type="presentation-c", title=title, author=author, reference=ref, year=year, desc=desc, doi=link, link="todo")
+        #publication = Photo(type="presentation-c", title=title, author=author, reference=ref, year=year, desc=desc, link=link, path="{}{}.pdf".format(paths[""], _filename))
         #db.session.add(publication)
         #db.session.commit()
         flash("Added {}".format(title))
@@ -286,11 +295,6 @@ def dashboard_data():
     return render_template(
         **permission_check("dashboard/files/data.html", **get_var(session)))
 
-
-@app.route("/dashboard/presentations", methods=['GET', "POST"])
-def dashboard_presentations():
-    return render_template(
-        **permission_check("dashboard/files/presentations.html", **get_var(session)))
 
     ###############
     # notes & cal #

@@ -1,6 +1,7 @@
 # extensions.py
 
 import os
+import hashlib
 from App import db
 from App.models import *
 
@@ -29,10 +30,15 @@ paths = {
         }
 
 def check_password(login, passwd):
-    user = User.query.filter(User.email == login)
-    if len(user.all()) == 1 and passwd == user[0].password_hash:
-        print(user[0].email, user[0].password_hash)
-        return "Correct password", True, user[0].email
+    user = User.query.filter(User.username == login)
+    if len(user.all()) == 1 and user[0].username == login:
+        salt, _hash = user[0].password_hash[:32], user[0].password_hash[32:]
+        _chash =  hashlib.pbkdf2_hmac("sha256", passwd.encode("utf-8"), salt, 100000)
+        if salt+_chash == salt+_hash:
+            print(user[0].email, user[0].password_hash)
+            return "Correct password. Dashboard unlocked.", True, user[0].email
+        else:
+            return "Wrong email or password. Try again.", False, None
     else:
         return "Wrong email or password. Try again.", False, None
 

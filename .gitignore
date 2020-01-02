@@ -1,7 +1,9 @@
+database/
+migrations/
+uploads/
+venv/
 App/uploads/
 App/static/uploads/
-database/
-venv/
 *__pycache__*
 *.pyc
 *.toc
@@ -9,5 +11,4 @@ venv/
 *.aux
 *.out
 *.toc
-uploads/
 

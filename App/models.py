@@ -14,6 +14,7 @@ class User(db.Model):
     affiliation_id = db.Column(
         db.String(128),
         db.ForeignKey("organization.id"))
+    desc = db.Column(db.Text)
     orcid = db.Column(db.String(128))
     rgate = db.Column(db.String(128))
     admin = db.Column(db.Boolean, nullable=False)
@@ -28,6 +29,8 @@ class Organization(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     head = db.Column(db.String(128), unique=True)
     shortcut = db.Column(db.String(64))
+    link = db.Column(db.String(128))
+    desc = db.Column(db.Text)
     users = db.relationship("User", backref="affilation", lazy="dynamic")
 
     def __repr__(self):
@@ -53,8 +56,8 @@ class Document(db.Model):
     reference = db.Column(db.String(256))
     year = db.Column(db.Float)
     desc = db.Column(db.Text)
-    doi = db.Column(db.String(128))
-    link = db.Column(db.String(256))
+    link = db.Column(db.String(128))
+    path = db.Column(db.String(256))
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
 
     def __repr__(self):
@@ -77,22 +80,10 @@ class Photo(db.Model):
 
 class Bina(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(128), nullable=False)
-    header1 = db.Column(db.String(128), nullable=False)
-    desc1 = db.Column(db.Text, nullable=False)
-    logo_id1 = db.Column(db.Integer, db.ForeignKey('photo.id'))
-    description1 = db.Column(db.Text, nullable=False)
-    photo_id1 = db.Column(db.Integer, db.ForeignKey('photo.id'))
-    header2 = db.Column(db.String(128), nullable=False)
-    desc2 = db.Column(db.Text, nullable=False)
-    logo_id2 = db.Column(db.Integer, db.ForeignKey('photo.id'))
-    description2 = db.Column(db.Text, nullable=False)
-    photo_id2 = db.Column(db.Integer, db.ForeignKey('photo.id'))
-    header3 = db.Column(db.String(128), nullable=False)
-    desc3 = db.Column(db.Text, nullable=False)
-    logo_id3 = db.Column(db.Integer, db.ForeignKey('photo.id'))
-    description3 = db.Column(db.Text, nullable=False)
-    photo_id3 = db.Column(db.Integer, db.ForeignKey('photo.id'))
+    head = db.Column(db.String(128), nullable=False)
+    body = db.Column(db.Text, nullable=False)
+    abstract = db.Column(db.Text)
+    photo_id = db.Column(db.Integer, db.ForeignKey('photo.id'))
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
 
     def __repr__(self):
@@ -101,8 +92,23 @@ class Bina(db.Model):
 
 class Note(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     head = db.Column(db.Text, nullable=False)
     body = db.Column(db.Text, nullable=False)
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+
+    def __repr__(self):
+        return '<Note {}>'.format(self.head)
+        
+class Event(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    title = db.Column(db.String(128), nullable=False)
+    localization = db.Column(db.String(128))
+    time = db.Column(db.DateTime)
+    desc = db.Column(db.Text)
+    members = db.Column(db.Text)
+    files = db.Column(db.Text)
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
 
     def __repr__(self):
