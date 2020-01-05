@@ -43,30 +43,14 @@ def check_password(login, passwd):
         return "Wrong email or password. Try again.", False, None
 
 
-def list_publications():
-    pubs = Document.query.filter(Document.type == "publication")
-    pubs2 = pubs.order_by(Document.year.desc()).all()
-    return(pubs2)
-
-def list_thesis():
-    pubs = Document.query.filter(Document.type == "thesis")
-    pubs2 = pubs.order_by(Document.year.desc()).all()
-    return(pubs2)
-
-def list_manuals():
-    pubs = Document.query.filter(Document.type == "manual")
-    pubs2 = pubs.order_by(Document.year.desc()).all()
-    return(pubs2)
-
-def list_logbooks():
-    pubs = Document.query.filter(Document.type == "logbook")
-    pubs2 = pubs.order_by(Document.year.desc()).all()
-    return(pubs2)
-
-def list_presentations(_type):
+def list_papers(_type):
     pubs = Document.query.filter(Document.type == _type)
-    pubs2 = pubs.order_by(Document.year.desc()).all()
-    return(pubs2)
+    _sort = pubs.order_by(Document.year.desc()).all()
+    return(_sort)
+
+def list_posts():
+    posts = Post.query.order_by(Post.id.desc()).all()
+    return posts
 
 def list_presentation_groups(_type,wc=True):
     folders = os.listdir(paths[_type])
@@ -86,11 +70,6 @@ def list_presentation_groups(_type,wc=True):
 def upload_publications():
     
     return 1
-
-
-def list_posts():
-    posts = Post.query.order_by(Post.id.desc()).all()
-    return posts
 
 
 def get_post(post_id):

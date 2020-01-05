@@ -74,7 +74,7 @@ def members():
 @app.route("/publications")
 def publications():
     return render_template("world/publications.html", **
-                           get_var(session), publications=list_publications())
+                           get_var(session), publications=list_papers("publication"))
 
     #####################
     #####################
@@ -95,23 +95,13 @@ def permission_check(template, *args, **kwargs):
         return _kwargs
 
 
-@app.route("/dashboard")
-def dashboard():
-    return redirect(url_for('dashboard_publications'))
-
     #########
     # files #
     #########
 
 
-@app.route("/dashboard/files")
-def dashboard_files():
-    return render_template(
-        **permission_check("dashboard/files.html", **get_var(session)))
-
-
-@app.route("/dashboard/publications", methods=['GET', "POST"])
-def dashboard_publications():
+@app.route("/dashboard/papers/<paper>", methods=['GET', "POST"])
+def dashboard_publications(paper):
     if request.method == "POST":
         title = request.form['title']
         author = request.form['author']
@@ -121,16 +111,17 @@ def dashboard_publications():
         desc = request.form['desc']
         
         _filename = int(time.time()) 
-        publication = Document(type="publication", title=title, author=author, reference=ref, year=year, desc=desc, link=link, path="{}{}.pdf".format(paths["publications"], _filename))
+        publication = Document(type=paper, title=title, author=author, reference=ref, year=year, desc=desc, link=link, path="{}{}.pdf".format(paths[paper], _filename))
         db.session.add(publication)
         db.session.commit()
         flash("Added {}".format(title))
-    return render_template(**permission_check("dashboard/files/publications.html",
-                                              **get_var(session)), publications=list_publications())
+    return render_template(**permission_check("dashboard/files/papers.html".format(paper),
+                                              **get_var(session)), publications=list_papers(paper))
 
 
-@app.route("/dashboard/thesis", methods=['GET', "POST"])
-def dashboard_thesis():
+
+@app.route("/dashboard/presentations/<presentation>", methods=['GET', "POST"])
+def dashboard_presentations(presentation):
     if request.method == "POST":
         title = request.form['title']
         author = request.form['author']
@@ -140,120 +131,14 @@ def dashboard_thesis():
         desc = request.form['desc']
         
         _filename = int(time.time()) 
-        publication = Document(type="thesis", title=title, author=author, reference=ref, year=year, desc=desc, link=link, path="{}{}.pdf".format(paths["thesis"], _filename))
+        publication = Document(type="p-{}".format(presentation), title=title, author=author, reference=ref, year=year, desc=desc, link=link, path="{}{}.pdf".format(paths[presentation], _filename))
         db.session.add(publication)
         db.session.commit()
         flash("Added {}".format(title))
-    return render_template(**permission_check("dashboard/files/thesis.html",
-                                              **get_var(session)), publications=list_thesis())
+    return render_template(**permission_check("dashboard/files/presentations.html".format(presentation),
+                                              **get_var(session)), publications=list_presentation_groups(presentation))
 
-@app.route("/dashboard/logbooks", methods=['GET', "POST"])
-def dashboard_logbooks():
-    if request.method == "POST":
-        title = request.form['title']
-        author = request.form['author']
-        year = request.form['year']
-        ref = request.form['ref']
-        link = request.form['link']
-        desc = request.form['desc']
-        
-        _filename = int(time.time()) 
-        publication = Document(type="logbook", title=title, author=author, reference=ref, year=year, desc=desc, link=link, path="{}{}.pdf".format(paths["logbooks"], _filename))
-        db.session.add(publication)
-        db.session.commit()
-        flash("Added {}".format(title))
-    return render_template(**permission_check("dashboard/files/logbooks.html",
-                                              **get_var(session)), publications=list_thesis())
 
-@app.route("/dashboard/manuals", methods=['GET', "POST"])
-def dashboard_manuals():
-    if request.method == "POST":
-        title = request.form['title']
-        author = request.form['author']
-        year = request.form['year']
-        ref = request.form['ref']
-        link = request.form['link']
-        desc = request.form['desc']
-        
-        _filename = int(time.time()) 
-        publication = Document(type="manual", title=title, author=author, reference=ref, year=year, desc=desc, link=link, path="{}{}.pdf".format(paths["manuals"], _filename))
-        db.session.add(publication)
-        db.session.commit()
-        flash("Added {}".format(title))
-    return render_template(**permission_check("dashboard/files/manuals.html",
-                                              **get_var(session)), publications=list_thesis())
-
-@app.route("/dashboard/presentations/meetings", methods=['GET', "POST"])
-def dashboard_presentations_meetings():
-    if request.method == "POST":
-        title = request.form['title']
-        author = request.form['author']
-        year = request.form['year']
-        ref = request.form['ref']
-        link = request.form['link']
-        desc = request.form['desc']
-        
-        _filename = int(time.time()) 
-        publication = Document(type="presentation-m", title=title, author=author, reference=ref, year=year, desc=desc, link=link, path="{}{}.pdf".format(paths["meetings"], _filename))
-        db.session.add(publication)
-        db.session.commit()
-        flash("Added {}".format(title))
-    return render_template(**permission_check("dashboard/files/presentations.html",
-                                              **get_var(session)), publications=list_presentation_groups("meetings"))
-
-@app.route("/dashboard/presentations/posters", methods=['GET', "POST"])
-def dashboard_presentations_posters():
-    if request.method == "POST":
-        title = request.form['title']
-        author = request.form['author']
-        year = request.form['year']
-        ref = request.form['ref']
-        link = request.form['link']
-        desc = request.form['desc']
-        
-        _filename = int(time.time()) 
-        publication = Document(type="presentation-p", title=title, author=author, reference=ref, year=year, desc=desc, link=link, path="{}{}.pdf".format(paths["posters"], _filename))
-        db.session.add(publication)
-        db.session.commit()
-        flash("Added {}".format(title))
-    return render_template(**permission_check("dashboard/files/presentations.html",
-                                              **get_var(session)), publications=list_presentation_groups("posters"))
-
-@app.route("/dashboard/presentations/conferences", methods=['GET', "POST"])
-def dashboard_presentations_conferences():
-    if request.method == "POST":
-        title = request.form['title']
-        author = request.form['author']
-        year = request.form['year']
-        ref = request.form['ref']
-        link = request.form['link']
-        desc = request.form['desc']
-        
-        _filename = int(time.time()) 
-        publication = Document(type="presentation-c", title=title, author=author, reference=ref, year=year, desc=desc, link=link, path="{}{}.pdf".format(paths["conferences"], _filename))
-        db.session.add(publication)
-        db.session.commit()
-        flash("Added {}".format(title))
-    return render_template(**permission_check("dashboard/files/presentations.html",
-                                              **get_var(session)), publications=list_presentation_groups("conferences"))
-                                              
-@app.route("/dashboard/miscellaneous", methods=['GET', "POST"])
-def dashboard_miscellaneous():
-    if request.method == "POST":
-        title = request.form['title']
-        author = request.form['author']
-        year = request.form['year']
-        ref = request.form['ref']
-        link = request.form['link']
-        desc = request.form['desc']
-        
-        _filename = int(time.time()) 
-        publication = Document(type="misc", title=title, author=author, reference=ref, year=year, desc=desc, link=link, path="{}{}.pdf".format(paths["miscellaneous"], _filename))
-        db.session.add(publication)
-        db.session.commit()
-        flash("Added {}".format(title))
-    return render_template(**permission_check("dashboard/files/presentations.html",
-                                              **get_var(session)), publications=list_presentation_groups("miscellaneous"))
 
 @app.route("/dashboard/gallery", methods=['GET', "POST"])
 def dashboard_gallery():

@@ -58,6 +58,7 @@ class Document(db.Model):
     desc = db.Column(db.Text)
     link = db.Column(db.String(128))
     path = db.Column(db.String(256))
+    tags = db.Column(db.Text)
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
 
     def __repr__(self):
