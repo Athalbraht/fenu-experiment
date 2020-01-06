@@ -1,6 +1,7 @@
 database/
 migrations/
 uploads/
+uploads
 venv/
 App/uploads/
 App/static/uploads/

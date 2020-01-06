@@ -80,8 +80,8 @@
 				<form class="was-validated" method="post">
 					<div class="form-group">
 						<label>Title</label>
-						<input type="text" class="form-control is-valid form-control-sm" id="validationServer01" placeholder="" name="title" required>
-						<div class="invalid-feedback">Example invalid custom select feedback</div>
+						<input type="text" class="form-control is-valid form-control-sm" id="validationServer01" placeholder="presentation name" name="title" required>
+						<div class="invalid-feedback">This field cannot be empty.</div>
 					</div>
 					<div class="form-row">
 						<div class="form-group col-md-6">
@@ -89,7 +89,7 @@
 								<label>Group</label>
 								<select class="custom-select is-invalid" id="validationServer04" required>
 									<option selected disabled value="">Choose</option>
-									<option value="new">New ---></option>
+									<option value="new">Set new group---></option>
 									{% for folder in publications %}
 									<option value="{{folder}}">{{folder.filename}}</option>
 									{% endfor %}
@@ -98,7 +98,7 @@
 						</div>
 						<div class="form-group col-md-6">
 							<label>New group</label>
-							<input type="text" class="form-control is-valid form-control-sm" id="validationServer01" placeholder="" name="title">
+							<input type="text" class="form-control is-valid form-control-sm" id="validationServer01" placeholder="new group name" name="title">
 						</div>
 					</div>
 					<div class="form-row">
@@ -113,9 +113,13 @@
 							<div class="custom-file">
 								<input type="file" class="custom-file-input" id="validatedCustomFile" name="file"required>
 								<label class="custom-file-label" for="validatedCustomFile">Choose file...</label>
-								<div class="invalid-feedback">Example invalid custom file feedback</div>
+								<div class="invalid-feedback">This field cannot be empty.</div>
 							</div>
 						</div>
+					</div>
+					<div class="form-group">
+						<label>Other tags</label>
+						<input type="text" class="form-control  form-control-sm" id="validationServer02" placeholder="optional tags separeted by commas" name="tags">
 					</div>
 					<hr>
 					<button type="submit" class="btn btn-primary">Add</button>
