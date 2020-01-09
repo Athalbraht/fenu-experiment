@@ -2,6 +2,7 @@
 
 import os
 import time
+from io import BytesIO
 from App import app
 from App import db
 from App.models import *
@@ -13,8 +14,9 @@ exp_img = exp_imgs(app.config["UPLOAD_FOLDER"])
 
 @app.route("/test")
 def test():
-    pass
-    return str(0)
+    x = list_presentation_groups("p-meetings")
+    print(x[0].content[1].title)
+    return str(len(x))
 
     #####################
     #####################
@@ -109,14 +111,20 @@ def dashboard_publications(paper):
         ref = request.form['ref']
         link = request.form['link']
         desc = request.form['desc']
+        tags = request.form['tags']
+        _file = request.files['file']
         
-        _filename = int(time.time()) 
-        publication = Document(type=paper, title=title, author=author, reference=ref, year=year, desc=desc, link=link, path="{}{}.pdf".format(paths[paper], _filename))
+        publication = Document(type=paper, title=title, author=author, reference=ref, year=year, desc=desc, link=link, path=_file.filename, files=_file.read())
         db.session.add(publication)
         db.session.commit()
         flash("Added {}".format(title))
     return render_template(**permission_check("dashboard/files/papers.html".format(paper),
-                                              **get_var(session)), publications=list_papers(paper))
+                                              **get_var(session)), publications=list_papers(paper), section=paper)
+                                              
+@app.route("/dashboard/<paper>/download/<fileid>", methods=['GET', "POST"])
+def dashboard_download(paper,fileid):
+    _file = Document.query.filter_by(id=fileid).first()
+    return send_file(BytesIO(_file.files), attachment_filename=_file.path)
 
 
 
@@ -125,18 +133,17 @@ def dashboard_presentations(presentation):
     if request.method == "POST":
         title = request.form['title']
         author = request.form['author']
-        year = request.form['year']
-        ref = request.form['ref']
-        link = request.form['link']
         desc = request.form['desc']
+        group = request.form['group']
+        ngroup = request.form['ngroup']
+        _file = request.files['file']
         
-        _filename = int(time.time()) 
-        publication = Document(type="p-{}".format(presentation), title=title, author=author, reference=ref, year=year, desc=desc, link=link, path="{}{}.pdf".format(paths[presentation], _filename))
+        publication = Document(type="p-{}".format(presentation), title=title, author=author, desc=desc, path=_file.filename, files=_file.read(), tags=group, reference=ngroup)
         db.session.add(publication)
         db.session.commit()
         flash("Added {}".format(title))
     return render_template(**permission_check("dashboard/files/presentations.html".format(presentation),
-                                              **get_var(session)), publications=list_presentation_groups(presentation))
+                                              **get_var(session)), tags=list_presentation_groups("p-{}".format(presentation)), section=presentation)
 
 
 

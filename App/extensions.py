@@ -53,6 +53,7 @@ def list_posts():
     return posts
 
 def list_presentation_groups(_type,wc=True):
+    '''
     folders = os.listdir(paths[_type])
     class Group():
         def __init__(self, id, filename,path,wc):
@@ -64,7 +65,23 @@ def list_presentation_groups(_type,wc=True):
                 self.content = os.listdir(self.path)
                 self.content_path = [ os.path.join(path, i) for i in self.content ]
     groups = [Group(i,folders[i], os.path.join(paths[_type],folders[i]),wc) for i in range(len(folders))]
-    return groups
+    '''
+    presentations = Document.query.filter(Document.type == _type).all()
+    tags = set([ i.tags for i in presentations ])
+    class Tag():
+        def __init__(self, id, name, content):
+            self.id = id
+            self.name = name
+            self.content = content
+    _tags = [ [] for i in tags]
+    for i,tag in enumerate(tags):
+        for record in presentations:
+            if record.tags == tag:
+                _tags[i].append(record)
+    newtags = []
+    for j,sets in enumerate(_tags):
+        newtags.append(Tag(j, list(tags)[j], sets))
+    return newtags
     
 
 def upload_publications():

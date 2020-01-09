@@ -59,6 +59,7 @@ class Document(db.Model):
     link = db.Column(db.String(128))
     path = db.Column(db.String(256))
     tags = db.Column(db.Text)
+    files = db.Column(db.LargeBinary)
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
 
     def __repr__(self):

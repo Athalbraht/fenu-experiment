@@ -67,10 +67,12 @@
 								{{pub.reference}}<hr>
 								<b>Description</b>:
 								{{pub.desc}}<hr>
-								<b>link</b>:
-								{{pub.doi}}<hr>
-								<b>path to file</b>:
-								{{pub.link}}<hr>
+								<b>filename</b>:
+								{{pub.path}}<hr>
+								<b><a  href="{{pub.link}}">Link</a></b><hr>
+								<b><a  href="/dashboard/{{section}}/download/{{pub.id}}">Download</a></b><hr>
+								<b>Tags</b>:
+								{{pub.tags}}<hr>
 							</div> 
 							
 						</div>
@@ -96,7 +98,7 @@
 				</button>
 			</div>
 			<div class="modal-body">
-				<form class="was-validated" method="post">
+				<form class="was-validated" method="post" enctype="multipart/form-data">
 					<div class="form-group">
 						<label>Title</label>
 						<input type="text" class="form-control is-valid form-control-sm" id="validationServer01" placeholder="" name="title" required>
@@ -147,6 +149,10 @@
 								<div class="invalid-feedback">This field cannot be empty.</div>
 							</div>
 						</div>
+					</div>
+					<div class="form-group">
+						<label>Other tags</label>
+						<input type="text" class="form-control  form-control-sm" id="validationServer02" placeholder="optional tags separeted by commas" name="tags">
 					</div>
 					<hr>
 					<button type="submit" class="btn btn-primary">Add</button>

@@ -33,25 +33,25 @@
 		</div><br>
 
 		<div class="accordion" id="accordionExample">
-			{% for group in publications %}
+			{% for tag in tags %}
 			<div class="card">
-				<div class="card-header" id="heading{{group.id}}" align="left">
+				<div class="card-header" id="heading{{tag.id}}" align="left">
 					<h5 class="mb-0">
-						<button class="btn btn-outline-dark collapsed" type="button" data-toggle="collapse" data-target="#collapse{{group.id}}" aria-expanded="false" aria-controls="collapse{{group.id}}">
-						{{ group.filename }}
+						<button class="btn btn-outline-dark collapsed" type="button" data-toggle="collapse" data-target="#collapse{{tag.id}}" aria-expanded="false" aria-controls="collapse{{tag.id}}">
+						{{ tag.name }}
 						</button>
 					</h5>
 				</div>
-				<div id="collapse{{group.id}}" class="collapse" aria-labelledby="heading{{group.id}}" data-parent="#accordionExample">
+				<div id="collapse{{tag.id}}" class="collapse" aria-labelledby="heading{{tag.id}}" data-parent="#accordionExample">
 					<div class="card-body">
 						<div class="container" align=left>
-							{% for file in group.content %}
+							{% for content in tag.content %}
 							<div class="row">
 								<div class="col">
-									<a class="nav-link active text-dark " href="/sendfile/{{group.types}}/{{group.filename}}/{{file}}">
+									<a class="nav-link active text-dark " href="/dashboard/presentations/download/{{content.id}}">
 										<i class="fa fa-file-pdf-o" style="font-size:30px;color:red"></i>
-										<b> {{ file }}</b>
-										<p><small>description description ....description description ....description description ....description description ...description description ....description description ....description description ....</small></p>
+										<b>{{ content.title }}</b> <br>{{ content.author }}<hr>
+										<p><small>{{ content.desc }}</small></p>
 									</a>
 									<hr>
 								</div>
@@ -77,7 +77,7 @@
 					</button>
 				</div>
 			<div class="modal-body">
-				<form class="was-validated" method="post">
+				<form class="was-validated" method="post", enctype="multipart/form-data">
 					<div class="form-group">
 						<label>Title</label>
 						<input type="text" class="form-control is-valid form-control-sm" id="validationServer01" placeholder="presentation name" name="title" required>
@@ -86,26 +86,8 @@
 					<div class="form-row">
 						<div class="form-group col-md-6">
 							<div class="form-group">
-								<label>Group</label>
-								<select class="custom-select is-invalid" id="validationServer04" required>
-									<option selected disabled value="">Choose</option>
-									<option value="new">Set new group---></option>
-									{% for folder in publications %}
-									<option value="{{folder}}">{{folder.filename}}</option>
-									{% endfor %}
-								</select>
-							</div>
-						</div>
-						<div class="form-group col-md-6">
-							<label>New group</label>
-							<input type="text" class="form-control is-valid form-control-sm" id="validationServer01" placeholder="new group name" name="title">
-						</div>
-					</div>
-					<div class="form-row">
-						<div class="form-group col-md-6">
-							<div class="form-group">
-								<label>Description</label>
-								<input type="text" class="form-control is-valid form-control-sm" id="validationServer01" name="desc" placeholder="" >
+								<label>Author</label>
+								<input type="text" class="form-control is-valid form-control-sm" id="validationServer01" name="author" placeholder=""  required>
 							</div>
 						</div>
 						<div class="form-group col-md-6">
@@ -117,9 +99,27 @@
 							</div>
 						</div>
 					</div>
+					<div class="form-row">
+						<div class="form-group col-md-6">
+							<div class="form-group">
+								<label>Group</label>
+								<select class="custom-select is-invalid" id="validationServer04" name="group" required>
+									<option selected disabled value="">Choose</option>
+									<option value="new">Set new group---></option>
+									{% for tag in tags %}
+									<option value="{{tag.name}}">{{tag.name}}</option>
+									{% endfor %}
+								</select>
+							</div>
+						</div>
+						<div class="form-group col-md-6">
+							<label>New group</label>
+							<input type="text" class="form-control is-valid form-control-sm" id="validationServer01" placeholder="new group name" name="ngroup">
+						</div>
+					</div>
 					<div class="form-group">
-						<label>Other tags</label>
-						<input type="text" class="form-control  form-control-sm" id="validationServer02" placeholder="optional tags separeted by commas" name="tags">
+						<label>Description</label>
+						<input type="text" class="form-control is-valid form-control-sm" id="validationServer01" placeholder="presentation name" name="desc">
 					</div>
 					<hr>
 					<button type="submit" class="btn btn-primary">Add</button>
