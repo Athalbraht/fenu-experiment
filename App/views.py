@@ -64,7 +64,7 @@ def logout():
 @app.route("/experiments", methods=['GET', "POST"])
 def experiments():
     return render_template("world/experiments.html", **
-                           get_var(session), imagee=exp_img, collection=list_presentation_groups("detector",False))
+                           get_var(session), imagee=exp_img)
 
 
 @app.route("/members")
@@ -104,46 +104,74 @@ def permission_check(template, *args, **kwargs):
 
 @app.route("/dashboard/papers/<paper>", methods=['GET', "POST"])
 def dashboard_publications(paper):
+    searchOptions = {"author":"","title":"","year":""}
     if request.method == "POST":
-        title = request.form['title']
-        author = request.form['author']
-        year = request.form['year']
-        ref = request.form['ref']
-        link = request.form['link']
-        desc = request.form['desc']
-        tags = request.form['tags']
-        _file = request.files['file']
+        formname = request.form['form-name']
+        if formname == "add":
+            title = request.form['title']
+            author = request.form['author']
+            year = request.form['year']
+            ref = request.form['ref']
+            link = request.form['link']
+            desc = request.form['desc']
+            tags = request.form['tags']
+            _file = request.files['file']
         
-        publication = Document(type=paper, title=title, author=author, reference=ref, year=year, desc=desc, link=link, path=_file.filename, files=_file.read())
-        db.session.add(publication)
-        db.session.commit()
-        flash("Added {}".format(title))
+            publication = Document(type=paper, title=title, author=author, reference=ref, year=year, desc=desc, link=link, path=_file.filename, files=_file.read())
+            db.session.add(publication)
+            db.session.commit()
+            flash("Added {}".format(title))
+
+        else:
+            search = request.form['form-name']
+            year = request.form['year']
+            author = request.form['author']
+            title = request.form['title']
+            searchOptions = {"author":author,"title":title,"year":year}
     return render_template(**permission_check("dashboard/files/papers.html".format(paper),
-                                              **get_var(session)), publications=list_papers(paper), section=paper)
+                                              **get_var(session)), publications=list_papers(paper,searchOptions), section=paper)
                                               
 @app.route("/dashboard/<paper>/download/<fileid>", methods=['GET', "POST"])
 def dashboard_download(paper,fileid):
     _file = Document.query.filter_by(id=fileid).first()
     return send_file(BytesIO(_file.files), attachment_filename=_file.path)
 
-
+@app.route("/dashboard/delete/<f>/<item>", methods=['GET', "POST"])
+def dashboard_delete(f,item):
+    _file = Document.query.filter_by(id=item).one()
+    db.session.delete(_file)
+    db.session.commit()
+    flash("deleted file")
+    return render_template(**permission_check("dashboard/files/papers.html"))
 
 @app.route("/dashboard/presentations/<presentation>", methods=['GET', "POST"])
 def dashboard_presentations(presentation):
+    searchOptions = {"author":"","title":"","tag":""}
     if request.method == "POST":
-        title = request.form['title']
-        author = request.form['author']
-        desc = request.form['desc']
-        group = request.form['group']
-        ngroup = request.form['ngroup']
-        _file = request.files['file']
+        formname = request.form['form-name']
+        if formname == "add":
+            title = request.form['title']
+            author = request.form['author']
+            desc = request.form['desc']
+            group = request.form['group']
+            ngroup = request.form['ngroup']
+            _file = request.files['file']
         
-        publication = Document(type="p-{}".format(presentation), title=title, author=author, desc=desc, path=_file.filename, files=_file.read(), tags=group, reference=ngroup)
-        db.session.add(publication)
-        db.session.commit()
-        flash("Added {}".format(title))
+            publication = Document(type="p-{}".format(presentation), title=title, author=author, desc=desc, path=_file.filename, files=_file.read(), tags=group, reference=ngroup)
+            db.session.add(publication)
+            db.session.commit()
+            flash("Added {}".format(title))
+            print("add")
+        else:
+            search = request.form['form-name']
+            tags = request.form['tags']
+            author = request.form['author']
+            title = request.form['title']
+            searchOptions = {"author":author,"title":title,"tag":tags}
+            print("else")
+            print(tags,author,title)
     return render_template(**permission_check("dashboard/files/presentations.html".format(presentation),
-                                              **get_var(session)), tags=list_presentation_groups("p-{}".format(presentation)), section=presentation)
+                                              **get_var(session)), tags=list_presentation_groups("p-{}".format(presentation),searchOptions), section=presentation)
 
 
 

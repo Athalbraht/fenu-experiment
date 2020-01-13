@@ -43,8 +43,9 @@ def check_password(login, passwd):
         return "Wrong email or password. Try again.", False, None
 
 
-def list_papers(_type):
-    pubs = Document.query.filter(Document.type == _type)
+def list_papers(_type,search=None):
+    _pubs = Document.query.filter(Document.type == _type)
+    pubs = _pubs.filter(Document.title.contains(search["title"]), Document.year.contains(search["year"]), Document.author.contains(search["author"]))
     _sort = pubs.order_by(Document.year.desc()).all()
     return(_sort)
 
@@ -52,7 +53,7 @@ def list_posts():
     posts = Post.query.order_by(Post.id.desc()).all()
     return posts
 
-def list_presentation_groups(_type,wc=True):
+def list_presentation_groups(_type,search=None):
     '''
     folders = os.listdir(paths[_type])
     class Group():
@@ -66,7 +67,11 @@ def list_presentation_groups(_type,wc=True):
                 self.content_path = [ os.path.join(path, i) for i in self.content ]
     groups = [Group(i,folders[i], os.path.join(paths[_type],folders[i]),wc) for i in range(len(folders))]
     '''
-    presentations = Document.query.filter(Document.type == _type).all()
+    _presentations = Document.query.filter(Document.type == _type)
+    if search != None:
+        presentations = _presentations.filter(Document.title.contains(search["title"]), Document.tags.contains(search["tag"]), Document.author.contains(search["author"])).order_by(Document.timestamp.desc()).all()
+    else:
+        presentations = _presentations.all()
     tags = set([ i.tags for i in presentations ])
     class Tag():
         def __init__(self, id, name, content):

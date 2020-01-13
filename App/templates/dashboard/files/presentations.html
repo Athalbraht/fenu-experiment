@@ -6,29 +6,25 @@
 		<div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups">
 			<div class="btn-group" role="group" aria-label="First group">
 				<button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#modnew">Send file</button>
-				<a class="btn btn-outline-info" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">Filter</a>
+				
 			</div>
-			<div class="collapse" id="collapseExample">
-				<div class="input-group"><hr>
-					<select class="custom-select" id="inputGroupSelect01">
-						<option selected>Tag</option>
-						<option value="1">SMCEBI</option>
-						<option value="2">IFJ</option>
-						<option value="3">both</option>
-					</select>
-					<select class="custom-select" id="inputGroupSelect01">
-						<option selected>Sort by</option>
-						<option value="1">Author</option>
-						<option value="2">Title</option>
-						<option value="3">Year</option>
-					</select>
-					<select class="custom-select" id="inputGroupSelect01">
-						<option selected>ascending</option>
-						<option value="1">descending</option>
-					</select>
-					<input type="text" class="form-control" placeholder="keyword" aria-label="Input group example" aria-describedby="btnGroupAddon2">
-					<button type="button" class="btn btn-secondary">Apply</button>
-				</div>
+			<div >
+				<form  method="post", enctype="multipart/form-data">
+					<input type="hidden" name="form-name" value="search">
+					<div class="input-group"><hr>
+						<select class="custom-select" id="inputGroupSelect01" name="tags" value="x">
+							<option selected value="">Choose tag</option>
+							{% for tag in tags %}
+							<option value="{{tag.name}}">{{tag.name}}</option>
+							{% endfor %}
+						</select>
+
+						<input type="text" class="form-control" placeholder="Author" name="author" value="">
+						<input type="text" class="form-control" placeholder="Title" name="title" value="">
+						 
+						<button type="submit" class="btn btn-secondary">Search</button>
+					</div>
+				</form>
 			</div>
 		</div><br>
 
@@ -50,7 +46,7 @@
 								<div class="col">
 									<a class="nav-link active text-dark " href="/dashboard/presentations/download/{{content.id}}">
 										<i class="fa fa-file-pdf-o" style="font-size:30px;color:red"></i>
-										<b>{{ content.title }}</b> <br>{{ content.author }}<hr>
+										<b><small>{{ content.author }}: </small>{{ content.title }}</b> <hr>
 										<p><small>{{ content.desc }}</small></p>
 									</a>
 									<hr>
@@ -77,7 +73,8 @@
 					</button>
 				</div>
 			<div class="modal-body">
-				<form class="was-validated" method="post", enctype="multipart/form-data">
+				<form class="was-validated" method="post", enctype="multipart/form-data" >
+					<input type="hidden" name="form-name" value="add">
 					<div class="form-group">
 						<label>Title</label>
 						<input type="text" class="form-control is-valid form-control-sm" id="validationServer01" placeholder="presentation name" name="title" required>

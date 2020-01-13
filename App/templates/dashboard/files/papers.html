@@ -1,28 +1,25 @@
 {% extends "dashboard/files.html" %}
 {% block dashboard_files %}
 <div class="container-fluid">
-	<div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups">
-		<div class="btn-group" role="group" aria-label="First group">
-			<button type="button" class="btn btn-success" data-toggle="modal" data-target="#modnew">New</button>
-			<a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">Filter</a>
-		</div>
-		<div class="collapse" id="collapseExample">
-			<div class="input-group"><hr>
-				<select class="custom-select" id="inputGroupSelect01">
-					<option selected>Sort by</option>
-					<option value="1">Author</option>
-					<option value="2">Title</option>
-					<option value="3">Year</option>
-				</select>
-				<select class="custom-select" id="inputGroupSelect01">
-					<option selected>ascending</option>
-					<option value="1">descending</option>
-				</select>
-				<input type="text" class="form-control" placeholder="keyword" aria-label="Input group example" aria-describedby="btnGroupAddon2">
-				<button type="button" class="btn btn-secondary">Apply</button>
+	<div class="container">
+		<div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups">
+			<div class="btn-group" role="group" aria-label="First group">
+				<button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#modnew">Send file</button>
+				
 			</div>
-		</div>
-	</div><br>
+			<div >
+				<form  method="post", enctype="multipart/form-data">
+					<input type="hidden" name="form-name" value="search">
+					<div class="input-group"><hr>
+						<input type="text" class="form-control" placeholder="Year" name="year" value="">
+						<input type="text" class="form-control" placeholder="Author" name="author" value="">
+						<input type="text" class="form-control" placeholder="Title" name="title" value="">
+						 
+						<button type="submit" class="btn btn-secondary">Search</button>
+					</div>
+				</form>
+			</div>
+		</div><br>
 	<table class="table table-striped">
 		<thead>
 			<tr>
@@ -36,7 +33,7 @@
 			{% for pub in publications %}
 			<tr>
 				<td>{{pub.author}}</td>
-				<td>{{pub.title}}</td>
+				<td><b><a  href="/dashboard/{{section}}/download/{{pub.id}}">{{pub.title}}</a></b></td>
 				<td>{{pub.year|int}}</td>
 				<td><a class="nav-link active text-secondary " type="button" data-toggle="modal" data-target="#mod{{pub.id}}"><h4><i class="fa fa-sliders"></h4></i></a></td>
 			</tr>
@@ -78,7 +75,7 @@
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-info" data-dismiss="modal">Edit</button>
-							<button type="button" class="btn btn-danger">Delete</button>
+							<b><a role="button" class="btn btn-outline-danger" href="/dashboard/delete/papers/{{pub.id}}">Delete</a></b>
 						</div>
 					</div>
 				</div>
@@ -99,6 +96,7 @@
 			</div>
 			<div class="modal-body">
 				<form class="was-validated" method="post" enctype="multipart/form-data">
+					<input type="hidden" name="form-name" value="add">
 					<div class="form-group">
 						<label>Title</label>
 						<input type="text" class="form-control is-valid form-control-sm" id="validationServer01" placeholder="" name="title" required>
