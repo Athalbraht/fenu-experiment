@@ -1,31 +1,23 @@
 {% extends "dashboard/files.html" %}
 {% block dashboard_files %}
-<div class="card-columns">
-	{% for group in collection %}
-	<div class="card">
-		<img class="card-img-top" src="{{url_for('static', filename=group.path)}}" alt="Generic placeholder image" >
-		<div class="card-body">
-			<h5 class="card-title">{{group.filename}}</h5>
-			<button type="button" class="btn btn-success" data-toggle="modal" data-target="#modnew{{group.id}}">Show</button>
-			<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modnew{{group.id}}">Delete</button>
-		</div>
-	</div>
-
-	<div class="modal fade" id="modnew{{group.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-		<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLabel">{{group.filename}}</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-					<img src="{{url_for('static', filename=group.path)}}" class="img-fluid" alt="Responsive image">
-				</div>
-			</div>
-		</div>
-	</div>
-	{% endfor %}
-</div>
+<table class="table table-striped" align="left">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Title</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+{% for group in collection %}
+    <tr>
+      <th scope="row">{{group.id}}</th>
+      <td>{{group.filename}}</td>
+      <td><a role="button" class="btn btn-outline-success" href="/dashboard/gallery/download/{{folder}}/{{group.id}}">Show</a></td>
+    </tr>
+{% endfor %}
+  </tbody>
+</table>
 {% endblock %}
+
+

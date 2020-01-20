@@ -89,6 +89,20 @@ def list_presentation_groups(_type,search=None):
     return newtags
     
 
+def list_photos(_type,wc=True):
+    folders = os.listdir(paths[_type])
+    class Group():
+        def __init__(self, id, filename,path,wc):
+            self.types = _type
+            self.filename = filename
+            self.id = id
+            self.path = path
+            if wc:
+                self.content = os.listdir(self.path)
+                self.content_path = [ os.path.join(path, i) for i in self.content ]
+    groups = [Group(i,folders[i], os.path.join(paths[_type],folders[i]),wc) for i in range(len(folders))]
+    return groups
+
 def upload_publications():
     
     return 1

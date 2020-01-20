@@ -190,8 +190,13 @@ def dashboard_gallery():
         #db.session.commit()
         flash("Added {}".format(title))
     return render_template(**permission_check("dashboard/files/photos.html",
-                                              **get_var(session)), collection=list_presentation_groups("gallery"), imgs=exp_img)
+                                              **get_var(session)), collection=list_photos("gallery"), imgs=exp_img)
 
+@app.route("/dashboard/gallery/download/<folder>/<fileid>", methods=['GET', "POST"])
+def dashboard_gallery_download(folder,fileid):
+    collection=list_photos(folder,False)
+    return render_template(**permission_check("dashboard/files/img.html",
+                                              **get_var(session)), picpath=collection[int(fileid)].path)
 
 @app.route("/dashboard/gallery/<folder>", methods=['GET', "POST"])
 def dashboard_gallery_open(folder):
@@ -208,7 +213,7 @@ def dashboard_gallery_open(folder):
         #db.session.commit()
         flash("Added {}".format(title))
     return render_template(**permission_check("dashboard/files/gallery.html",
-                                              **get_var(session)), collection=list_presentation_groups(folder,False), imgs=exp_img)
+                                              **get_var(session)), collection=list_photos(folder,False), imgs=exp_img, folder=folder)
 
 @app.route("/dashboard/data", methods=['GET', "POST"])
 def dashboard_data():
