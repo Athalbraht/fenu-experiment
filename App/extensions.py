@@ -45,7 +45,10 @@ def check_password(login, passwd):
 
 def list_papers(_type,search=None):
     _pubs = Document.query.filter(Document.type == _type)
-    pubs = _pubs.filter(Document.title.contains(search["title"]), Document.year.contains(search["year"]), Document.author.contains(search["author"]))
+    if search != None:
+        pubs = _pubs.filter(Document.title.contains(search["title"]), Document.year.contains(search["year"]), Document.author.contains(search["author"]))
+    else:
+        pubs = _pubs
     _sort = pubs.order_by(Document.year.desc()).all()
     return(_sort)
 

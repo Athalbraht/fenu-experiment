@@ -25,7 +25,7 @@ def test():
     #####################
 
 
-@app.route("/home")
+@app.route("/students")
 def home():
     print(get_var(session))
     return render_template("world/home.html", **
@@ -48,7 +48,7 @@ def login():
             session["username"] = user[2]
             session["status"] = "Log out"
             flash(user[0])
-            return redirect(url_for('home'))
+            return redirect(url_for('experiments'))
         else:
             flash(user[0])
     return render_template("world/login.html", **get_var(session))
@@ -76,7 +76,7 @@ def members():
 @app.route("/publications")
 def publications():
     return render_template("world/publications.html", **
-                           get_var(session), publications=list_papers("publication"))
+                           get_var(session), publications=list_papers("publications"))
 
     #####################
     #####################
