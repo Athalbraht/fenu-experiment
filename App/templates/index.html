@@ -25,27 +25,27 @@
 			<ul class="navbar-nav ml-auto ">
 
 				<li class="nav-item active">
-					<a class="nav-link" href="/experiments">Experiment<span class="sr-only">(current)</span></a>
+					<a class="nav-link" href="/experiments">{{ lang["ihexp"] }}<span class="sr-only">(current)</span></a>
 				</li>
 
 				<li class="nav-item">
-					<a class="nav-link" href="/publications">Publications</a>
+					<a class="nav-link" href="/publications">{{ lang["ihpub"] }}</a>
 				</li>
 
 				<li class="nav-item">
-					<a class="nav-link" href="/members">Members</a>
+					<a class="nav-link" href="/members">{{ lang["ihmem"] }}</a>
 				</li>
 
 				<li class="nav-item">
-					<a class="nav-link" href="/students">For students </a>
+					<a class="nav-link" href="/students">{{ lang["ihstud"] }}</a>
 				</li>
 
 				<li class="nav-item">
-					<a class="nav-link" href="#" data-toggle="modal" data-target="#ContactsModal">Contact</a>
+					<a class="nav-link" href="#" data-toggle="modal" data-target="#ContactsModal">{{ lang["ihcon"] }}</a>
 				</li>
 				{% if admin %}
 				<li class="nav-item">
-					<a class="nav-link" href="/dashboard/papers/publications">Dashboard</a>
+					<a class="nav-link" href="/dashboard/papers/publications">{{ lang["ihdash"] }}</a>
 				</li>
 				{% endif %}
 			</ul>
@@ -53,10 +53,10 @@
 			<ul class="navbar-nav flex-row ml-md-auto  d-md-flex">
 				
 				<li class="nav-item">
-					<a class="nav-link active" href="/#">ENG</a>
+					<a class="nav-link active" href="/lang/en">ENG</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="/#">PL</a> 
+					<a class="nav-link" href="/lang/pl">PL</a> 
 				</li>
 				
 				<li class="nav-item">
@@ -91,7 +91,7 @@
 		<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalCenterTitle">Contacts</h5>
+					<h5 class="modal-title" id="exampleModalCenterTitle">{{lang["ihcon"]}}</h5>
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 							<span aria-hidden="true">&times;</span>
 						</button>

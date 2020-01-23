@@ -12,6 +12,20 @@ from App.models import *
 
 source = "uploads/"
 
+translations = {
+               "ihexp":"",
+               "ihpub":"",
+               "ihmem":"",
+               "ihstud":"",
+               "ihcon":"",
+               "ihdash":"",
+               "icpub-year":"",
+               "icpub-title":"",
+               "icpub-author":"",
+               "icpub-download":"",
+               }
+
+
 paths = {
         "publications":"{}documents/papers/publications/".format(source),
         "thesis":"{}documents/papers/thesis".format(source),
@@ -28,6 +42,13 @@ paths = {
         "other":"{}gallery/other".format(source),
         "gallery":"{}gallery".format(source)
         }
+
+def translator(lang):
+    user = Content.query.filter(Content.lang == lang)
+    _translations = translations.copy()
+    for key in translations.keys():
+        _translations[key] = Content.query.filter(Content.lang == lang, Content.localization == key).first().body
+    return _translations
 
 def check_password(login, passwd):
     user = User.query.filter(User.username == login)

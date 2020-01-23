@@ -1,7 +1,7 @@
 {% extends "index.html" %}
 {% block body %}
 	<div class="container">
-		<h2 class="mb-0 text-black lh-100">Members</h2>
+		<h2 class="mb-0 text-black lh-100">{{ lang["ihmem"] }}</h2>
 {% for org in organizations %}
 		<div class="my-3 p-3 bg-white rounded box-shadow">
 			<h6 class="border-bottom border-gray pb-2 mb-0">{{org[0]}}</h6>

@@ -12,6 +12,7 @@ from werkzeug.utils import secure_filename
 exp_img = exp_imgs(app.config["UPLOAD_FOLDER"])
 
 
+
 @app.route("/test")
 def test():
     x = list_presentation_groups("p-meetings")
@@ -25,11 +26,17 @@ def test():
     #####################
 
 
+@app.route("/lang/<lang>")
+def language(lang):
+    session["lang"] = lang
+    flash("Language switched to {}".format(session["lang"]))
+    return redirect(url_for('experiments'))
+
 @app.route("/students")
 def home():
-    print(get_var(session))
-    return render_template("world/home.html", **
-                           get_var(session), posts=list_posts())
+    x = {"x":"xx"}
+    return render_template("world/home.html", 
+                           **get_var(session), posts=list_posts(),lang=translator(session["lang"]), langg=session["lang"])
 
 
 @app.route("/")
@@ -51,12 +58,14 @@ def login():
             return redirect(url_for('experiments'))
         else:
             flash(user[0])
-    return render_template("world/login.html", **get_var(session))
+    return render_template("world/login.html", **get_var(session),lang=translator(session["lang"]))
 
 
 @app.route("/logout", methods=['GET', "POST"])
 def logout():
+    lang = session["lang"]
     session.pop("user", None)
+    session["lang"] = lang
     flash("Logged out")
     return redirect(url_for('home'))
 
@@ -64,19 +73,19 @@ def logout():
 @app.route("/experiments", methods=['GET', "POST"])
 def experiments():
     return render_template("world/experiments.html", **
-                           get_var(session), imagee=exp_img)
+                           get_var(session), imagee=exp_img,lang=translator(session["lang"]))
 
 
 @app.route("/members")
 def members():
     return render_template("world/members.html", **
-                           get_var(session), organizations=list_members())
+                           get_var(session), organizations=list_members(),lang=translator(session["lang"]))
 
 
 @app.route("/publications")
 def publications():
     return render_template("world/publications.html", **
-                           get_var(session), publications=list_papers("publications"))
+                           get_var(session), publications=list_papers("publications"),lang=translator(session["lang"]))
 
     #####################
     #####################
@@ -314,6 +323,7 @@ def send_pub(types,folder,filename):
 @app.before_request
 def before_request():
     g.user = None
+    g.lang = None
     if 'user' in session:
         g.user = session["user"]
         session["status"] = "Log out"
@@ -326,6 +336,10 @@ def before_request():
         session["logged_in"] = False
         session["admin"] = False
         session["username"] = "Guest"
+    if 'lang' in session:
+        g.lang = session["lang"]
+    else:
+        session["lang"] = "en"
 
 
 @app.errorhandler(404)
