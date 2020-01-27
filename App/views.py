@@ -72,8 +72,9 @@ def logout():
 
 @app.route("/experiments", methods=['GET', "POST"])
 def experiments():
+    print(session["lang"])
     return render_template("world/experiments.html", **
-                           get_var(session), imagee=exp_img,lang=translator(session["lang"]))
+                           get_var(session), imagee=exp_img,lang=translator(session["lang"]), collection=list_photos("detector", False))
 
 
 @app.route("/members")
@@ -123,10 +124,9 @@ def dashboard_publications(paper):
             ref = request.form['ref']
             link = request.form['link']
             desc = request.form['desc']
-            tags = request.form['tags']
             _file = request.files['file']
         
-            publication = Document(type=paper, title=title, author=author, reference=ref, year=year, desc=desc, link=link, path=_file.filename, files=_file.read())
+            publication = Document(type=paper, title=title, author=author, reference=ref, year=int(year), desc=desc, link=link, path=_file.filename, files=_file.read())
             db.session.add(publication)
             db.session.commit()
             flash("Added {}".format(title))
@@ -165,8 +165,11 @@ def dashboard_presentations(presentation):
             group = request.form['group']
             ngroup = request.form['ngroup']
             _file = request.files['file']
-        
-            publication = Document(type="p-{}".format(presentation), title=title, author=author, desc=desc, path=_file.filename, files=_file.read(), tags=group, reference=ngroup)
+            if group == 'new':
+                group = ngroup
+                if group == "":
+                    group = "Unsorted"
+            publication = Document(type="p-{}".format(presentation), title=title, author=author, desc=desc, path=_file.filename, files=_file.read(), tags=group)
             db.session.add(publication)
             db.session.commit()
             flash("Added {}".format(title))
@@ -279,6 +282,41 @@ def dashboard_edit_home_post(post_id):
     return render_template(**permission_check("dashboard/edit/home.html", **get_var(session)),
                            posts=list_posts(), edit_header="Editing {}".format(post.head), title=post.head, body=post.body)
 
+
+@app.route("/dashboard/edit/experiment", methods=['GET', "POST"])
+def dashboard_edit_experiment():
+    if request.method == "POST":
+        head = request.form['title']
+        body = request.form['body']
+        loc = request.form['loc']
+        lang = request.form["lang"]
+        desc = request.form["desc"]
+        post = Experiment(head=head, body=body, localization=loc, lang=lang,desc=desc)
+        db.session.add(post)
+        db.session.commit()
+        flash("Added")
+    return render_template(**permission_check("dashboard/edit/experiment.html", **
+                                              get_var(session)), posts=list_exp(), edit_header="Add new message")
+
+
+@app.route("/dashboard/edit/experiment/<post_id>", methods=['GET', "POST"])
+def dashboard_edit_experiment_post(post_id):
+    post = get_exp(post_id)
+    if request.method == "POST":
+        head = request.form['title']
+        body = request.form['body']
+        loc = request.form['loc']
+        lang = request.form["lang"]
+        desc = request.form["desc"]
+        post.head = head
+        post.body = body
+        post.lang = lang
+        post.desc = desc
+        post.localization = loc
+        db.session.commit()
+        flash("Updated")
+    return render_template(**permission_check("dashboard/edit/experiment.html", **get_var(session)),
+                           posts=list_exp(), edit_header="Editing {}".format(post.head), title=post.head, body=post.body, loc=post.localization, lang=post.lang, desc=post.desc)
 
 @app.route("/dashboard/edit/members", methods=['GET', "POST"])
 def dashboard_edit_members():

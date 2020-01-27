@@ -3,40 +3,52 @@
 
 <nav aria-label="breadcrumb">
 	<ol class="breadcrumb">
-		<li class="breadcrumb-item"><a href="#">Notes</a></li>
-		<li class="breadcrumb-item active" aria-current="page">Data</li>
+		<li class="breadcrumb-item"><a href="#">Experiment</a></li>
+		<li class="breadcrumb-item active" aria-current="page">Editing</li>
 	</ol>
 </nav>
 
+<div class="jumbotron">
+	<p class="lead">{{edit_header}}</p>
+	<hr class="my-4">
+	<form method="post">
+		<div class="form-group">
+			<label for="title">Title</label>
+			<textarea class="form-control" id="title" rows="1" name="title" >{{title}}</textarea>
+			<label for="title">Language</label>
+			<textarea class="form-control" id="title" rows="1" name="lang" >{{lang}}</textarea>
+			<label for="title">Localization</label>
+			<textarea class="form-control" id="title" rows="1" name="loc" >{{loc}}</textarea>
+						<label for="title">Description</label>
+			<textarea class="form-control" id="title" rows="1" name="desc" >{{desc}}</textarea>
+		</div>
+		<div class="form-group">
+			<label for="body">Body</label>
+			<textarea class="form-control" id="body" rows="6" name="body">{{body}}</textarea>
+		</div>
+		<button type="submit" class="btn btn-primary">Publish</button>
+	</form>
+</div>
+
 <div class="accordion" id="accordionExample">
+{% for post in posts %}
 	<div class="card">
 		<div class="card-header" id="headingTwo">
 			<h5 class="mb-0">
-				<button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-					Collapsible Group Item #2
+				<button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#post{{post.id}}" aria-expanded="false" aria-controls="collapseTwo">
+					{{post.head}}
 				</button>
+				<a type="button" class="btn btn-outline-danger btn-sm float-right" href="/dashboard/edit/experment/delete/{{post.id}}" role="button">Delete</a>
+				<a type="button" class="btn btn-outline-info btn-sm float-right" href="/dashboard/edit/experiment/{{post.id}}" role="button">Edit</a>
 			</h5>
 		</div>
-		<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+		<div id="post{{post.id}}" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
 			<div class="card-body">
-				Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+				{{post.body}}
 			</div>
 		</div>
 	</div>
-	<div class="card">
-		<div class="card-header" id="headingThree">
-			<h5 class="mb-0">
-				<button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-					Collapsible Group Item #3
-				</button>
-			</h5>
-		</div>
-		<div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
-			<div class="card-body">
-				Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-			</div>
-		</div>
-	</div>
+{% endfor %}
 </div>
 
 {% endblock %}

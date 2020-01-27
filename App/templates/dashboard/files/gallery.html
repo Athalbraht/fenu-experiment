@@ -6,6 +6,7 @@
       <th scope="col">#</th>
       <th scope="col">Title</th>
       <th scope="col"></th>
+      <th scope="col"></th>
     </tr>
   </thead>
   <tbody>
@@ -14,6 +15,7 @@
       <th scope="row">{{group.id}}</th>
       <td>{{group.filename}}</td>
       <td><a role="button" class="btn btn-outline-success" href="/dashboard/gallery/download/{{folder}}/{{group.id}}">Show</a></td>
+      <th ><img  src="{{url_for('static', filename=group.path)}}"  style=" width: 90px; height: 60px;"></th>
     </tr>
 {% endfor %}
   </tbody>

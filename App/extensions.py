@@ -23,6 +23,13 @@ translations = {
                "icpub-title":"",
                "icpub-author":"",
                "icpub-download":"",
+               "gallery":"",
+               "prev":"",
+               "next":"",
+               "up":"",
+               "viewd":"",
+
+               
                }
 
 
@@ -44,10 +51,17 @@ paths = {
         }
 
 def translator(lang):
-    user = Content.query.filter(Content.lang == lang)
     _translations = translations.copy()
     for key in translations.keys():
         _translations[key] = Content.query.filter(Content.lang == lang, Content.localization == key).first().body
+    posts = Post.query.filter(Post.head.contains("[{}]".format(lang))).all()
+    _translations["icstud"] = []
+    for post in posts:
+        _translations["icstud"].append(post)
+    exp = Experiment.query.filter(Experiment.lang.contains(lang)).all()
+    _translations["icexp"] = []
+    for post in exp:
+        _translations["icexp"].append(post)
     return _translations
 
 def check_password(login, passwd):
@@ -75,6 +89,10 @@ def list_papers(_type,search=None):
 
 def list_posts():
     posts = Post.query.order_by(Post.id.desc()).all()
+    return posts
+    
+def list_exp():
+    posts = Experiment.query.order_by(Experiment.id.desc()).all()
     return posts
 
 def list_presentation_groups(_type,search=None):
@@ -136,6 +154,9 @@ def get_post(post_id):
     post = Post.query.filter(Post.id == post_id).first()
     return post
 
+def get_exp(post_id):
+    post = Experiment.query.filter(Experiment.id == post_id).first()
+    return post
 
 def list_members():
     affiliation = []

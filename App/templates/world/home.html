@@ -1,31 +1,28 @@
 {% extends "index.html" %}
 {% block body %}
+
  <main role="main" class="container">
-      <div class="row">
-        <div class=" blog-main">
-          <h2 class="font-italic border-bottom">
-            {{lang["ihstud"]}} 
-          </h2><br>
-{% for post in posts %}
-          <div class="blog-post">
-            <h3 class="blog-post-title">{{post.head}}</h3>
-            
-{{post.body}}
-          </div><hr>
-          <small><p class="blog-post-meta">Added: {{post.timestamp.strftime("%d-%m-%Y  %H:%M") }}</p></small>
+		<div class="row">
+		<div class=" blog-main">
+			<h2 class="font-italic border-bottom">
+				{{lang["ihstud"]}} 
+			</h2><br>
+{% for post in lang["icstud"] %}
+
+			<div class="blog-post">
+				<h3 class="blog-post-title">{{post.head[4:]}}</h3>
+					{{post.body|safe}}
+			</div><hr>
+			<small><p class="blog-post-meta">Added: {{post.timestamp.strftime("%d-%m-%Y  %H:%M") }}</p></small>
 {% endfor %}
-          
 
-          <nav class="blog-pagination">
-            <a class="btn btn-outline-primary" href="#">Older</a>
-            <a class="btn btn-outline-secondary disabled" href="#">Newer</a>
-          </nav>
 
-        </div><!-- /.blog-main -->
+			<nav class="blog-pagination">
+				<a class="btn btn-outline-primary" href="#">Older</a>
+				<a class="btn btn-outline-secondary disabled" href="#">Newer</a>
+			</nav>
 
-        
-
-      </div><!-- /.row -->
-
-    </main><!-- /.container -->
+		</div><!-- /.blog-main -->
+	</div><!-- /.row -->
+</main><!-- /.container -->
 {% endblock %}

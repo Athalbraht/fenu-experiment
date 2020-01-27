@@ -116,6 +116,15 @@ class Event(db.Model):
     def __repr__(self):
         return '<Note {}>'.format(self.head)
 
+class Experiment(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    lang = db.Column(db.String(128), nullable=False)
+    localization = db.Column(db.String(128), nullable=False)
+    head = db.Column(db.String(128), nullable=False)
+    body = db.Column(db.Text)
+    desc = db.Column(db.Text)
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+
 class Content(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     lang = db.Column(db.String(128), nullable=False)
