@@ -9,7 +9,7 @@
 						<th>{{ lang["icpub-year"] }}</th>
 						<th>{{ lang["icpub-title"] }}</th>
 						<th>{{ lang["icpub-author"] }}</th>
-						<th>{{ lang["icpub-download"] }}</th>
+						<!--<th>{{ lang["icpub-download"] }}</th>-->
 					</tr>
 				</thead>
 				<tbody>
@@ -18,9 +18,11 @@
 						<td>{{pub.year|int}}</td>
 						<td>{{pub.title}}</td>
 						<td>{{pub.author}}</td>
+						<!--
 						<td>
 							<a class="dropdown-item"href="{{pub.doi}}"><i class="fa fa-cloud-download fa-fw"></i></a>
 						</td>
+						-->
 					</tr>
 					{% endfor %}
 				</tbody>

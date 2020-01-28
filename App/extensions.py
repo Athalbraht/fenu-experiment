@@ -28,6 +28,9 @@ translations = {
                "next":"",
                "up":"",
                "viewd":"",
+               #"icexp-mainphoto":"",
+               #"icexp-desc":"",
+               
 
                
                }
@@ -47,7 +50,14 @@ paths = {
         "detector":"{}gallery/detector".format(source),
         "thumbn":"{}gallery/thumbnails".format(source),
         "other":"{}gallery/other".format(source),
+        "plans":"{}gallery/plans".format(source),
+        "production":"{}gallery/production".format(source),
+        "target":"{}gallery/target".format(source),
+        "targetchamber":"{}gallery/targetchamber".format(source),
+        "salad":"{}gallery/salad".format(source),
+        "public":"{}gallery/public".format(source),
         "gallery":"{}gallery".format(source)
+       
         }
 
 def translator(lang):

@@ -74,7 +74,7 @@ def logout():
 def experiments():
     print(session["lang"])
     return render_template("world/experiments.html", **
-                           get_var(session), imagee=exp_img,lang=translator(session["lang"]), collection=list_photos("detector", False))
+                           get_var(session), imagee=exp_img,lang=translator(session["lang"]), collection=list_photos("public", False))
 
 
 @app.route("/members")
@@ -350,6 +350,17 @@ def send_pub(types,folder,filename):
     print(filename)
     return send_from_directory(
         directory="../{}/{}/".format(path,folder), filename=filename, as_attachment=False)
+
+    #####################
+    #####################
+    ###  git server   ###
+    #####################
+    #####################
+
+@app.route("/dashboard/git/", methods=['GET', "POST"])
+def dashboard_git():
+    return render_template(
+        **permission_check("dashboard/git/home.html", **get_var(session)))
 
     ###############
     ###############
