@@ -1,0 +1,130 @@
+{% extends "dashboard/files.html" %}
+{% block dashboard_files %}
+
+<div class="container-fluid">
+	<div class="container">
+		<div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups">
+			<div class="btn-group" role="group" aria-label="First group">
+				<button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#modnew">Send file</button>
+				
+			</div>
+			<div >
+				<form  method="post", enctype="multipart/form-data">
+					<input type="hidden" name="form-name" value="search">
+					<div class="input-group"><hr>
+						<select class="custom-select" id="inputGroupSelect01" name="tags" value="x">
+							<option selected value="">Choose tag</option>
+							{% for tag in tags %}
+							<option value="{{tag.name}}">{{tag.name}}</option>
+							{% endfor %}
+						</select>
+
+						<input type="text" class="form-control" placeholder="Author" name="author" value="">
+						<input type="text" class="form-control" placeholder="Title" name="title" value="">
+						 
+						<button type="submit" class="btn btn-secondary">Search</button>
+					</div>
+				</form>
+			</div>
+		</div><br>
+
+		<div class="accordion" id="accordionExample">
+			{% for tag in tags %}
+			<div class="card">
+				<div class="card-header" id="heading{{tag.id}}" align="left">
+					<h5 class="mb-0">
+						<button class="btn btn-outline-dark collapsed" type="button" data-toggle="collapse" data-target="#collapse{{tag.id}}" aria-expanded="false" aria-controls="collapse{{tag.id}}">
+						{{ tag.name }}
+						</button>
+					</h5>
+				</div>
+				<div id="collapse{{tag.id}}" class="collapse" aria-labelledby="heading{{tag.id}}" data-parent="#accordionExample">
+					<div class="card-body">
+						<div class="container" align=left>
+							{% for content in tag.content %}
+							<div class="row">
+								<div class="col">
+									<a class="nav-link active text-dark " href="/dashboard/presentations/download/{{content.id}}">
+										<i class="fa fa-file-pdf-o" style="font-size:30px;color:red"></i>
+										<b><small>{{ content.author }}: </small>{{ content.title }}</b> 
+										<p><small>{{ content.desc }}</small></p>
+									</a>
+									<hr>
+								</div>
+							</div>
+							{% endfor %}
+						</div>
+					</div>
+				</div>
+			</div>
+			{% endfor %}
+		</div>
+	</div>
+
+
+
+	<div class="modal fade" id="modnew" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">New file</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+			<div class="modal-body">
+				<form class="was-validated" method="post", enctype="multipart/form-data" >
+					<input type="hidden" name="form-name" value="add">
+					<div class="form-group">
+						<label>Title</label>
+						<input type="text" class="form-control is-valid form-control-sm" id="validationServer01" placeholder="presentation name" name="title" required>
+						<div class="invalid-feedback">This field cannot be empty.</div>
+					</div>
+					<div class="form-row">
+						<div class="form-group col-md-6">
+							<div class="form-group">
+								<label>Author</label>
+								<input type="text" class="form-control is-valid form-control-sm" id="validationServer01" name="author" placeholder=""  required>
+							</div>
+						</div>
+						<div class="form-group col-md-6">
+							<label>Upload</label>
+							<div class="custom-file">
+								<input type="file" class="custom-file-input" id="validatedCustomFile" name="file"required>
+								<label class="custom-file-label" for="validatedCustomFile">Choose file...</label>
+								<div class="invalid-feedback">This field cannot be empty.</div>
+							</div>
+						</div>
+					</div>
+					<div class="form-row">
+						<div class="form-group col-md-6">
+							<div class="form-group">
+								<label>Group</label>
+								<select class="custom-select is-invalid" id="validationServer04" name="group" required>
+									<option selected disabled value="">Choose</option>
+									<option value="new">Set new group---></option>
+									{% for tag in tags %}
+									<option value="{{tag.name}}">{{tag.name}}</option>
+									{% endfor %}
+								</select>
+							</div>
+						</div>
+						<div class="form-group col-md-6">
+							<label>New group</label>
+							<input type="text" class="form-control is-valid form-control-sm" id="validationServer01" placeholder="new group name" name="ngroup">
+						</div>
+					</div>
+					<div class="form-group">
+						<label>Description</label>
+						<input type="text" class="form-control is-valid form-control-sm" id="validationServer01" placeholder="optional" name="desc">
+					</div>
+					<hr>
+					<button type="submit" class="btn btn-primary">Add</button>
+				</form>
+			</div>
+		</div>
+	 </div>
+	</div>
+</div>
+
+{% endblock %}
