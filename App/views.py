@@ -72,7 +72,6 @@ def logout():
 
 @app.route("/experiments", methods=['GET', "POST"])
 def experiments():
-    print(session["lang"])
     return render_template("world/experiments.html", **
                            get_var(session), imagee=exp_img,lang=translator(session["lang"]), collection=list_photos("public", False))
 
@@ -138,7 +137,7 @@ def dashboard_publications(paper):
             title = request.form['title']
             searchOptions = {"author":author,"title":title,"year":year}
     return render_template(**permission_check("dashboard/files/papers.html".format(paper),
-                                              **get_var(session)), publications=list_papers(paper,searchOptions), section=paper)
+                                              **get_var(session)), publications=list_papers(paper,searchOptions), section=paper,lang=translator(session["lang"]))
                                               
 @app.route("/dashboard/<paper>/download/<fileid>", methods=['GET', "POST"])
 def dashboard_download(paper,fileid):
@@ -151,7 +150,7 @@ def dashboard_delete(f,item):
     db.session.delete(_file)
     db.session.commit()
     flash("deleted file")
-    return render_template(**permission_check("dashboard/files/papers.html"))
+    return render_template(**permission_check("dashboard/files/papers.html"),lang=translator(session["lang"]))
 
 @app.route("/dashboard/presentations/<presentation>", methods=['GET', "POST"])
 def dashboard_presentations(presentation):
@@ -173,17 +172,14 @@ def dashboard_presentations(presentation):
             db.session.add(publication)
             db.session.commit()
             flash("Added {}".format(title))
-            print("add")
         else:
             search = request.form['form-name']
             tags = request.form['tags']
             author = request.form['author']
             title = request.form['title']
             searchOptions = {"author":author,"title":title,"tag":tags}
-            print("else")
-            print(tags,author,title)
     return render_template(**permission_check("dashboard/files/presentations.html".format(presentation),
-                                              **get_var(session)), tags=list_presentation_groups("p-{}".format(presentation),searchOptions), section=presentation)
+                                              **get_var(session)), tags=list_presentation_groups("p-{}".format(presentation),searchOptions), section=presentation,lang=translator(session["lang"]))
 
 
 
@@ -202,13 +198,13 @@ def dashboard_gallery():
         #db.session.commit()
         flash("Added {}".format(title))
     return render_template(**permission_check("dashboard/files/photos.html",
-                                              **get_var(session)), collection=list_photos("gallery"), imgs=exp_img)
+                                              **get_var(session)), collection=list_photos("gallery"), imgs=exp_img,lang=translator(session["lang"]))
 
 @app.route("/dashboard/gallery/download/<folder>/<fileid>", methods=['GET', "POST"])
 def dashboard_gallery_download(folder,fileid):
     collection=list_photos(folder,False)
     return render_template(**permission_check("dashboard/files/img.html",
-                                              **get_var(session)), picpath=collection[int(fileid)].path)
+                                              **get_var(session)), picpath=collection[int(fileid)].path,lang=translator(session["lang"]))
 
 @app.route("/dashboard/gallery/<folder>", methods=['GET', "POST"])
 def dashboard_gallery_open(folder):
@@ -225,12 +221,12 @@ def dashboard_gallery_open(folder):
         #db.session.commit()
         flash("Added {}".format(title))
     return render_template(**permission_check("dashboard/files/gallery.html",
-                                              **get_var(session)), collection=list_photos(folder,False), imgs=exp_img, folder=folder)
+                                              **get_var(session)), collection=list_photos(folder,False), imgs=exp_img, folder=folder,lang=translator(session["lang"]))
 
 @app.route("/dashboard/data", methods=['GET', "POST"])
 def dashboard_data():
     return render_template(
-        **permission_check("dashboard/files/data.html", **get_var(session)))
+        **permission_check("dashboard/files/data.html", **get_var(session)),lang=translator(session["lang"]))
 
 
     ###############
@@ -241,13 +237,13 @@ def dashboard_data():
 @app.route("/dashboard/notes", methods=['GET', "POST"])
 def dashboard_notes():
     return render_template(
-        **permission_check("dashboard/notes.html", **get_var(session)))
+        **permission_check("dashboard/notes.html", **get_var(session)),lang=translator(session["lang"]))
 
 
 @app.route("/dashboard/calendar", methods=['GET', "POST"])
 def dashboard_calendar():
     return render_template(
-        **permission_check("dashboard/calendar.html", **get_var(session)))
+        **permission_check("dashboard/calendar.html", **get_var(session)),lang=translator(session["lang"]))
 
     #########################
     #########################
@@ -266,7 +262,7 @@ def dashboard_edit_home():
         db.session.commit()
         flash("Added")
     return render_template(**permission_check("dashboard/edit/home.html", **
-                                              get_var(session)), posts=list_posts(), edit_header="Add new message")
+                                              get_var(session)), posts=list_posts(), edit_header="Add new message",lang=translator(session["lang"]))
 
 
 @app.route("/dashboard/edit/home/<post_id>", methods=['GET', "POST"])
@@ -280,7 +276,7 @@ def dashboard_edit_home_post(post_id):
         db.session.commit()
         flash("Updated")
     return render_template(**permission_check("dashboard/edit/home.html", **get_var(session)),
-                           posts=list_posts(), edit_header="Editing {}".format(post.head), title=post.head, body=post.body)
+                           posts=list_posts(), edit_header="Editing {}".format(post.head), title=post.head, body=post.body,lang=translator(session["lang"]))
 
 
 @app.route("/dashboard/edit/experiment", methods=['GET', "POST"])
@@ -296,7 +292,7 @@ def dashboard_edit_experiment():
         db.session.commit()
         flash("Added")
     return render_template(**permission_check("dashboard/edit/experiment.html", **
-                                              get_var(session)), posts=list_exp(), edit_header="Add new message")
+                                              get_var(session)), posts=list_exp(), edit_header="Add new message",lang=translator(session["lang"]))
 
 
 @app.route("/dashboard/edit/experiment/<post_id>", methods=['GET', "POST"])
@@ -334,7 +330,7 @@ def dashboard_edit_members():
 @app.route("/dashboard/edit/files", methods=['GET', "POST"])
 def dashboard_edit_files():
     return render_template(
-        **permission_check("dashboard/edit/files.html", **get_var(session)))
+        **permission_check("dashboard/edit/files.html", **get_var(session)),lang=translator(session["lang"]))
 
     #####################
     #####################
@@ -346,8 +342,6 @@ def dashboard_edit_files():
 @app.route("/sendfile/<types>/<folder>/<filename>", methods=['GET', "POST"])
 def send_pub(types,folder,filename):
     path = paths[types]
-    print(path)
-    print(filename)
     return send_from_directory(
         directory="../{}/{}/".format(path,folder), filename=filename, as_attachment=False)
 
@@ -360,7 +354,7 @@ def send_pub(types,folder,filename):
 @app.route("/dashboard/git/", methods=['GET', "POST"])
 def dashboard_git():
     return render_template(
-        **permission_check("dashboard/git/home.html", **get_var(session)))
+        **permission_check("dashboard/git/home.html", **get_var(session)),lang=translator(session["lang"]))
 
     ###############
     ###############
@@ -393,4 +387,4 @@ def before_request():
 
 @app.errorhandler(404)
 def page_not_found(e):
-    return render_template("404.html", **get_var(session)), 404
+    return render_template("404.html", **get_var(session),lang=translator(session["lang"])), 404

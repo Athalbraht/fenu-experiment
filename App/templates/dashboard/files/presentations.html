@@ -1,6 +1,5 @@
 {% extends "dashboard/files.html" %}
 {% block dashboard_files %}
-
 <div class="container-fluid">
 	<div class="container">
 		<div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups">
@@ -46,10 +45,13 @@
 								<div class="col">
 									<a class="nav-link active text-dark " href="/dashboard/presentations/download/{{content.id}}">
 										<i class="fa fa-file-pdf-o" style="font-size:30px;color:red"></i>
-										<b><small>{{ content.author }}: </small>{{ content.title }}</b> 
+										<b><small>{{ content.author }}: </small>{{ content.title }}</b>
 										<p><small>{{ content.desc }}</small></p>
 									</a>
 									<hr>
+								</div>
+								<div class="col" align="right">
+										<a  type="button" href="/dashboard/delete/presentation/{{content.id}}" class="btn btn-outline-danger btn-sm"><i class="fa fa-trash" style="font-size:15px;color:red"></i></a>
 								</div>
 							</div>
 							{% endfor %}
