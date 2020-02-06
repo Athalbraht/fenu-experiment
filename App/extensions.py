@@ -28,6 +28,7 @@ translations = {
                "next":"",
                "up":"",
                "viewd":"",
+		"3d":"",
                #"icexp-mainphoto":"",
                #"icexp-desc":"",
                
