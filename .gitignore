@@ -4,6 +4,7 @@ uploads
 venv/
 App/uploads/
 App/static/uploads/
+App/static/homepage/
 *__pycache__*
 *.pyc
 *.toc
