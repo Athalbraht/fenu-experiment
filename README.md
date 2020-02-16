@@ -1,5 +1,9 @@
 # BINA-experiment page
 
+## App structure
+
+![structure](App/static/img/PageStructure.png)
+
 ## Apache configuration
 
 TODO!
