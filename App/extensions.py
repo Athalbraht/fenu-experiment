@@ -2,6 +2,7 @@
 
 import os
 import hashlib
+import config
 from App import db
 from App.models import *
 
@@ -28,12 +29,12 @@ translations = {
                "next":"",
                "up":"",
                "viewd":"",
-		"3d":"",
+		       "3d":"",
                #"icexp-mainphoto":"",
                #"icexp-desc":"",
-               
 
-               
+
+
                }
 
 
@@ -58,8 +59,13 @@ paths = {
         "salad":"{}gallery/salad".format(source),
         "public":"{}gallery/public".format(source),
         "gallery":"{}gallery".format(source)
-       
+
         }
+
+def export_html(name, content, path=''):
+    with open("{}/pl/{}.html".format(config.HOMEPAGE_FOLDER, name),"w") as html:
+        html.write(content)
+    return None
 
 def translator(lang):
     _translations = translations.copy()
@@ -101,7 +107,7 @@ def list_papers(_type,search=None):
 def list_posts():
     posts = Post.query.order_by(Post.id.desc()).all()
     return posts
-    
+
 def list_exp():
     posts = Experiment.query.order_by(Experiment.id.desc()).all()
     return posts
@@ -140,7 +146,7 @@ def list_presentation_groups(_type,search=None):
     for j,sets in enumerate(_tags):
         newtags.append(Tag(j, list(tags)[j], sets))
     return newtags
-    
+
 
 def list_photos(_type,wc=True):
     folders = os.listdir(paths[_type])
@@ -157,7 +163,7 @@ def list_photos(_type,wc=True):
     return groups
 
 def upload_publications():
-    
+
     return 1
 
 

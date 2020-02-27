@@ -5,6 +5,7 @@ import time
 from io import BytesIO
 from App import app
 from App import db
+from App import config
 from App.models import *
 from App.extensions import *
 from flask import render_template, request, redirect, url_for, session, flash, send_file, send_from_directory, g
@@ -13,11 +14,11 @@ exp_img = exp_imgs(app.config["UPLOAD_FOLDER"])
 
 
 
+
 @app.route("/test")
 def test():
-    x = list_presentation_groups("p-meetings")
-    print(x[0].content[1].title)
-    return str(len(x))
+    print(config.HOMEPAGE_FOLDER)
+    return("test")
 
     #####################
     #####################
@@ -34,15 +35,14 @@ def language(lang):
 
 @app.route("/students")
 def home():
-    x = {"x":"xx"}
-    return render_template("world/home.html", 
+    students_page = render_template("world/home.html",
                            **get_var(session), posts=list_posts(),lang=translator(session["lang"]), langg=session["lang"])
-
+    export_html("test",students_page)
+    return students_page
 
 @app.route("/")
 def main():
     return redirect(url_for('experiments'))
-
 
 @app.route("/login", methods=['GET', "POST"])
 def login():
@@ -55,7 +55,7 @@ def login():
             session["username"] = user[2]
             session["status"] = "Log out"
             flash(user[0])
-            return redirect(url_for('experiments'))
+            return redirect(url_for('dashboard_publications',paper='publications'))
         else:
             flash(user[0])
     return render_template("world/login.html", **get_var(session),lang=translator(session["lang"]))
@@ -124,7 +124,7 @@ def dashboard_publications(paper):
             link = request.form['link']
             desc = request.form['desc']
             _file = request.files['file']
-        
+
             publication = Document(type=paper, title=title, author=author, reference=ref, year=int(year), desc=desc, link=link, path=_file.filename, files=_file.read())
             db.session.add(publication)
             db.session.commit()
@@ -138,7 +138,7 @@ def dashboard_publications(paper):
             searchOptions = {"author":author,"title":title,"year":year}
     return render_template(**permission_check("dashboard/files/papers.html".format(paper),
                                               **get_var(session)), publications=list_papers(paper,searchOptions), section=paper,lang=translator(session["lang"]))
-                                              
+
 @app.route("/dashboard/<paper>/download/<fileid>", methods=['GET', "POST"])
 def dashboard_download(paper,fileid):
     _file = Document.query.filter_by(id=fileid).first()

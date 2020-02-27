@@ -1,9 +1,8 @@
 database/
-uploads/
-uploads
+migrations/
 venv/
-App/uploads/
-App/static/uploads/
+App/
+App/static/
 App/static/homepage/
 *__pycache__*
 *.pyc

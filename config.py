@@ -14,3 +14,4 @@ SQLALCHEMY_DATABASE_URI = 'sqlite:///' + \
     os.path.join(basedir, 'database/sqlite')
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 UPLOAD_FOLDER = os.path.join('static', 'img')
+HOMEPAGE_FOLDER = os.path.join(basedir, 'App/static/homepage')
