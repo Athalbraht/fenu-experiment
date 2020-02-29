@@ -5,15 +5,15 @@
 		<div class="row">
 		<div class=" blog-main">
 			<h2 class="font-italic border-bottom">
-				{{lang["ihstud"]}} 
+				{{lang["ihstud"]}}
 			</h2><br>
 {% for post in lang["icstud"] %}
 
 			<div class="blog-post">
-				<h3 class="blog-post-title">{{post.head[4:]}}</h3>
-					{{post.body|safe}}
+				<h3 class="blog-post-title">{{post[0]}}</h3>
+					{{post[1]|safe}}
 			</div><hr>
-			<small><p class="blog-post-meta">Added: {{post.timestamp.strftime("%d-%m-%Y  %H:%M") }}</p></small>
+			<small><p class="blog-post-meta">Added: {{post[2].strftime("%d-%m-%Y  %H:%M") }}</p></small>
 {% endfor %}
 
 

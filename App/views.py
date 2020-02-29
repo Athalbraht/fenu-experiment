@@ -36,7 +36,7 @@ def language(lang):
 @app.route("/students")
 def home():
     students_page = render_template("world/home.html",
-                           **get_var(session), posts=list_posts(),lang=translator(session["lang"]), langg=session["lang"])
+                           **get_var(session), lang=translator(session["lang"]), langg=session["lang"])
     export_html("test",students_page)
     return students_page
 
@@ -73,19 +73,23 @@ def logout():
 @app.route("/experiments", methods=['GET', "POST"])
 def experiments():
     return render_template("world/experiments.html", **
-                           get_var(session), imagee=exp_img,lang=translator(session["lang"]), collection=list_photos("public", False))
+                           get_var(session),
+                           lang=translator(session["lang"]))
 
 
 @app.route("/members")
 def members():
     return render_template("world/members.html", **
-                           get_var(session), organizations=list_members(),lang=translator(session["lang"]))
+                           get_var(session),
+                           organizations=list_members(),
+                           lang=translator(session["lang"]))
 
 
 @app.route("/publications")
 def publications():
     return render_template("world/publications.html", **
-                           get_var(session), publications=list_papers("publications"),lang=translator(session["lang"]))
+                           get_var(session), publications=list_papers("publications"),
+                           lang=translator(session["lang"]))
 
     #####################
     #####################

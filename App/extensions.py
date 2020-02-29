@@ -13,82 +13,43 @@ from App.models import *
 
 source = "uploads/"
 
-translations = {
-               "ihexp":"",
-               "ihpub":"",
-               "ihmem":"",
-               "ihstud":"",
-               "ihcon":"",
-               "ihdash":"",
-               "icpub-year":"",
-               "icpub-title":"",
-               "icpub-author":"",
-               "icpub-download":"",
-               "gallery":"",
-               "prev":"",
-               "next":"",
-               "up":"",
-               "viewd":"",
-		       "3d":"",
-               #"icexp-mainphoto":"",
-               #"icexp-desc":"",
-
-
-
-               }
-
-
-paths = {
-        "publications":"{}documents/papers/publications/".format(source),
-        "thesis":"{}documents/papers/thesis".format(source),
-        "manuals":"{}documents/papers/manuals".format(source),
-        "loogbooks":"{}documents/papers/logbooks".format(source),
-        "posters":"{}documents/presentations/posters".format(source),
-        "conferences":"{}documents/presentations/conferences".format(source),
-        "meetings":"{}documents/presentations/meetings".format(source),
-        "miscellaneous":"{}documents/miscellaneous".format(source),
-        "schemes":"{}gallery/schemes".format(source),
-        "window":"{}gallery/window".format(source),
-        "detector":"{}gallery/detector".format(source),
-        "thumbn":"{}gallery/thumbnails".format(source),
-        "other":"{}gallery/other".format(source),
-        "plans":"{}gallery/plans".format(source),
-        "production":"{}gallery/production".format(source),
-        "target":"{}gallery/target".format(source),
-        "targetchamber":"{}gallery/targetchamber".format(source),
-        "salad":"{}gallery/salad".format(source),
-        "public":"{}gallery/public".format(source),
-        "gallery":"{}gallery".format(source)
-
-        }
-
 def export_html(name, content, path=''):
     with open("{}/pl/{}.html".format(config.HOMEPAGE_FOLDER, name),"w") as html:
         html.write(content)
     return None
 
 def translator(lang):
-    _translations = translations.copy()
-    for key in translations.keys():
-        _translations[key] = Content.query.filter(Content.lang == lang, Content.localization == key).first().body
-    posts = Post.query.filter(Post.head.contains("[{}]".format(lang))).all()
+    translation_table = Contents.query.all()
+    keys = [ item.loc for item in translation_table ]
+    _translations = {}
+    for key in keys:
+        if lang == 'pl':
+            _translations[key] = Contents.query.filter(Contents.loc == key).first().body_pl
+        else:
+            _translations[key] = Contents.query.filter(Contents.loc == key).first().body_en
+    posts = Posts.query.all()
     _translations["icstud"] = []
     for post in posts:
-        _translations["icstud"].append(post)
-    exp = Experiment.query.filter(Experiment.lang.contains(lang)).all()
-    _translations["icexp"] = []
-    for post in exp:
-        _translations["icexp"].append(post)
+        post2 = []
+        if lang == "pl":
+            post2 = [post.head_pl, post.body_pl, post.timestamp]
+        else:
+            post2 = [post.head_en, post.body_en, post.timestamp]
+        _translations["icstud"].append(post2)
+    exp = Home.query.all()[-1]
+    if lang == "pl":
+        _translations["icexp"] = exp.body_pl
+    else:
+        _translations["icexp"] = exp.body_en
     return _translations
 
 def check_password(login, passwd):
-    user = User.query.filter(User.username == login)
-    if len(user.all()) == 1 and user[0].username == login:
+    user = Users.query.filter(Users.id == 0)
+    if len(user.all()) == 1 and user[0].id== 0:
         salt, _hash = user[0].password_hash[:32], user[0].password_hash[32:]
         _chash =  hashlib.pbkdf2_hmac("sha256", passwd.encode("utf-8"), salt, 100000)
         if salt+_chash == salt+_hash:
-            print(user[0].email, user[0].password_hash)
-            return "Correct password. Dashboard unlocked.", True, user[0].email
+            return "Correct password. Dashboard unlocked.", True, user[0].id
         else:
             return "Wrong email or password. Try again.", False, None
     else:
@@ -96,20 +57,20 @@ def check_password(login, passwd):
 
 
 def list_papers(_type,search=None):
-    _pubs = Document.query.filter(Document.type == _type)
+    _pubs = Documents.query.filter(Documents.type == "paper-{}".format(_type))
     if search != None:
-        pubs = _pubs.filter(Document.title.contains(search["title"]), Document.year.contains(search["year"]), Document.author.contains(search["author"]))
+        pubs = _pubs.filter(Documents.title.contains(search["title"]), Documents.year.contains(search["year"]), Documents.author.contains(search["author"]))
     else:
         pubs = _pubs
-    _sort = pubs.order_by(Document.year.desc()).all()
+    _sort = pubs.order_by(Documents.year.desc()).all()
     return(_sort)
 
 def list_posts():
-    posts = Post.query.order_by(Post.id.desc()).all()
+    posts = Posts.query.order_by(Posts.id.desc()).all()
     return posts
 
 def list_exp():
-    posts = Experiment.query.order_by(Experiment.id.desc()).all()
+    posts = Home.query.order_by(Home.id.desc()).all()
     return posts
 
 def list_presentation_groups(_type,search=None):
@@ -177,10 +138,10 @@ def get_exp(post_id):
 
 def list_members():
     affiliation = []
-    for i, o in enumerate(Organization.query.all()):
-        affiliation.append([o.head, []])
-        for j, u in enumerate(User.query.filter(
-                User.affiliation_id == o.id).all()):
+    for i, o in enumerate(Organizations.query.all()):
+        affiliation.append([o, []])
+        for j, u in enumerate(Members.query.filter(
+                Members.affiliation == o.id).all()):
             affiliation[i][1].append(u)
     return affiliation
 

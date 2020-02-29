@@ -9,7 +9,7 @@
 				</ol>
 				<div class="carousel-inner" >
 					<div class="carousel-item active">
-						<img class="first-slide" src="{{imagee[0]}}" class="d-block w-100" alt="First slide" style="object-fit: cover ;width: 100%; height: 300px;">
+						<img class="first-slide" src="" class="d-block w-100" alt="First slide" style="object-fit: cover ;width: 100%; height: 300px;">
 						<div class="container">
 							<div class="carousel-caption text-center">
 								<button type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#gallery">{{ lang["gallery"] }}</button>
@@ -37,13 +37,13 @@
 					<div id="carouselExampleFade" class="carousel slide carousel-fade" data-ride="carousel">
 						<div class="carousel-inner">
 							<div class="carousel-item active">
-								<img class="d-block w-100" src="{{url_for('static', filename=collection[1].path)}}" alt="Photo 1">
+								<img class="d-block w-100" src="" alt="Photo 1">
 							</div>
-							{% for photo in collection %}
+
 							<div class="carousel-item">
-								<img class="d-block w-100" src="{{url_for('static', filename=photo.path)}}" alt="Photo {{photo.id}}" style="object-fit: cover ;width: 100%; height: 900px;">
+								<img class="d-block w-100" src="" alt="Photo " style="object-fit: cover ;width: 100%; height: 900px;">
 							</div>
-							{% endfor %}
+
 						</div>
 						<a class="carousel-control-prev" href="#carouselExampleFade" role="button" data-slide="prev">
 							<span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -3171,6 +3171,7 @@
           <indexedFaceSet solid='false' coordIndex='0 3 2 1 -1 4 7 3 0 -1 7 6 2 3 -1 6 5 1 2 -1 5 4 0 1 -1 4 5 6 7 -1'>
             <coordinate point='-1200.02 -940.533 638.942 1200.02 -940.533 638.942 1200.02 -840.493 638.942 -1200.02 -840.493 638.942 -1200.02 -940.533 738.982 1200.02 -940.533 738.982 1200.02 -840.493 738.982 -1200.02 -840.493 738.982'></coordinate>
           </indexedFaceSet>
+
         </shape>
         <shape>
           <appearance>
@@ -3200,7 +3201,7 @@
     </x3d>
 
 			<hr>
-			  <h5>Navigation</h5><smal>
+			  <h5>Navigation</h5><small>
  				 <p> 'r' or 'a': reset view </p>
  				 <p> 'e' or 'g':  interactive camera </p>
  				 <p>  'ctrl' + 'Right-click': changes perspective</p>
@@ -3216,19 +3217,19 @@
 			<div class="container marketing">
 				<div class="row">
 					<div class="col-lg-4">
-						<img class="rounded-circle" src="{{imagee[6]}}" alt="Generic placeholder image" width="140" height="140">
+						<img class="rounded-circle" src="" alt="Generic placeholder image" width="140" height="140">
 						<h2>Research</h2>
 						<p>Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna.</p>
 						<p><a class="btn btn-secondary" href="#" role="button">{{ lang["viewd"] }}</a></p>
 					</div><!-- /.col-lg-4 -->
 					<div class="col-lg-4">
-						<img class="rounded-circle" src="{{imagee[7]}}" alt="Generic placeholder image" width="140" height="140">
+						<img class="rounded-circle" src="" alt="Generic placeholder image" width="140" height="140">
 						<h2>BINA detector</h2>
 						<p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh.</p>
 						<p><a class="btn btn-secondary" href="#" role="button">{{ lang["viewd"] }}</a></p>
 					</div><!-- /.col-lg-4 -->
 					<div class="col-lg-4">
-						<img class="rounded-circle" src="{{imagee[9]}}" alt="Generic placeholder image" width="140" height="140">
+						<img class="rounded-circle" src="" alt="Generic placeholder image" width="140" height="140">
 						<h2>Experiments</h2>
 						<p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
 						<p><a class="btn btn-secondary" href="#" role="button">{{ lang["viewd"] }}</a></p>
@@ -3239,15 +3240,13 @@
 
 
 
-{% for post in lang["icexp"] %}
 				<hr class="featurette-divider">
-				
-						{{ post.body|safe }}
-						{}
-				
-{% endfor %}
+
+						{{ lang["icexp"]|safe }}
+
+
 			</div><!-- /.container -->
-			
+
 			<footer class="container" style="margin-bottom:10px">
 						<p class="float-right"> <a href="#">{{ lang["up"] }}</a></p>
 			</footer>

@@ -12,7 +12,7 @@ class Users(db.Model):
     admin = db.Column(db.Boolean, nullable=False)
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     def __repr__(self):
-        return '<User {}>'.format(self.username)
+        return '<User {}>'.format(self.id)
 
 
 class Members(db.Model):
@@ -30,7 +30,7 @@ class Members(db.Model):
     link = db.Column(db.String(128))
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     def __repr__(self):
-        return '<Member {}>'.format(self.username)
+        return '<Member {}>'.format(self.email)
 
 
 class Organizations(db.Model):
@@ -39,7 +39,7 @@ class Organizations(db.Model):
     shortcut = db.Column(db.String(64))
     link = db.Column(db.String(128))
     desc = db.Column(db.Text)
-    users = db.relationship("User", backref="affilation", lazy="dynamic")
+    #users = db.relationship("Users", backref="affilation", lazy="dynamic")
     def __repr__(self):
         return '<Organization {}>'.format(self.head)
 
@@ -52,7 +52,7 @@ class Posts(db.Model):
     body_pl = db.Column(db.Text, nullable=False)
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     def __repr__(self):
-        return '<Post {}>'.format(self.head)
+        return '<Post {}>'.format(self.id)
 
 
 class Documents(db.Model):
@@ -111,7 +111,7 @@ class Events(db.Model):
     members = db.Column(db.Text)
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     def __repr__(self):
-        return '<Event {}>'.format(self.head)
+        return '<Event {}>'.format(self.title)
 
 
 class Home(db.Model):
