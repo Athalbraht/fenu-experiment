@@ -16,7 +16,7 @@
 					{% for pub in publications %}
 					<tr>
 						<td>{{pub.year|int}}</td>
-						<td>{{pub.title}}</td>
+						<td>{{pub.title}} <br> <small>{{pub.reference}}</small></td>
 						<td>{{pub.author}}</td>
 						<!--
 						<td>

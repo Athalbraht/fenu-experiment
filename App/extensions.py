@@ -74,25 +74,13 @@ def list_exp():
     return posts
 
 def list_presentation_groups(_type,search=None):
-    '''
-    folders = os.listdir(paths[_type])
-    class Group():
-        def __init__(self, id, filename,path,wc):
-            self.types = _type
-            self.filename = filename
-            self.id = id
-            self.path = path
-            if wc:
-                self.content = os.listdir(self.path)
-                self.content_path = [ os.path.join(path, i) for i in self.content ]
-    groups = [Group(i,folders[i], os.path.join(paths[_type],folders[i]),wc) for i in range(len(folders))]
-    '''
-    _presentations = Document.query.filter(Document.type == _type)
+    _presentations = Documents.query.filter(Documents.type == "presentation-{}".format(_type))
+    print("presentation-{}".format(_type))
     if search != None:
-        presentations = _presentations.filter(Document.title.contains(search["title"]), Document.tags.contains(search["tag"]), Document.author.contains(search["author"])).order_by(Document.timestamp.desc()).all()
+        presentations = _presentations.filter(Documents.title.contains(search["title"]), Documents.event.contains(search["tag"]), Documents.author.contains(search["author"])).order_by(Documents.timestamp.desc()).all()
     else:
         presentations = _presentations.all()
-    tags = set([ i.tags for i in presentations ])
+    tags = set([ i.event for i in presentations ])
     class Tag():
         def __init__(self, id, name, content):
             self.id = id
@@ -101,13 +89,16 @@ def list_presentation_groups(_type,search=None):
     _tags = [ [] for i in tags]
     for i,tag in enumerate(tags):
         for record in presentations:
-            if record.tags == tag:
+            if record.event == tag:
                 _tags[i].append(record)
     newtags = []
     for j,sets in enumerate(_tags):
-        newtags.append(Tag(j, list(tags)[j], sets))
+        _event = Events.query.filter(Events.id==list(tags)[j]).first()
+        newtags.append(Tag(j,
+                    "{}@{}  ({})".format(
+                        _event.title, _event.localization, _event.time.strftime("%d-%m-%Y")),
+                    sets))
     return newtags
-
 
 def list_photos(_type,wc=True):
     folders = os.listdir(paths[_type])

@@ -129,7 +129,7 @@ def dashboard_publications(paper):
             desc = request.form['desc']
             _file = request.files['file']
 
-            publication = Document(type=paper, title=title, author=author, reference=ref, year=int(year), desc=desc, link=link, path=_file.filename, files=_file.read())
+            publication = Documents(type="paper-{}".format(paper), title=title, author=author, reference=ref, year=int(year), desc=desc, link=link, filename=_file.filename, file=_file.read())
             db.session.add(publication)
             db.session.commit()
             flash("Added {}".format(title))
@@ -141,16 +141,20 @@ def dashboard_publications(paper):
             title = request.form['title']
             searchOptions = {"author":author,"title":title,"year":year}
     return render_template(**permission_check("dashboard/files/papers.html".format(paper),
-                                              **get_var(session)), publications=list_papers(paper,searchOptions), section=paper,lang=translator(session["lang"]))
+                                              **get_var(session)),
+                                              publications=list_papers(paper,searchOptions),
+                                              section=paper,
+                                              lang=translator(session["lang"]))
+
 
 @app.route("/dashboard/<paper>/download/<fileid>", methods=['GET', "POST"])
 def dashboard_download(paper,fileid):
-    _file = Document.query.filter_by(id=fileid).first()
-    return send_file(BytesIO(_file.files), attachment_filename=_file.path)
+    _file = Documents.query.filter_by(id=fileid).first()
+    return send_file(BytesIO(_file.file), attachment_filename=_file.filename)
 
 @app.route("/dashboard/delete/<f>/<item>", methods=['GET', "POST"])
 def dashboard_delete(f,item):
-    _file = Document.query.filter_by(id=item).one()
+    _file = Documents.query.filter_by(id=item).one()
     db.session.delete(_file)
     db.session.commit()
     flash("deleted file")
@@ -172,7 +176,7 @@ def dashboard_presentations(presentation):
                 group = ngroup
                 if group == "":
                     group = "Unsorted"
-            publication = Document(type="p-{}".format(presentation), title=title, author=author, desc=desc, path=_file.filename, files=_file.read(), tags=group)
+            publication = Documents(type="p-{}".format(presentation), title=title, author=author, desc=desc, path=_file.filename, files=_file.read(), tags=group)
             db.session.add(publication)
             db.session.commit()
             flash("Added {}".format(title))
@@ -183,7 +187,10 @@ def dashboard_presentations(presentation):
             title = request.form['title']
             searchOptions = {"author":author,"title":title,"tag":tags}
     return render_template(**permission_check("dashboard/files/presentations.html".format(presentation),
-                                              **get_var(session)), tags=list_presentation_groups("p-{}".format(presentation),searchOptions), section=presentation,lang=translator(session["lang"]))
+                                              **get_var(session)),
+                                              tags=list_presentation_groups(presentation,searchOptions),
+                                              section=presentation,
+                                              lang=translator(session["lang"]))
 
 
 
