@@ -120,11 +120,11 @@ def upload_publications():
 
 
 def get_post(post_id):
-    post = Post.query.filter(Post.id == post_id).first()
+    post = Posts.query.filter(Posts.id == post_id).first()
     return post
 
 def get_exp(post_id):
-    post = Experiment.query.filter(Experiment.id == post_id).first()
+    post = Experiments.query.filter(Experiments.id == post_id).first()
     return post
 
 def list_members():

@@ -208,8 +208,9 @@ def dashboard_gallery():
         #db.session.add(publication)
         #db.session.commit()
         flash("Added {}".format(title))
-    return render_template(**permission_check("dashboard/files/photos.html",
-                                              **get_var(session)), collection=list_photos("gallery"), imgs=exp_img,lang=translator(session["lang"]))
+    return "Temporary disabled"
+    #return render_template(**permission_check("dashboard/files/photos.html",
+    #                                          **get_var(session)), collection=list_photos("gallery"), imgs=exp_img,lang=translator(session["lang"]))
 
 @app.route("/dashboard/gallery/download/<folder>/<fileid>", methods=['GET', "POST"])
 def dashboard_gallery_download(folder,fileid):
@@ -266,28 +267,42 @@ def dashboard_calendar():
 @app.route("/dashboard/edit/home", methods=['GET', "POST"])
 def dashboard_edit_home():
     if request.method == "POST":
-        head = request.form['title']
-        body = request.form['body']
-        post = Post(head=head, body=body)
+        headen = request.form['headen']
+        headpl = request.form['headpl']
+        bodyen = request.form['bodyen']
+        bodypl = request.form['bodypl']
+        post = Posts(head_pl=headpl, head_en=headen,
+                    body_en=bodyen, body_pl=bodypl)
         db.session.add(post)
         db.session.commit()
         flash("Added")
     return render_template(**permission_check("dashboard/edit/home.html", **
-                                              get_var(session)), posts=list_posts(), edit_header="Add new message",lang=translator(session["lang"]))
+                                              get_var(session)),
+                                              posts=list_posts(),
+                                              edit_header="Add new message",
+                                              edited=None,
+                                              lang=translator(session["lang"]))
 
 
 @app.route("/dashboard/edit/home/<post_id>", methods=['GET', "POST"])
 def dashboard_edit_home_post(post_id):
     post = get_post(post_id)
     if request.method == "POST":
-        head = request.form['title']
-        body = request.form['body']
-        post.head = head
-        post.body = body
+        headen = request.form['headen']
+        headpl = request.form['headpl']
+        bodyen = request.form['bodyen']
+        bodypl = request.form['bodypl']
+        post.head_en = headen
+        post.body_en = bodyen
+        post.head_pl = headpl
+        post.body_pl = bodypl
         db.session.commit()
         flash("Updated")
     return render_template(**permission_check("dashboard/edit/home.html", **get_var(session)),
-                           posts=list_posts(), edit_header="Editing {}".format(post.head), title=post.head, body=post.body,lang=translator(session["lang"]))
+                           posts=list_posts(),
+                           edit_header="Editing message {}".format(post.id),
+                           edited=post,
+                           lang=translator(session["lang"]))
 
 
 @app.route("/dashboard/edit/experiment", methods=['GET', "POST"])
