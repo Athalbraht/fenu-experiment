@@ -69,7 +69,7 @@ def list_posts():
     posts = Posts.query.order_by(Posts.id.desc()).all()
     return posts
 
-def list_exp():
+def list_home():
     posts = Home.query.order_by(Home.id.desc()).all()
     return posts
 
@@ -123,8 +123,8 @@ def get_post(post_id):
     post = Posts.query.filter(Posts.id == post_id).first()
     return post
 
-def get_exp(post_id):
-    post = Experiments.query.filter(Experiments.id == post_id).first()
+def show_home(post_id):
+    post = Home.query.filter(Home.id == post_id).first()
     return post
 
 def list_members():

@@ -308,37 +308,38 @@ def dashboard_edit_home_post(post_id):
 @app.route("/dashboard/edit/experiment", methods=['GET', "POST"])
 def dashboard_edit_experiment():
     if request.method == "POST":
-        head = request.form['title']
-        body = request.form['body']
-        loc = request.form['loc']
-        lang = request.form["lang"]
-        desc = request.form["desc"]
-        post = Experiment(head=head, body=body, localization=loc, lang=lang,desc=desc)
+        #head = request.form['title']
+        bodypl = request.form['bodypl']
+        bodyen = request.form['bodyen']
+        #loc = request.form['loc']
+        #lang = request.form["lang"]
+        #desc = request.form["desc"]
+        post = Home(body_pl=bodypl, body_en=bodyen,
+                    head_pl="", head_en="",loc="",lang="")
         db.session.add(post)
         db.session.commit()
         flash("Added")
     return render_template(**permission_check("dashboard/edit/experiment.html", **
-                                              get_var(session)), posts=list_exp(), edit_header="Add new message",lang=translator(session["lang"]))
+                                              get_var(session)), posts=list_home(),
+                                              edit_header="New Experiment description",
+                                              edited=None,
+                                              lang=translator(session["lang"]))
 
 
 @app.route("/dashboard/edit/experiment/<post_id>", methods=['GET', "POST"])
 def dashboard_edit_experiment_post(post_id):
-    post = get_exp(post_id)
+    post = show_home(post_id)
     if request.method == "POST":
-        head = request.form['title']
-        body = request.form['body']
-        loc = request.form['loc']
-        lang = request.form["lang"]
-        desc = request.form["desc"]
-        post.head = head
-        post.body = body
-        post.lang = lang
-        post.desc = desc
-        post.localization = loc
+        bodypl = request.form['bodypl']
+        bodyen = request.form['bodyen']
+        post.body_pl = bodypl
+        post.body_en = bodyen
         db.session.commit()
         flash("Updated")
     return render_template(**permission_check("dashboard/edit/experiment.html", **get_var(session)),
-                           posts=list_exp(), edit_header="Editing {}".format(post.head), title=post.head, body=post.body, loc=post.localization, lang=post.lang, desc=post.desc)
+                           posts=list_home(),
+                           edit_header="Editing info {}".format(post.id),
+                           edited=post)
 
 @app.route("/dashboard/edit/members", methods=['GET', "POST"])
 def dashboard_edit_members():
@@ -349,8 +350,9 @@ def dashboard_edit_members():
         db.session.add(post)
         db.session.commit()
         flash("Added")
-    return render_template(**permission_check("dashboard/edit/members.html", **get_var(session)),
-                           posts=list_posts(), edit_header="Add new message", organizations=list_members())
+    return "Permission denied"
+    #return render_template(**permission_check("dashboard/edit/members.html", **get_var(session)),
+    #                       posts=list_posts(), edit_header="Add new message", organizations=list_members())
 
 
 @app.route("/dashboard/edit/files", methods=['GET', "POST"])
@@ -358,18 +360,17 @@ def dashboard_edit_files():
     return render_template(
         **permission_check("dashboard/edit/files.html", **get_var(session)),lang=translator(session["lang"]))
 
+
     #####################
     #####################
-    ### Sending files ###
+    ###   Projects    ###
     #####################
     #####################
 
+@app.route("/dashboard/kanban/", methods=['GET', "POST"])
+def dashboard_kanban():
+    return "Permission denied"
 
-@app.route("/sendfile/<types>/<folder>/<filename>", methods=['GET', "POST"])
-def send_pub(types,folder,filename):
-    path = paths[types]
-    return send_from_directory(
-        directory="../{}/{}/".format(path,folder), filename=filename, as_attachment=False)
 
     #####################
     #####################
@@ -379,15 +380,29 @@ def send_pub(types,folder,filename):
 
 @app.route("/dashboard/git/", methods=['GET', "POST"])
 def dashboard_git():
-    return render_template(
-        **permission_check("dashboard/git/home.html", **get_var(session)),lang=translator(session["lang"]))
+    return "Permission denied"
+    #return render_template(
+    #    **permission_check("dashboard/git/home.html", **get_var(session)),lang=translator(session["lang"]))
+
+
+    #####################
+    #####################
+    ### Sending files ###
+    #####################
+    #####################
+
+@app.route("/sendfile/<types>/<folder>/<filename>", methods=['GET', "POST"])
+def send_pub(types,folder,filename):
+    path = paths[types]
+    return send_from_directory(
+        directory="../{}/{}/".format(path,folder), filename=filename, as_attachment=False)
+
 
     ###############
     ###############
     ### Session ###
     ###############
     ###############
-
 
 @app.before_request
 def before_request():
@@ -409,7 +424,6 @@ def before_request():
         g.lang = session["lang"]
     else:
         session["lang"] = "en"
-
 
 @app.errorhandler(404)
 def page_not_found(e):
