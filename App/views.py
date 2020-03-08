@@ -67,14 +67,16 @@ def logout():
     session.pop("user", None)
     session["lang"] = lang
     flash("Logged out")
-    return redirect(url_for('home'))
+    return redirect(url_for('login'))
 
 
 @app.route("/experiments", methods=['GET', "POST"])
 def experiments():
-    return render_template("world/experiments.html", **
+    experiments_page =  render_template("world/experiments.html", **
                            get_var(session),
                            lang=translator(session["lang"]))
+    export_html("experiments", experiments_page)
+    return experiments_page
 
 
 @app.route("/members")
@@ -104,7 +106,7 @@ def permission_check(template, *args, **kwargs):
         _kwargs.update(kwargs)
         return _kwargs
     else:
-        _kwargs = {"template_name_or_list": "world/home.html"}
+        _kwargs = {"template_name_or_list": "world/login.html"}
         _kwargs.update(get_var(session))
         flash("Permission denied. Log in first.")
         return _kwargs
@@ -241,22 +243,6 @@ def dashboard_data():
         **permission_check("dashboard/files/data.html", **get_var(session)),lang=translator(session["lang"]))
 
 
-    ###############
-    # notes & cal #
-    ###############
-
-
-@app.route("/dashboard/notes", methods=['GET', "POST"])
-def dashboard_notes():
-    return render_template(
-        **permission_check("dashboard/notes.html", **get_var(session)),lang=translator(session["lang"]))
-
-
-@app.route("/dashboard/calendar", methods=['GET', "POST"])
-def dashboard_calendar():
-    return render_template(
-        **permission_check("dashboard/calendar.html", **get_var(session)),lang=translator(session["lang"]))
-
     #########################
     #########################
     ###   DashBoard EDIT  ###
@@ -339,7 +325,8 @@ def dashboard_edit_experiment_post(post_id):
     return render_template(**permission_check("dashboard/edit/experiment.html", **get_var(session)),
                            posts=list_home(),
                            edit_header="Editing info {}".format(post.id),
-                           edited=post)
+                           edited=post,
+                           lang=translator(session["lang"]))
 
 @app.route("/dashboard/edit/members", methods=['GET', "POST"])
 def dashboard_edit_members():
@@ -358,7 +345,24 @@ def dashboard_edit_members():
 @app.route("/dashboard/edit/files", methods=['GET', "POST"])
 def dashboard_edit_files():
     return render_template(
-        **permission_check("dashboard/edit/files.html", **get_var(session)),lang=translator(session["lang"]))
+                **permission_check("dashboard/edit/files.html",
+                **get_var(session)),
+                lang=translator(session["lang"]))
+
+
+    ###############
+    # notes & cal #
+    ###############
+
+@app.route("/dashboard/notes", methods=['GET', "POST"])
+def dashboard_notes():
+    return render_template(
+        **permission_check("dashboard/notes.html", **get_var(session)),lang=translator(session["lang"]))
+
+
+@app.route("/dashboard/events", methods=['GET', "POST"])
+def dashboard_calendar():
+    return "Permission denied"
 
 
     #####################

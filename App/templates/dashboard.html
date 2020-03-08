@@ -17,7 +17,7 @@
 				<div class="collapse navbar-collapse ">
 					<ul class="flex-md-column flex-row navbar-nav w-100 justify-content-between">
 						<li class="nav-item">
-							<a class="nav-link pl-0 text-nowrap" href="/"><h5><i class="fa fa-home fa-fw"></i> <span class="font-weight-bold">BINA@CCB</h5></span></a>
+							<a class="nav-link pl-0 text-nowrap" href="{{ lang["domain"] }}"><h5><i class="fa fa-home fa-fw"></i> <span class="font-weight-bold">Fenu-Exp</h5></span></a>
 						</li>
 <div class="dropdown">
   <a class="nav-link pl-0" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-id-card"></i> <span class="d-none d-md-inline"><small>Page Settings</small> </span></a>
@@ -49,6 +49,9 @@
 								</li>
 							</div>
 						</div>
+						<li class="nav-item">
+							<a class="nav-link pl-0" href="/logout"><i class="fa fa-share-square-o"></i> <span class="d-none d-md-inline">Logout</span></a>
+						</li>
 
 						<li class="nav-item">
 							<a class="nav-link pl-0 disabled" href="/dashboard/notes"><span class="d-none d-md-inline"><hr><small>Data</small> </span></a>
@@ -56,22 +59,22 @@
 						<li class="nav-item">
 							<a class="nav-link pl-0" href="/dashboard/papers/publications"><i class="fa fa-folder"></i> <span class="d-none d-md-inline">Files</span></a>
 						</li>
+						<li class="nav-item">
+							<a class="nav-link pl-0" href="/dashboard/events"><i class="fa fa-calendar"></i> <span class="d-none d-md-inline">Events</span></a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link pl-0" href="/dashboard/git"><i class="fa fa-cogs"></i> <span class="d-none d-md-inline">Software</span></a>
+						</li>
 
-						
+
 						<div class="dropdown ">
 							 <a class="nav-link pl-0" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-puzzle-piece"></i> <span class="d-none d-md-inline">BETA</span></a>
 							<div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-								<li class="nav-item">
-									<a class="dropdown-item" href="/dashboard/calendar"><i class="fa fa-calendar"></i> <span class="d-none d-md-inline">Calendar</span></a>
-								</li>
 								<li class="nav-item">
 									<a class="dropdown-item" href="/dashboard/notes"><i class="fa fa-sticky-note"></i> <span class="d-none d-md-inline">Notes</span></a>
 								</li>
 								<li class="nav-item">
 									<a class="dropdown-item" href="/dashboard/kanban"><i class="fa fa-pie-chart"></i> <span class="d-none d-md-inline">Projects</span></a>
-								</li>
-								<li class="nav-item">
-									<a class="dropdown-item" href="/dashboard/git"><i class="fa fa-code-fork"></i> <span class="d-none d-md-inline">Git</span></a>
 								</li>
 							</div>
 						</div>
@@ -88,7 +91,7 @@
 			{% endfor %}
 		{% endif %}
 	{% endwith %}
-	
+
 {% block dashboard %}{% endblock %}
         </main>
     </div>

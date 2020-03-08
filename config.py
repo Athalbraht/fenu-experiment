@@ -2,6 +2,8 @@
 
 import os
 
+domain = "https://fenu-exp.us.edu.pl"
+
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 ORIGINS = ["*"]
