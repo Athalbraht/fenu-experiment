@@ -1,5 +1,12 @@
 {% extends "index.html" %}
 {% block body %}
+	{% with messages = get_flashed_messages() %}
+		{% if messages %}
+			{% for message in messages %}
+	<div class="alert alert-primary" role="alert" style="margin-top:20px">{{message}}</div>
+			{% endfor %}
+		{% endif %}
+	{% endwith %}
 	{% if guest %}
 		<div class="container-fluid" align="center" style="min-height:100%">
 			<div class="container" style="min-height:100% width:80%">
@@ -10,7 +17,7 @@
 							<img class="mb-4" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
 							<h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
 							<div class="form-group">
-									
+
 									<input type="password" class="form-control" id="passwd" name="password" placeholder="Password">
 							</div>
 							<button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
@@ -20,7 +27,7 @@
 				</div>
 			</div>
 		</div>
-	{% endif %}	
+	{% endif %}
 	{% if login %}
 		<div class="container-fluid" align="center" style="min-height:100%">
 			<div class="container" style="min-height:100% width:80%">
@@ -36,6 +43,6 @@
 				</div>
 			</div>
 		</div>
-	{% endif %}	
-	
+	{% endif %}
+
 {% endblock %}

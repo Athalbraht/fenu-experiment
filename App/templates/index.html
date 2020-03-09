@@ -33,47 +33,37 @@
 			<ul class="navbar-nav ml-auto ">
 
 				<li class="nav-item active">
-					<a class="nav-link" href="{{ lang["domain"] }}/{{ lang["lang"] }}/experiments">{{ lang["ihexp"] }}<span class="sr-only">(current)</span></a>
+					<a class="nav-link" href="{{ lang["domain"] }}/{{ lang["lang"] }}/experiments.html">{{ lang["ihexp"] }}<span class="sr-only">(current)</span></a>
 				</li>
 
 				<li class="nav-item">
-					<a class="nav-link" href="{{ lang["domain"] }}/{{ lang["lang"] }}/publications">{{ lang["ihpub"] }}</a>
+					<a class="nav-link" href="{{ lang["domain"] }}/{{ lang["lang"] }}/publications.html">{{ lang["ihpub"] }}</a>
 				</li>
 
 				<li class="nav-item">
-					<a class="nav-link" href="{{ lang["domain"] }}/{{ lang["lang"] }}/members">{{ lang["ihmem"] }}</a>
+					<a class="nav-link" href="{{ lang["domain"] }}/{{ lang["lang"] }}/members.html">{{ lang["ihmem"] }}</a>
 				</li>
 
 				<li class="nav-item">
-					<a class="nav-link" href="{{ lang["domain"] }}/{{ lang["lang"] }}/students">{{ lang["ihstud"] }}</a>
+					<a class="nav-link" href="{{ lang["domain"] }}/{{ lang["lang"] }}/students.html">{{ lang["ihstud"] }}</a>
 				</li>
 
 				<li class="nav-item">
 					<a class="nav-link" href="#" data-toggle="modal" data-target="#ContactsModal">{{ lang["ihcon"] }}</a>
 				</li>
-				{% if admin %}
-				<li class="nav-item active">
-					<a class="nav-link" href="https://fenu-experiment.pl/dashboard/papers/publications">{{ lang["ihdash"] }}</a>
-				</li>
-				{% endif %}
 			</ul>
 
 			<ul class="navbar-nav flex-row ml-md-auto  d-md-flex">
 
 				<li class="nav-item">
-					<a class="nav-link active" href="/lang/en">ENG</a>
+					<a class="nav-link active" href="{{ lang["domain"] }}/en/experiments.html">EN</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="/lang/pl">PL</a>
+					<a class="nav-link active" href="{{ lang["domain"] }}/pl/experiments.html">PL</a>
 				</li>
 
 				<li class="nav-item">
-					{% if guest %}
-					<a class="btn btn-primary" href="/login" role="button"> Log in </a>
-					{% endif %}
-					{% if login %}
-					<a class="btn btn-primary" href="/logout" role="button"> Log out </a>
-					{% endif %}
+					<a class="btn btn-primary" role="button" href="https://fenu-experiment.pl/login">{{ lang["ihdash"] }}</a>
 				</li>
 
 			</ul>
@@ -81,16 +71,7 @@
 		</nav>
 	</header>
 
-	{% with messages = get_flashed_messages() %}
-		{% if messages %}
-			{% for message in messages %}
-	<div class="alert alert-primary" role="alert" style="margin-top:20px">{{message}}</div>
-			{% endfor %}
-		{% endif %}
-	{% endwith %}
 	<div class="container" style="margin-top: 20px; ">
-
-
 		<div class="jumbotron" style="margin-top: 20px; margin-bottom:20px">
 			{% block body %}{% endblock %}
 		</div>

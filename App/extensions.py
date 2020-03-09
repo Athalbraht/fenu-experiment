@@ -13,9 +13,13 @@ from App.models import *
 
 source = "uploads/"
 
-def export_html(name, content, path=''):
-    with open("{}/pl/{}.html".format(config.HOMEPAGE_FOLDER, name),"w") as html:
-        html.write(content)
+def export_html(language, filename, content, index=False):
+    if index:
+        with open("{}/index.html".format(config.HOMEPAGE_FOLDER),"w") as html:
+            html.write(content)
+    else:
+        with open("{}/{}/{}.html".format(config.HOMEPAGE_FOLDER, language, filename),"w") as html:
+            html.write(content)
     return None
 
 def translator(lang):

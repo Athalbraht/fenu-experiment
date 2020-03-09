@@ -13,7 +13,31 @@ from werkzeug.utils import secure_filename
 exp_img = exp_imgs(app.config["UPLOAD_FOLDER"])
 
 
-
+def deploy_homepage():
+    try:
+        index_page = render_template("world/experiments.html", **get_var(session),
+                                        lang=translator('en'))
+        export_html(None, "index", index_page, index=True)
+        for language in config.languages:
+            experiment_page = render_template("world/experiments.html", **get_var(session),
+                                            lang=translator(language))
+            students_page = render_template("world/home.html", **get_var(session),
+                                            lang=translator(language))
+            publications_page = render_template("world/publications.html", **get_var(session),
+                                            lang=translator(language), publications=list_papers("publications"))
+            members_page = render_template("world/members.html", **get_var(session),
+                                            lang=translator(language), organizations=list_members())
+            export_html(language, "experiments", experiment_page)
+            export_html(language, "home", students_page)
+            export_html(language, "publications", publications_page)
+            export_html(language, "members", members_page)
+        flash("Deployed")
+    except:
+        flash("FAILED!")
+        return None
+    # TODO
+    # GIT-AUTOUPDATE
+    return None
 
 @app.route("/test")
 def test():
@@ -33,12 +57,33 @@ def language(lang):
     flash("Language switched to {}".format(session["lang"]))
     return redirect(url_for('experiments'))
 
+@app.route("/experiments", methods=['GET', "POST"])
+def experiments():
+    return render_template("world/experiments.html",
+                            **get_var(session),
+                           lang=translator(session["lang"]))
+
+
+@app.route("/members")
+def members():
+    return render_template("world/members.html",
+                           **get_var(session),
+                           organizations=list_members(),
+                           lang=translator(session["lang"]))
+
+
+@app.route("/publications")
+def publications():
+    return render_template("world/publications.html",
+                           **get_var(session),
+                           publications=list_papers("publications"),
+                           lang=translator(session["lang"]))
 @app.route("/students")
 def home():
-    students_page = render_template("world/home.html",
-                           **get_var(session), lang=translator(session["lang"]), langg=session["lang"])
-    export_html("test",students_page)
-    return students_page
+    return render_template("world/home.html",
+                           **get_var(session),
+                           lang=translator(session["lang"]))
+
 
 @app.route("/")
 def main():
@@ -46,6 +91,8 @@ def main():
 
 @app.route("/login", methods=['GET', "POST"])
 def login():
+    if session['status'] == "Log out":
+        return redirect(url_for('dashboard_publications',paper='publications'))
     if request.method == "POST":
         #login = request.form['login']
         password = request.form['password']
@@ -70,28 +117,6 @@ def logout():
     return redirect(url_for('login'))
 
 
-@app.route("/experiments", methods=['GET', "POST"])
-def experiments():
-    experiments_page =  render_template("world/experiments.html", **
-                           get_var(session),
-                           lang=translator(session["lang"]))
-    export_html("experiments", experiments_page)
-    return experiments_page
-
-
-@app.route("/members")
-def members():
-    return render_template("world/members.html", **
-                           get_var(session),
-                           organizations=list_members(),
-                           lang=translator(session["lang"]))
-
-
-@app.route("/publications")
-def publications():
-    return render_template("world/publications.html", **
-                           get_var(session), publications=list_papers("publications"),
-                           lang=translator(session["lang"]))
 
     #####################
     #####################
@@ -106,7 +131,7 @@ def permission_check(template, *args, **kwargs):
         _kwargs.update(kwargs)
         return _kwargs
     else:
-        _kwargs = {"template_name_or_list": "world/login.html"}
+        _kwargs = {"template_name_or_list": "index.html"}
         _kwargs.update(get_var(session))
         flash("Permission denied. Log in first.")
         return _kwargs
@@ -305,6 +330,7 @@ def dashboard_edit_experiment():
         db.session.add(post)
         db.session.commit()
         flash("Added")
+        deploy_homepage()
     return render_template(**permission_check("dashboard/edit/experiment.html", **
                                               get_var(session)), posts=list_home(),
                                               edit_header="New Experiment description",
@@ -322,6 +348,7 @@ def dashboard_edit_experiment_post(post_id):
         post.body_en = bodyen
         db.session.commit()
         flash("Updated")
+        deploy_homepage()
     return render_template(**permission_check("dashboard/edit/experiment.html", **get_var(session)),
                            posts=list_home(),
                            edit_header="Editing info {}".format(post.id),
