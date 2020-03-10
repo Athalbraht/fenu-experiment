@@ -18,4 +18,5 @@ SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 REPO = "https://github.com/aszadzinski/BINA-CCB.git"
 UPLOAD_FOLDER = os.path.join('static', 'img')
+PHOTOS_TYPE = ["BINA_window","Schemes", "Detector", "Others"]
 HOMEPAGE_FOLDER = os.path.join(basedir, 'App/static/homepage')

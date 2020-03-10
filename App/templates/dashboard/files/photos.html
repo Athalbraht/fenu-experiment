@@ -1,73 +1,23 @@
 {% extends "dashboard/files.html" %}
 {% block dashboard_files %}
-<div class="row" style="margin: 5px;">
-	<div class="col-sm-6">
-		<div class="card">
-			<img class="card-img-top" src="{{url_for('static', filename='img/detector.jpg')}}" alt="Generic placeholder image" width="140" height="140">
-			<div class="card-body">
-				<h5 class="card-title"><a  href="/dashboard/gallery/detector">BINA detector</a></h5>
-			</div>
-		</div>
-	</div>
-	<div class="col-sm-6">
-		<div class="card">
-			<img class="card-img-top" src="{{url_for('static', filename='img/schemes.jpg')}}" alt="Generic placeholder image" width="140" height="140">
-			<div class="card-body">
-				<h5 class="card-title"><a  href="/dashboard/gallery/schemes">Schemes</a></h5>
-			</div>
-		</div>
-	</div>
-</div>
-<div class="row" style="margin: 5px;">
-	<div class="col-sm-6">
-		<div class="card">
-			<img class="card-img-top" src="{{url_for('static', filename='img/window.jpg')}}" alt="Generic placeholder image" width="140" height="140">
-			<div class="card-body">
-				<h5 class="card-title"><a  href="/dashboard/gallery/window">Window</a></h5>
-			</div>
-		</div>
-	</div>
-	<div class="col-sm-6">
-		<div class="card">
-			<img class="card-img-top" src="{{url_for('static', filename='img/target.jpg')}}" alt="Generic placeholder image" width="140" height="140">
-			<div class="card-body">
-				<h5 class="card-title"><a  href="/dashboard/gallery/target">Target</a></h5>
-			</div>
-		</div>
-	</div>
-	<div class="col-sm-6">
-		<div class="card">
-			<img class="card-img-top" src="{{url_for('static', filename='img/production.jpg')}}" alt="Generic placeholder image" width="140" height="140">
-			<div class="card-body">
-				<h5 class="card-title"><a  href="/dashboard/gallery/production">Production</a></h5>
-			</div>
-		</div>
-	</div>
-	<div class="col-sm-6">
-		<div class="card">
-			<img class="card-img-top" src="{{url_for('static', filename='img/chamber.jpg')}}" alt="Generic placeholder image" width="140" height="140">
-			<div class="card-body">
-				<h5 class="card-title"><a  href="/dashboard/gallery/targetchamber">Target-chamber</a></h5>
-			</div>
-		</div>
-	</div>
-	<div class="col-sm-6">
-		<div class="card">
-			<img class="card-img-top" src="{{url_for('static', filename='img/plans.jpg')}}" alt="Generic placeholder image" width="140" height="140">
-			<div class="card-body">
-				<h5 class="card-title"><a  href="/dashboard/gallery/plans">Plans</a></h5>
-			</div>
-		</div>
-	</div>
-	<div class="col-sm-6">
-		<div class="card" >
-			<img class="card-img-top" src="{{url_for('static', filename='img/other.jpg')}}" alt="Generic placeholder image" width="140" height="140">
-			<div class="card-body">
-				<h5 class="card-title"><a  href="/dashboard/gallery/other">Other</a></h5>
-				
-			</div>
-		</div>
-	</div>
-	
-</div>
+<table class="table table-striped" align="left">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Title</th>
+      <th scope="col"></th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+{% for photo in collection %}
+    <tr>
+      <th scope="row">{{photo.id}}</th>
+      <td>{{photo.filename}}</td>
+      <td><a role="button" class="btn btn-outline-success" href="/dashboard/gallery/send/{{photo.id}}">Show</a></td>
+      <th ><img  class="img-thumbnail" src="/dashboard/gallery/send/{{photo.id}}"  style=" width: 120px; height: 80px;"></th>
+    </tr>
+{% endfor %}
+  </tbody>
+</table>
 {% endblock %}

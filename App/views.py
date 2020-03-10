@@ -2,6 +2,7 @@
 
 import os
 import time
+from datetime import datetime as dt
 from io import BytesIO
 from App import app
 from App import db
@@ -187,6 +188,28 @@ def dashboard_delete(f,item):
     flash("deleted file")
     return render_template(**permission_check("dashboard/files/papers.html"),lang=translator(session["lang"]))
 
+@app.route("/dashboard/edit/<f>/<item>", methods=["GET", "POST"])
+def dashboard_edit_document(f, item):
+    doc = Documents.query.filter(Documents.id==item).first()
+    if request.method == "POST":
+        title = request.form["title"]
+        author = request.form["author"]
+        year = request.form["year"]
+        ref = request.form["ref"]
+        filename = request.form["filename"]
+        doc.title = title
+        doc.author = author
+        doc.year = year
+        doc.reference = ref
+        doc.filename = filename
+        db.session.commit()
+        flash("Updated")
+
+    return render_template(**permission_check("dashboard/edit/files.html",
+                                              **get_var(session)),
+                                              edited=Documents.query.filter(Documents.id==item).first(),
+                                              lang=translator(session["lang"]))
+
 @app.route("/dashboard/presentations/<presentation>", methods=['GET', "POST"])
 def dashboard_presentations(presentation):
     searchOptions = {"author":"","title":"","tag":""}
@@ -196,20 +219,15 @@ def dashboard_presentations(presentation):
             title = request.form['title']
             author = request.form['author']
             desc = request.form['desc']
-            group = request.form['group']
-            ngroup = request.form['ngroup']
+            event = request.form['event']
             _file = request.files['file']
-            if group == 'new':
-                group = ngroup
-                if group == "":
-                    group = "Unsorted"
-            publication = Documents(type="p-{}".format(presentation), title=title, author=author, desc=desc, path=_file.filename, files=_file.read(), tags=group)
+            publication = Documents(type="presentation-{}".format(presentation), title=title, author=author, desc=desc, filename=_file.filename, file=_file.read(), event=event)
             db.session.add(publication)
             db.session.commit()
             flash("Added {}".format(title))
         else:
             search = request.form['form-name']
-            tags = request.form['tags']
+            event = request.form['event']
             author = request.form['author']
             title = request.form['title']
             searchOptions = {"author":author,"title":title,"tag":tags}
@@ -217,6 +235,7 @@ def dashboard_presentations(presentation):
                                               **get_var(session)),
                                               tags=list_presentation_groups(presentation,searchOptions),
                                               section=presentation,
+                                              events=list_events(),
                                               lang=translator(session["lang"]))
 
 
@@ -224,48 +243,29 @@ def dashboard_presentations(presentation):
 @app.route("/dashboard/gallery", methods=['GET', "POST"])
 def dashboard_gallery():
     if request.method == "POST":
-        title = request.form['title']
-        author = request.form['author']
-        year = request.form['year']
-        ref = request.form['ref']
-        link = request.form['link']
-        desc = request.form['desc']
-
-        #publication = Photo(type="presentation-c", title=title, author=author, reference=ref, year=year, desc=desc, link=link, path="{}{}.pdf".format(paths[""], _filename))
-        #db.session.add(publication)
-        #db.session.commit()
-        flash("Added {}".format(title))
-    return "Temporary disabled"
-    #return render_template(**permission_check("dashboard/files/photos.html",
-    #                                          **get_var(session)), collection=list_photos("gallery"), imgs=exp_img,lang=translator(session["lang"]))
-
-@app.route("/dashboard/gallery/download/<folder>/<fileid>", methods=['GET', "POST"])
-def dashboard_gallery_download(folder,fileid):
-    collection=list_photos(folder,False)
-    return render_template(**permission_check("dashboard/files/img.html",
-                                              **get_var(session)), picpath=collection[int(fileid)].path,lang=translator(session["lang"]))
-
-@app.route("/dashboard/gallery/<folder>", methods=['GET', "POST"])
-def dashboard_gallery_open(folder):
-    if request.method == "POST":
-        title = request.form['title']
-        author = request.form['author']
-        year = request.form['year']
-        ref = request.form['ref']
-        link = request.form['link']
-        desc = request.form['desc']
-
-        #publication = Photo(type="presentation-c", title=title, author=author, reference=ref, year=year, desc=desc, link=link, path="{}{}.pdf".format(paths[""], _filename))
-        #db.session.add(publication)
-        #db.session.commit()
-        flash("Added {}".format(title))
+        files = request.files.getlist("images")
+        folder = request.form["folder"]
+        for photo in files:
+            pic = Photos(type=folder, title=photo.filename, filename=photo.filename, file=photo.read())
+            db.session.add(pic)
+            db.session.commit()
+        flash("Uploaded")
     return render_template(**permission_check("dashboard/files/gallery.html",
-                                              **get_var(session)), collection=list_photos(folder,False), imgs=exp_img, folder=folder,lang=translator(session["lang"]))
+                                              **get_var(session)),
+                                              types = config.PHOTOS_TYPE,
+                                              lang=translator(session["lang"]))
 
-@app.route("/dashboard/data", methods=['GET', "POST"])
-def dashboard_data():
-    return render_template(
-        **permission_check("dashboard/files/data.html", **get_var(session)),lang=translator(session["lang"]))
+@app.route("/dashboard/gallery/<type>", methods=['GET', "POST"])
+def dashboard_gallery_type(type):
+    return render_template(**permission_check("dashboard/files/photos.html",
+                                              **get_var(session)),
+                                              collection = Photos.query.filter(Photos.type==type).all(),
+                                              lang=translator(session["lang"]))
+
+@app.route("/dashboard/gallery/send/<photo>", methods=['GET', "POST"])
+def dashboard_gallery_return(photo):
+    _file = Photos.query.filter_by(id=photo).first()
+    return send_file(BytesIO(_file.file), attachment_filename=_file.filename)
 
 
     #########################
@@ -365,14 +365,6 @@ def dashboard_edit_members():
     #                       posts=list_posts(), edit_header="Add new message", organizations=list_members())
 
 
-@app.route("/dashboard/edit/files", methods=['GET', "POST"])
-def dashboard_edit_files():
-    return render_template(
-                **permission_check("dashboard/edit/files.html",
-                **get_var(session)),
-                lang=translator(session["lang"]))
-
-
     ###############
     # notes & cal #
     ###############
@@ -385,7 +377,24 @@ def dashboard_notes():
 
 @app.route("/dashboard/events", methods=['GET', "POST"])
 def dashboard_calendar():
-    return "Permission denied"
+    if request.method == "POST":
+        title = request.form['title']
+        localization = request.form['localization']
+        y, m, d = [ int(i) for i in request.form['date'].split('-') ]
+        desc = request.form['desc']
+        members = " ".join(request.form.getlist('members'))
+        print(members)
+        event = Events(title=title, localization=localization,
+                        time=dt(y,m,d), desc=desc, members=members)
+        db.session.add(event)
+        db.session.commit()
+        flash("Added")
+    return render_template(
+        **permission_check("dashboard/events.html",
+                            **get_var(session)),
+                            events = list_events(),
+                            members=Members.query.all(),
+                            lang=translator(session["lang"]))
 
 
     #####################
@@ -407,9 +416,10 @@ def dashboard_kanban():
 
 @app.route("/dashboard/git/", methods=['GET', "POST"])
 def dashboard_git():
-    return "Permission denied"
-    #return render_template(
-    #    **permission_check("dashboard/git/home.html", **get_var(session)),lang=translator(session["lang"]))
+    return render_template(
+        **permission_check("dashboard/git/data.html", 
+                            **get_var(session)),
+                            lang=translator(session["lang"]))
 
 
     #####################

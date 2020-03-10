@@ -1,153 +1,31 @@
-{% extends "dashboard.html" %}
-{% block dashboard %}
-
-<nav aria-label="breadcrumb">
-<div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-	<div class="btn-group" role="group">
-		<button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-		Document
-		</button>
-		<div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-			<a class="dropdown-item" data-toggle="collapse" href="#publication">Publication</a>
-			<a class="dropdown-item" data-toggle="collapse" href="#phd">PhD thesis</a>
-			<a class="dropdown-item" data-toggle="collapse" href="#presentation">Presentation</a>
-			<a class="dropdown-item" data-toggle="collapse" href="#poster">Poster</a>
-			<a class="dropdown-item" data-toggle="collapse" href="#other">Other</a>
-		</div>
-
-
-
-		<button type="button" class="btn btn-secondary" data-toggle="collapse" href="#multiCollapseExample1">Photos</button>
-		<button type="button" class="btn btn-secondary" data-toggle="collapse" href="#multiCollapseExample1">Data</button>
-	</div>
-</div>
-</nav>
+{% extends "dashboard/files.html" %}
+{% block dashboard_files %}
 
 <div class="jumbotron">
-
-	<div class="collapse " id="publication">
-		<div class="card card-body">
-			<h3>New publication</h3><hr>
-			<form class="was-validated">
-				<div class="form-group">
-					<label>Title</label>
-					<input type="text" class="form-control is-valid form-control-sm" id="validationServer01" placeholder="" required>
-					<div class="invalid-feedback">Example invalid custom select feedback</div>
-				</div>
-				<div class="form-row">
-					<div class="form-group col-md-6">
-						<div class="form-group">
-							<label>Author</label>
-							<input type="text" class="form-control is-valid form-control-sm" id="validationServer01" placeholder="" required>
-							<div class="invalid-feedback">Example invalid custom select feedback</div>
-						</div>
-					</div>
-					<div class="form-group col-md-6">
-						<div class="form-group">
-							<label>Year</label>
-							<input type="text" class="form-control is-valid form-control-sm" id="validationServer01" placeholder="" required>
-							<div class="invalid-feedback">Example invalid custom select feedback</div>
-						</div>
-					</div>
-				</div>
-				<div class="form-row">
-					<div class="form-group col-md-6">
-						<div class="form-group">
-							<label>Reference</label>
-							<input type="text" class="form-control is-valid form-control-sm" id="validationServer01" placeholder="">
-						</div>
-					</div>
-					<div class="form-group col-md-6">
-						<div class="form-group">
-							<label>DOI</label>
-							<input type="text" class="form-control is-valid form-control-sm" id="validationServer01" placeholder="">
-						</div>
-					</div>
-				</div>
-				<div class="form-row">
-					<div class="form-group col-md-6">
-						<div class="form-group">
-							<label>Link</label>
-							<input type="text" class="form-control is-valid form-control-sm" id="validationServer01" placeholder="" >
-						</div>
-					</div>
-					<div class="form-group col-md-6">
-						<label>Upload</label>
-						<div class="custom-file">
-							<input type="file" class="custom-file-input" id="validatedCustomFile">
-							<label class="custom-file-label" for="validatedCustomFile">Choose file...</label>
-							<div class="invalid-feedback">Example invalid custom file feedback</div>
-						</div>
-					</div>
-				</div>
-				<hr>
-				<button type="submit" class="btn btn-primary">Add</button>
-			</form>
+	<form method="post">
+		<div class="form-group">
+			<label for="title">Title </label>
+			<textarea class="form-control" id="title" rows="1" name="title" >{{edited.title}}</textarea>
 		</div>
-	</div>
-
-	<div class="collapse " id="phd">
-		<div class="card card-body">
-			<h3>New PhD thesis</h3><hr>
-			<form class="was-validated">
-				<div class="form-group">
-					<label>Title</label>
-					<input type="text" class="form-control is-valid form-control-sm" id="validationServer01" placeholder="" required>
-					<div class="invalid-feedback">Example invalid custom select feedback</div>
-				</div>
-				<div class="form-row">
-					<div class="form-group col-md-6">
-						<div class="form-group">
-							<label>Author</label>
-							<input type="text" class="form-control is-valid form-control-sm" id="validationServer01" placeholder="" required>
-							<div class="invalid-feedback">Example invalid custom select feedback</div>
-						</div>
-					</div>
-					<div class="form-group col-md-6">
-						<div class="form-group">
-							<label>Year</label>
-							<input type="text" class="form-control is-valid form-control-sm" id="validationServer01" placeholder="" required>
-							<div class="invalid-feedback">Example invalid custom select feedback</div>
-						</div>
-					</div>
-				</div>
-				<div class="form-row">
-					<div class="form-group col-md-6">
-						<div class="form-group">
-							<label>Reference</label>
-							<input type="text" class="form-control is-valid form-control-sm" id="validationServer01" placeholder="">
-						</div>
-					</div>
-					<div class="form-group col-md-6">
-						<div class="form-group">
-							<label>DOI</label>
-							<input type="text" class="form-control is-valid form-control-sm" id="validationServer01" placeholder="">
-						</div>
-					</div>
-				</div>
-				<div class="form-row">
-					<div class="form-group col-md-6">
-						<div class="form-group">
-							<label>Link</label>
-							<input type="text" class="form-control is-valid form-control-sm" id="validationServer01" placeholder="" >
-						</div>
-					</div>
-					<div class="form-group col-md-6">
-						<label>Upload</label>
-						<div class="custom-file">
-							<input type="file" class="custom-file-input" id="validatedCustomFile">
-							<label class="custom-file-label" for="validatedCustomFile">Choose file...</label>
-							<div class="invalid-feedback">Example invalid custom file feedback</div>
-						</div>
-					</div>
-				</div>
-				<hr>
-				<button type="submit" class="btn btn-primary">Add</button>
-			</form>
+		<div class="form-group">
+			<label for="title">Author</label>
+			<textarea class="form-control" id="title" rows="1" name="author" >{{edited.author}}</textarea>
 		</div>
-	</div>
+		<div class="form-group">
+			<label for="title">Year</label>
+			<textarea class="form-control" id="title" rows="1" name="year" >{{edited.year}}</textarea>
+		</div>
+		<div class="form-group">
+			<label for="title">Reference</label>
+			<textarea class="form-control" id="title" rows="1" name="ref" >{{edited.reference}}</textarea>
+		</div>
+		<div class="form-group">
+			<label for="title">filename</label>
+			<textarea class="form-control" id="title" rows="1" name="filename" >{{edited.filename}}</textarea>
+		</div>
 
-
-
+		<button type="submit" class="btn btn-primary">Update</button>
+	</form>
 </div>
+
 {% endblock %}

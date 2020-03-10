@@ -62,6 +62,10 @@ def check_password(login, passwd):
         return "Wrong email or password. Try again.", False, None
 
 
+def list_events():
+    events = Events.query.order_by(Events.time.desc()).all()
+    return events
+
 def list_papers(_type,search=None):
     _pubs = Documents.query.filter(Documents.type == "paper-{}".format(_type))
     if search != None:
@@ -119,10 +123,6 @@ def list_photos(_type,wc=True):
                 self.content_path = [ os.path.join(path, i) for i in self.content ]
     groups = [Group(i,folders[i], os.path.join(paths[_type],folders[i]),wc) for i in range(len(folders))]
     return groups
-
-def upload_publications():
-
-    return 1
 
 
 def get_post(post_id):

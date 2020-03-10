@@ -5,7 +5,7 @@
 		<div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups">
 			<div class="btn-group" role="group" aria-label="First group">
 				<button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#modnew">Send file</button>
-				
+
 			</div>
 			<div >
 				<form  method="post", enctype="multipart/form-data">
@@ -14,7 +14,7 @@
 						<input type="text" class="form-control" placeholder="Year" name="year" value="">
 						<input type="text" class="form-control" placeholder="Author" name="author" value="">
 						<input type="text" class="form-control" placeholder="Title" name="title" value="">
-						 
+
 						<button type="submit" class="btn btn-secondary">Search</button>
 					</div>
 				</form>
@@ -33,53 +33,13 @@
 			{% for pub in publications %}
 			<tr>
 				<td>{{pub.author}}</td>
-				<td><b><a  href="/dashboard/{{section}}/download/{{pub.id}}">{{pub.title}}</a></b></td>
+				<td><b><a  href="/dashboard/{{section}}/download/{{pub.id}}">{{pub.title}}</a></b><br><small>{{pub.reference}}</small></td>
 				<td>{{pub.year|int}}</td>
-				<td><a class="nav-link active text-secondary " type="button" data-toggle="modal" data-target="#mod{{pub.id}}"><h4><i class="fa fa-sliders"></h4></i></a></td>
+				<td>
+					<a  type="button" href="/dashboard/edit/paper/{{pub.id}}" class="btn btn-outline-primary btn-sm"><i class="fa fa-edit" style="font-size:15px;color:blue"></i></a>
+					<a  type="button" href="/dashboard/delete/paper/{{pub.id}}" class="btn btn-outline-danger btn-sm"><i class="fa fa-trash" style="font-size:15px;color:red"></i></a>
+				</td>
 			</tr>
-
-			<div class="modal fade" id="mod{{pub.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-				<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h5 class="modal-title" id="exampleModalCenterTitle">Options</h5>
-							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							</button>
-						</div>
-						<div class="modal-body">
-
-							 <div align="left">
-								<b>ID</b>:
-								{{pub.id}}<hr>
-								<b>Type</b>:
-								{{pub.type}}<hr>
-								<b>Title</b>:
-								{{pub.title}}<hr>
-								<b>Author</b>:
-								{{pub.author}}<hr>
-								<b>Year</b>:
-								{{pub.year|int}}<hr>
-								<b>Ref</b>:
-								{{pub.reference}}<hr>
-								<b>Description</b>:
-								{{pub.desc}}<hr>
-								<b>filename</b>:
-								{{pub.path}}<hr>
-								<b><a  href="{{pub.link}}">Link</a></b><hr>
-								<b><a  href="/dashboard/{{section}}/download/{{pub.id}}">Download</a></b><hr>
-								<b>Tags</b>:
-								{{pub.tags}}<hr>
-							</div> 
-							
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-info" data-dismiss="modal">Edit</button>
-							<b><a role="button" class="btn btn-outline-danger" href="/dashboard/delete/papers/{{pub.id}}">Delete</a></b>
-						</div>
-					</div>
-				</div>
-			</div>
 			{% endfor %}
 		</tbody>
 	</table>
