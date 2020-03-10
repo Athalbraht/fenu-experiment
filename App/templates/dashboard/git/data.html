@@ -1,0 +1,52 @@
+{% extends "dashboard/git/home.html" %}
+{% block dashboard_git_home %}
+<div class="container-fluid">
+<ul class="nav nav-tabs card-header-tabs ">
+	<li class="nav-item dropdown">
+		<a class="nav-link  dropdown-toggle" id="navbarDropdown" data-toggle="dropdown"   href="#">Branches</a>
+		<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+			<a class="dropdown-item" href="/dashboard/papers/publications">master</a>
+			<div class="dropdown-divider"></div>
+			<a class="dropdown-item" href="/dashboard/papers/manuals">dev</a>
+		</div>
+	</li>
+  <li class="nav-item">
+    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Clone</a>
+  </li>
+</ul>
+</div>
+<div class="container-fluid">
+
+<div class="container" align=left>
+	<div class="row">
+		<div class="col">
+			<a class="nav-link active text-dark " href="#">
+			<i class="fa fa-folder-open-o" style="font-size:30px;color:red"></i>
+			<small><b>2019-CCB data</b></small>
+			</a>
+			<hr>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col">
+			<a class="nav-link active text-dark " href="#">
+			<i class="fa fa-folder-open-o" style="font-size:30px;color:red"></i>
+			<small><b>Programs</b></small>
+			</a>
+			<hr>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col">
+			<a class="nav-link active text-dark " href="#">
+			<i class="fa fa-folder-open-o" style="font-size:30px;color:red"></i>
+			<small><b>Repository</b></small>
+			</a>
+			<hr>
+		</div>
+	</div>
+
+</div>
+</div>
+
+{% endblock %}

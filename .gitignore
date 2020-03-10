@@ -1,7 +1,6 @@
 database/
 migrations/
 venv/
-App/
 App/static/
 App/static/homepage/
 *__pycache__*
