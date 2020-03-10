@@ -101,15 +101,44 @@
 			</div>
 		</div>
 	</div>
+	<div class="modal fade" id="das" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalCenterTitle">{{lang["das"]}}</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+				</div>
+				<div class="modal-body">
+					<div class="media text-muted pt-3">
+						<img data-src="holder.js/32x32?theme=thumb&bg=007bff&fg=007bff&size=1" alt="" class="mr-2 rounded">
+						<div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+							<div class="d-flex justify-content-between align-items-center w-100">
+								<strong class="text-gray-dark">{{lang["das_body"]|safe}}</strong>
+							</div>
+							<span class="d-block">{{lang["das_header"]|safe}}</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
 	<nav class="navbar sticky-bottom navbar-light bg-white">
-		<small><a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">  <img src="https://img.shields.io/github/v/tag/aszadzinski/BINA-CCB.svg" class="figure-img img-fluid rounded" alt="badge-tag"> <img src="https://img.shields.io/github/last-commit/aszadzinski/BINA-CCB.svg" class="figure-img img-fluid rounded" alt="badge-last vommit"></a></small>
-		<ul class="navbar-nav  flex-row ml-md-auto d-none d-md-flex">
+	<ul class="nav navbar-nav  navbar-left">
 		<li class="nav-item">
-			<a class="nav-link" href="https://github.com/aszadzinski/BINA-CCB.git"><i class="fa fa-github"></i> GitHub</a>
+			<a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Version: {{ lang["version"] }}</a>
 		</li>
+	</ul>
+	<ul class="nav navbar-nav navbar-center">
 		<li class="nav-item">
-			<a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">© 2020 BINA@CCB</a>
+			<a class="nav-link" href="https://github.com/aszadzinski/BINA-CCB.git"><i class="fa fa-github"></i> GitHub<font color="gray">©2020 BINA@CCB</font></a>
+		</li>
+	</ul>
+	<ul class="nav navbar-nav navbar-center">
+		<li class="nav-item">
+			<a class="nav-link" href="#" data-toggle="modal" data-target="#das">{{ lang["das"] }}</a>
 		</li>
 	</nav>
 

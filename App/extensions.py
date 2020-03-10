@@ -47,6 +47,7 @@ def translator(lang):
         _translations["icexp"] = exp.body_en
     _translations["lang"] = lang
     _translations["domain"] = config.domain
+    _translations["version"] = config.VERSION
     return _translations
 
 def check_password(login, passwd):
