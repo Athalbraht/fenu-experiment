@@ -28,7 +28,7 @@ def deploy_homepage():
             members_page = render_template("world/members.html", **get_var(session),
                                             lang=translator(language), organizations=list_members())
             export_html(language, "experiments", experiment_page)
-            export_html(language, "home", students_page)
+            export_html(language, "students", students_page)
             export_html(language, "publications", publications_page)
             export_html(language, "members", members_page)
         flash("Deployed")
@@ -177,7 +177,7 @@ def dashboard_publications(paper):
 @app.route("/dashboard/<paper>/download/<fileid>", methods=['GET', "POST"])
 def dashboard_download(paper,fileid):
     _file = Documents.query.filter_by(id=fileid).first()
-    return send_file(BytesIO(_file.file), attachment_filename=_file.filename)
+    return send_file(BytesIO(_file.file), attachment_filename=_file.filename+".pdf")
 
 @app.route("/dashboard/delete/<f>/<item>", methods=['GET', "POST"])
 def dashboard_delete(f,item):
@@ -319,12 +319,8 @@ def dashboard_edit_home_post(post_id):
 @app.route("/dashboard/edit/experiment", methods=['GET', "POST"])
 def dashboard_edit_experiment():
     if request.method == "POST":
-        #head = request.form['title']
         bodypl = request.form['bodypl']
         bodyen = request.form['bodyen']
-        #loc = request.form['loc']
-        #lang = request.form["lang"]
-        #desc = request.form["desc"]
         post = Home(body_pl=bodypl, body_en=bodyen,
                     head_pl="", head_en="",loc="",lang="")
         db.session.add(post)
