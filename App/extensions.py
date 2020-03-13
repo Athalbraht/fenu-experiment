@@ -46,8 +46,7 @@ def translator(lang):
     else:
         _translations["icexp"] = exp.body_en
     _translations["lang"] = lang
-    _translations["domain"] = config.domain
-    _translations["version"] = config.VERSION
+    _translations.update(config.main)
     return _translations
 
 def check_password(login, passwd):
@@ -58,9 +57,9 @@ def check_password(login, passwd):
         if salt+_chash == salt+_hash:
             return "Correct password. Dashboard unlocked.", True, user[0].id
         else:
-            return "Wrong email or password. Try again.", False, None
+            return "Wrong password. Try again.", False, None
     else:
-        return "Wrong email or password. Try again.", False, None
+        return "Wrong password. Try again.", False, None
 
 
 def list_events():
