@@ -40,10 +40,22 @@ def deploy_homepage():
     # GIT-AUTOUPDATE
     return None
 
-@app.route("/test")
-def test():
-    print(config.HOMEPAGE_FOLDER)
-    return("test")
+@app.route("/invite", methods=["POST", "GET"])
+def invite():
+    if request.method == "POST":
+        passwd = request.form["password"]
+        new_passwd = request.form["password"]
+        name = request.form["name"]
+        surname = request.form["surname"]
+        title = request.form["title"]
+        affil = request.form["affil"]
+        email = request.form["email"]
+        pubs = request.form["pubs"]
+
+    return render_template("world/invite.html",
+                            **get_var(session),
+                            lang=translator(session["lang"]),
+                            afil=Organizations.query.all())
 
     #####################
     #####################
@@ -417,7 +429,7 @@ def dashboard_kanban():
 @app.route("/dashboard/git/", methods=['GET', "POST"])
 def dashboard_git():
     return render_template(
-        **permission_check("dashboard/git/data.html", 
+        **permission_check("dashboard/git/data.html",
                             **get_var(session)),
                             lang=translator(session["lang"]))
 

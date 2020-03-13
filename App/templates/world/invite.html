@@ -1,0 +1,88 @@
+{% extends "index.html" %}
+{% block body %}
+	{% with messages = get_flashed_messages() %}
+		{% if messages %}
+			{% for message in messages %}
+	<div class="alert alert-primary" role="alert" style="margin-top:21px">{{message}}</div>
+			{% endfor %}
+		{% endif %}
+	{% endwith %}
+	<div class="container-fluid" align="center" style="min-height:100%">
+    <h2>Welcome to fenu-exp.us.edu.pl webpage</h2>
+    <p>Please fill out the form below. </p>
+		<form class="was-validated" method="post" enctype="multipart/form-data">
+			<div class="form-group">
+		      <label>Verification. Please enter password from invitation email.</label>
+					<input type="password" class="form-control is-valid form-control-sm" id="password" placeholder="Password" name="password" required>
+					<div class="invalid-feedback">This field cannot be empty.</div>
+			</div>
+			<div class="form-row">
+				<div class="form-group col-md-6">
+  					<label>Email address</label>
+  					<input type="text" class="form-control is-valid form-control-sm" id="name" name="name" placeholder="Enter email address"  required>
+  					<div class="invalid-feedback">This field cannot be empty.</div>
+				</div>
+  			<div class="form-group col-md-6">
+  				<label>Affiliation</label>
+						<select class="custom-select is-invalid" id="title" name="title" required>
+              {% for place in afil %}
+							<option value="{{ place.id }}">{{ place.head }}</option>
+              {% endfor %}
+						</select>
+  			</div>
+			</div>
+			<div class="form-row">
+				<div class="form-group col-md-2">
+  					<label> Degree</label>
+  					<input type="text" class="form-control" id="title" name="title" placeholder="">
+				</div>
+				<div class="form-group col-md-4">
+  					<label>Name</label>
+  					<input type="text" class="form-control is-valid form-control-sm" id="name" name="name" placeholder="Enter name"  required>
+  					<div class="invalid-feedback">This field cannot be empty.</div>
+				</div>
+  			<div class="form-group col-md-6">
+  				<label>Surname</label>
+  				<input type="text" class="form-control is-valid form-control-sm" id="surname" name="surname" placeholder="Enter surname"  required>
+  				<div class="invalid-feedback">This field cannot be empty.</div>
+  			</div>
+			</div>
+      <hr>
+
+      Optional:
+       <a class="btn btn-primary btn-sm" data-toggle="collapse" href="#social" role="button" aria-expanded="false" aria-controls="spacestar">
+       Social links
+       </a>
+       <a class="btn btn-primary btn-sm" data-toggle="collapse" href="#npass" role="button" aria-expanded="false" aria-controls="spacestar">
+       Personal password
+       </a>
+     <div class="collapse multi-collapse" id="social">
+       <div class="card card-body">
+    			<div class="form-group">
+    				<label>ORCID number</label>
+    				<input type="text" class="form-control is-valid form-control-sm" id="orcid" placeholder="Your ORCID number" name="orcid">
+    			</div>
+    			<div class="form-group">
+    				<label>ResearchGate profile</label>
+    				<input type="text" class="form-control is-valid form-control-sm" id="orcid" placeholder="Your RG profile" name="rgate">
+    			</div>
+    			<div class="form-group">
+    				<label>Personal page</label>
+    				<input type="text" class="form-control is-valid form-control-sm" id="orcid" placeholder="Your own page" name="personal">
+    			</div>
+       </div>
+     </div>
+     <div class="collapse multi-collapse" id="npass">
+       <div class="card card-body">
+    			<div class="form-group">
+    				<label>Personal Password</label>
+    				<input type="password" class="form-control is-valid form-control-sm" id="orcid" placeholder="Your personal password" name="orcid">
+    			</div>
+       </div>
+     </div>
+<hr>
+			<button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+		</form>
+	</div>
+
+{% endblock %}
