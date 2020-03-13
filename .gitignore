@@ -1,7 +1,5 @@
 database/
-migrations/
 venv/
-App/static/
 App/static/homepage/
 *__pycache__*
 *.pyc
@@ -10,4 +8,3 @@ App/static/homepage/
 *.aux
 *.out
 *.toc
-

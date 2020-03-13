@@ -63,44 +63,9 @@ def invite():
     #####################
     #####################
 
-
-@app.route("/lang/<lang>")
-def language(lang):
-    session["lang"] = lang
-    flash("Language switched to {}".format(session["lang"]))
-    return redirect(url_for('experiments'))
-
-@app.route("/experiments", methods=['GET', "POST"])
-def experiments():
-    return render_template("world/experiments.html",
-                            **get_var(session),
-                           lang=translator(session["lang"]))
-
-
-@app.route("/members")
-def members():
-    return render_template("world/members.html",
-                           **get_var(session),
-                           organizations=list_members(),
-                           lang=translator(session["lang"]))
-
-
-@app.route("/publications")
-def publications():
-    return render_template("world/publications.html",
-                           **get_var(session),
-                           publications=list_papers("publications"),
-                           lang=translator(session["lang"]))
-@app.route("/students")
-def home():
-    return render_template("world/home.html",
-                           **get_var(session),
-                           lang=translator(session["lang"]))
-
-
 @app.route("/")
 def main():
-    return redirect(url_for('experiments'))
+    return redirect(url_for('login'))
 
 @app.route("/login", methods=['GET', "POST"])
 def login():
@@ -128,7 +93,6 @@ def logout():
     session["lang"] = lang
     flash("Logged out")
     return redirect(url_for('login'))
-
 
 
     #####################
