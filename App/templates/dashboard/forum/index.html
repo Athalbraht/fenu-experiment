@@ -1,0 +1,20 @@
+{% extends "dashboard.html" %}
+{% block dashboard %}
+
+<div class="card text-center">
+	<div class="card-header">
+		<ul class="nav nav-tabs card-header-tabs">
+			<li class="nav-item dropdown">
+				<a class="nav-link  dropdown-toggle" id="navbarDropdown" data-toggle="dropdown"   href="#">Software</a>
+				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+					<a class="dropdown-item" href="/dashboard/papers/publications">FBun</a>
+					<div class="dropdown-divider"></div>
+					<a class="dropdown-item" href="/dashboard/papers/manuals">BINA_SIM</a>
+
+				</div>
+			</li>
+		</ul>
+	</div>
+		{% block dashboard_forum %}{% endblock %}
+</div>
+{% endblock %}

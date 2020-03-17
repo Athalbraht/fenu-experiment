@@ -341,6 +341,38 @@ def dashboard_edit_members():
     #                       posts=list_posts(), edit_header="Add new message", organizations=list_members())
 
 
+    #########
+    # FORUM #
+    #########
+
+@app.route("/dashboard/forum", methods=['GET', "POST"])
+def dashboard_forum():
+    if request.method == "POST":
+        flash("Added")
+    return render_template(
+        **permission_check("dashboard/forum/index.html",
+                            **get_var(session)),
+                            lang=translator(session["lang"]))
+
+@app.route("/dashboard/forum/<topic>", methods=['GET', "POST"])
+def dashboard_forum_topic(topic):
+    if request.method == "POST":
+        flash("Added")
+    return render_template(
+        **permission_check("dashboard/forum/topic.html",
+                            **get_var(session)),
+                            lang=translator(session["lang"]))
+
+    #########
+    # Wiki  #
+    #########
+
+@app.route("/dashboard/wiki", methods=['GET', "POST"])
+def dashboard_wiki():
+    if request.method == "POST":
+        flash("Added")
+    return "Permission denied"
+
     ###############
     # notes & cal #
     ###############
