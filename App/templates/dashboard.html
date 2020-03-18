@@ -7,77 +7,75 @@
 		<meta name="keywords" content="BINA, BINA detector, 3nf, space star, CCB, bronowice, nuclear forces, UŚ, UJ, IFJ PAN, experiments, 3-nucleon forces, breakup, elastic scattering">
 
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="/css/bootstrap.min.css">
+		<link rel="stylesheet" href="/css/fonts.min.css">
+		<script type="text/javascript" src="/js/fonts.min.js"></script>
 
-		<title>BINA</title>
+		<script type="text/javascript" src="/js/latexit.js"></script>
+		<script type="text/javascript">
+			LatexIT.add('p',true);
+		</script>
+
+		<title>[INTERNAL] fenu-exp</title>
+		<link rel="shortcut icon" type="image/png" href="/img/favicon.png"/>
 </head>
-
 <body>
 
 <div class="container-fluid">
-	<div class="row min-vh-100 flex-column flex-md-row">
+	<div class="row min-vh-100 flex-column flex-md-row" >
 		<aside class="col-12 col-md-2 p-0 bg-dark flex-shrink-1">
 			<nav class="navbar navbar-expand navbar-dark bg-dark flex-md-column flex-row align-items-start py-2">
 				<div class="collapse navbar-collapse ">
 					<ul class="flex-md-column flex-row navbar-nav w-100 justify-content-between">
+
 						<li class="nav-item">
-							<a class="nav-link pl-0 text-nowrap" href="{{ lang["domain"] }}"><h5><i class="fa fa-mail-reply"></i> <span class="font-weight-bold">Back</h5></span></a>
+							<a class="nav-link pl-0 text-nowrap" href="{{ lang["domain"] }}"><h5><i class="fa fa-backward"></i> <span class="font-weight-bold">Back</h5></span></a>
 						</li>
-<div class="dropdown">
-  <a class="nav-link pl-0" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-id-card"></i> <span class="d-none d-md-inline"><small>Page Settings</small> </span></a>
-  <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-    <button class="dropdown-item disabled" type="button">Edit informations</button>
-    <button class="dropdown-item disabled" type="button">Change password</button>
-    <button class="dropdown-item disabled" type="button">Add user</button>
-  </div>
-</div>
+
+						<li class="nav-item">
+							<a class="nav-link pl-0" href="/logout"><i class="fa fa-sign-out-alt"></i> <span class="d-none d-md-inline">Logout</span></a>
+						</li>
+
 						<li class="nav-item">
 							<a class="nav-link pl-0 disabled" href="/dashboard/notes"><span class="d-none d-md-inline"><hr><small></small> </span></a>
 						</li>
-<!--
-						<li class="nav-item">
-							<a class="nav-link pl-0" href="/dashboard/edit/files"><i class="fa fa-plus-square"></i> <span class="d-none d-md-inline">Add files</span></a>
-						</li>
--->
+
 						<div class="dropdown ">
-							 <a class="nav-link pl-0" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-pencil-square-o"></i> <span class="d-none d-md-inline">Edit</span></a>
+							 <a class="nav-link pl-0" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-tools"></i> <span class="d-none d-md-inline">Settings</span></a>
 							<div class="dropdown-menu" aria-labelledby="dropdownMenu2">
 								<li class="nav-item">
-									<a class="dropdown-item" href="/dashboard/edit/home"><i class="fa fa-home"></i> <span class="d-md-inline">For students</span></a>
+									<a class="dropdown-item" href="/dashboard/edit/home"><i class="fa fa-user-graduate"></i> <span class="d-md-inline">For Students</span></a>
 								</li>
 								<li class="nav-item">
-									<a class="dropdown-item" href="/dashboard/edit/experiment"><i class="fa fa-laptop"></i> <span class=" d-md-inline">Experiments</span></a>
+									<a class="dropdown-item" href="/dashboard/edit/experiment"><i class="fa fa-atom"></i> <span class=" d-md-inline">Homepage</span></a>
 								</li>
 								<li class="nav-item">
 									<a class="dropdown-item" href="/dashboard/edit/members"><i class="fa fa-users"></i> <span class="d-md-inline">Members</span></a>
 								</li>
+								<li class="nav-item">
+									<a class="dropdown-item" href="/dashboard/statistics"><i class="fa fa-chart-bar"></i> <span class="d-md-inline">Statistics</span></a>
+								</li>
+								<li class="nav-item">
+									<a class="dropdown-item" href="/dashboard/database"><i class="fa fa-database"></i> <span class="d-md-inline">Database</span></a>
+								</li>
 							</div>
 						</div>
-						<li class="nav-item">
-							<a class="nav-link pl-0" href="/logout"><i class="fa fa-share-square-o"></i> <span class="d-none d-md-inline">Logout</span></a>
-						</li>
 
 						<li class="nav-item">
 							<a class="nav-link pl-0 disabled" href="/dashboard/notes"><span class="d-none d-md-inline"><hr><small>Data</small> </span></a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link pl-0" href="/dashboard/papers/publications"><i class="fa fa-folder"></i> <span class="d-none d-md-inline">Files</span></a>
+							<a class="nav-link pl-0" href="/dashboard/papers/publications"><i class="fa fa-folder-open"></i> <span class="d-none d-md-inline">Files</span></a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link pl-0" href="/dashboard/events"><i class="fa fa-calendar"></i> <span class="d-none d-md-inline">Events</span></a>
+							<a class="nav-link pl-0" href="/dashboard/events"><i class="fa fa-calendar-alt"></i> <span class="d-none d-md-inline">Events</span></a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link pl-0" href="/dashboard/git"><i class="fa fa-cogs"></i> <span class="d-none d-md-inline">Software</span></a>
+							<a class="nav-link pl-0" href="/dashboard/git"><i class="fa fa-microchip"></i> <span class="d-none d-md-inline">Software</span></a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link pl-0" href="/dashboard/forum"><i class="fa fa-bank"></i> <span class="d-none d-md-inline">Forum</span></a>
+							<a class="nav-link pl-0" href="/dashboard/forum"><i class="fa fa-comments"></i> <span class="d-none d-md-inline">Forum</span></a>
 						</li>
-						<li class="nav-item">
-							<a class="nav-link pl-0" href="/dashboard/wiki"><i class="fa fa-graduation-cap"></i> <span class="d-none d-md-inline">Wiki</span></a>
-						</li>
-
                     </ul>
                 </div>
             </nav>
@@ -91,15 +89,21 @@
 		{% endif %}
 	{% endwith %}
 
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/dashboard/forum">{{ session["nav_p"] }}</a></li>
+    <li class="breadcrumb-item active" aria-current="page">{{ session["nav_c"] }}</li>
+  </ol>
+</nav>
+
 {% block dashboard %}{% endblock %}
         </main>
     </div>
 </div>
 
 
-
-	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+	<script src="/js/jquery-3.3.1.slim.min.js"></script>
+	<script src="/js/popper.min.js"></script>
+	<script src="/js/bootstrap.min.js"></script>
 </body>
 </html>

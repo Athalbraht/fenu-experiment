@@ -1,20 +1,73 @@
 {% extends "dashboard.html" %}
 {% block dashboard %}
 
-<div class="card text-center">
-	<div class="card-header">
-		<ul class="nav nav-tabs card-header-tabs">
-			<li class="nav-item dropdown">
-				<a class="nav-link  dropdown-toggle" id="navbarDropdown" data-toggle="dropdown"   href="#">Software</a>
-				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-					<a class="dropdown-item" href="/dashboard/papers/publications">FBun</a>
-					<div class="dropdown-divider"></div>
-					<a class="dropdown-item" href="/dashboard/papers/manuals">BINA_SIM</a>
+<div class="container-fluid">
+	<div align=left>
 
-				</div>
-			</li>
-		</ul>
+		<div class="row">
+		  <div class="col-3">
+		    <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+					<a href="/dashboard/forum/new" type="button" class="btn btn-success">New Thread</a>
+					{% for category in forum.keys() %}
+					<a class="nav-link pl-0 disabled" href="/dashboard/notes">
+						<span class="d-none d-md-inline"><hr><small>{{ category }}</small> </span>
+					</a>
+					{% for topic in forum[category].keys() %}
+		      <a class="nav-link" id="vt{{forum[category][topic]["id"]}}" data-toggle="pill" href="#v{{ forum[category][topic]["id"] }}" role="tab" aria-controls="v{{ forum[category][topic]["id"] }}" aria-selected="true">{{ topic }}</a>
+					{% endfor %}
+					{% endfor %}
+		    </div>
+			</div>
+		  <div class="col-9">
+		    <div class="tab-content" id="v-pills-tabContent">
+		      <div class="tab-pane fade show active" id="vv" role="tabpanel" aria-labelledby="vtv">
+							{% block dashboard_forum %}{% endblock %}
+					</div>
+					{% for category in forum.keys() %}
+					{% for topic in forum[category].keys() %}
+		      <div class="tab-pane fade show " id="v{{ forum[category][topic]["id"] }}" role="tabpanel" aria-labelledby="vt{{ forum[category][topic]["id"] }}">
+
+						<div class="card text-center">
+							<div class="card-header">
+								<ul class="nav nav-tabs card-header-tabs">
+
+								  <li class="nav-item">
+								    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">{{ topic }}</a>
+								  </li>
+								</ul>
+							</div>
+
+							<div class="card-body">
+								<div align=left>
+									{% for thread in forum[category][topic]["topics"] %}
+									<div class="row">
+										<div class="col">
+											<a class="nav-link active text-dark " href="/dashboard/forum/{{ thread["question"].id }}">
+												<i class="fa fa-comment-alt" style="font-size:30px;color:#008cba"></i>
+												<b>{{ thread["question"].title }}<br><small>Author: {{ thread["question"].author }}</small></b>
+											</a>
+											<hr>
+										</div>
+										<div class="col" align="right">
+
+													{% for anwser in thread["anwsers"] %}
+														{{ anwser.title }}: {{ anwser.body }}
+													{% endfor %}
+										</div>
+									</div>
+									{% endfor %}
+								</div>
+							</div>
+
+						</div>
+
+					</div>
+					{% endfor %}
+					{% endfor %}
+		    </div>
+		  </div>
+		</div>
+
 	</div>
-		{% block dashboard_forum %}{% endblock %}
 </div>
 {% endblock %}

@@ -3,19 +3,17 @@
 <table class="table table-striped" align="left">
   <thead>
     <tr>
-      <th scope="col">#</th>
+      <th scope="col">Thumbnail</th>
       <th scope="col">Title</th>
-      <th scope="col"></th>
-      <th scope="col"></th>
+      <th scope="col">Download</th>
     </tr>
   </thead>
   <tbody>
 {% for photo in collection %}
     <tr>
-      <th scope="row">{{photo.id}}</th>
+      <th ><img  class="img-thumbnail" src="/dashboard/gallery/send/{{photo.id}}"  style=" width: 120px; height: 80px;"></th>
       <td>{{photo.filename}}</td>
       <td><a role="button" class="btn btn-outline-success" href="/dashboard/gallery/send/{{photo.id}}">Show</a></td>
-      <th ><img  class="img-thumbnail" src="/dashboard/gallery/send/{{photo.id}}"  style=" width: 120px; height: 80px;"></th>
     </tr>
 {% endfor %}
   </tbody>

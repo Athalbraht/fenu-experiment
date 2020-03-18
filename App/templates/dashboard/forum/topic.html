@@ -1,52 +1,82 @@
 {% extends "dashboard/forum/index.html" %}
 {% block dashboard_forum %}
-<div class="container-fluid">
-<ul class="nav nav-tabs card-header-tabs ">
-	<li class="nav-item dropdown">
-		<a class="nav-link  dropdown-toggle" id="navbarDropdown" data-toggle="dropdown"   href="#">Branches</a>
-		<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-			<a class="dropdown-item" href="/dashboard/papers/publications">master</a>
-			<div class="dropdown-divider"></div>
-			<a class="dropdown-item" href="/dashboard/papers/manuals">dev</a>
-		</div>
-	</li>
-  <li class="nav-item">
-    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Clone</a>
-  </li>
-</ul>
-</div>
-<div class="container-fluid">
+						<div class="card text-center">
+							<div class="card-header">
+								<ul class="nav nav-tabs card-header-tabs">
 
-<div class="container" align=left>
-	<div class="row">
-		<div class="col">
-			<a class="nav-link active text-dark " href="#">
-			<i class="fa fa-folder-open-o" style="font-size:30px;color:red"></i>
-			<small><b>2019-CCB data</b></small>
-			</a>
-			<hr>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col">
-			<a class="nav-link active text-dark " href="#">
-			<i class="fa fa-folder-open-o" style="font-size:30px;color:red"></i>
-			<small><b>Programs</b></small>
-			</a>
-			<hr>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col">
-			<a class="nav-link active text-dark " href="#">
-			<i class="fa fa-folder-open-o" style="font-size:30px;color:red"></i>
-			<small><b>Repository</b></small>
-			</a>
-			<hr>
-		</div>
-	</div>
+								  <li class="nav-item">
+								    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Thread: {{ thread["question"].title }}</a>
+								  </li>
+								</ul>
+							</div>
 
-</div>
-</div>
+							<div class="card-body">
+								<div align=left>
+									<div class="row">
+										<div class="col-sm-10">
+												<i class="fa fa-comment-alt" style="font-size:20px;color:#008cba"></i>
+                        <h5 align="center">{{ thread["question"].title }}</h5>
 
+										</div>
+										<div class="col-sm-2" align="right">
+                      <small>
+                      {{ thread["question"].timestamp }}
+                      </small>
+										</div>
+									</div>
+                  <div class="row">
+                    <p style="text-align: justify; margin: 10px">
+                      {{ thread["question"].body }}
+                    </p>
+                  </div>
+                  <div class="row">
+                    <p style="text-align: justify; margin: 10px">
+                      Written by <b>{{ thread["question"].author }}</b>
+                    </p>
+                  </div>
+                  <hr>
+                  {% for anwser in thread["anwsers"] %}
+                  <div class="row">
+										<div class="col-sm-10">
+												<i class="fa fa-reply-all" style="font-size:20px;color:#008cba"></i>
+                        <a id="" align="center"><small> {{ anwser.title }}</small></a>
+
+										</div>
+										<div class="col-sm-2" align="right">
+                      <small>
+                      {{ anwser.timestamp }}
+                      </small>
+										</div>
+									</div>
+                  <div class="row">
+                    <p style="text-align: justify; margin: 10px">
+                      {{ anwser.body }}
+                    </p><hr>
+                  </div>
+                  <div class="row">
+                    <p style="text-align: justify; margin: 10px">
+                      Written by <b>{{ anwser.author }}</b>
+                    </p>
+                  </div>
+                  <hr>
+                  {% endfor %}
+
+								</div>
+							</div>
+
+						</div>
+                    <div class="card text-center" style="margin-top:6px">
+                  	<p class="lead"><a id="reply">Reply</a></p>
+				            <form class="was-validated" method="post", enctype="multipart/form-data" style="margin:10px">
+                  		<div class="form-group">
+            						<label>Author</label>
+            						<input type="text" class="form-control is-valid form-control-sm" id="validationServer01" name="author" required>
+            						<div class="invalid-feedback">This field cannot be empty.</div>
+                  			<label for="body">Your message</label>
+                  			<textarea class="form-control is-valid form-control-sm" id="body" rows="6" name="body" required></textarea>
+            						<div class="invalid-feedback">This field cannot be empty.</div>
+                  		</div>
+                  		<button type="submit" class="btn btn-primary">Reply</button>
+                  	</form>
+                    </div>
 {% endblock %}

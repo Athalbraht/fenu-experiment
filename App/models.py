@@ -135,3 +135,42 @@ class Contents(db.Model):
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     def __repr__(self):
         return '<Content {}>'.format(self.id)
+
+class Topics(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.Text)
+    body = db.Column(db.Text)
+    author = db.Column(db.Text)
+    flag = db.Column(db.String(128))
+    photos = db.Column(db.Text)
+    category = db.Column(db.Text)
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    def __repr__(self):
+        return '<Content {}>'.format(self.title)
+
+class Anwsers(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.Text)
+    topic = db.Column(
+        db.Integer,
+        db.ForeignKey("topics.id"))
+    body = db.Column(db.Text)
+    author = db.Column(db.Text)
+    photos = db.Column(db.Text)
+    category = db.Column(db.Text)
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    def __repr__(self):
+        return '<Content {}>'.format(self.title)
+
+class Repositories(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.Text)
+    desc = db.Column(db.Text)
+    urls = db.Column(db.Text)
+    users = db.Column(db.Text)
+    branches = db.Column(db.Text)
+    targz = db.Column(db.LargeBinary)
+    file = db.Column(db.LargeBinary)
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    def __repr__(self):
+        return '<Content {}>'.format(self.title)

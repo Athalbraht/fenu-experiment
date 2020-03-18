@@ -1,66 +1,6 @@
-# extensions.py
+# tools/db_requests.py
 
-import os
-import hashlib
-import config
-from App import db
 from App.models import *
-
-
-##################
-# Database query #
-##################
-
-source = "uploads/"
-
-def export_html(language, filename, content, index=False):
-    if index:
-        with open("{}/index.html".format(config.HOMEPAGE_FOLDER),"w") as html:
-            html.write(content)
-    else:
-        with open("{}/{}/{}.html".format(config.HOMEPAGE_FOLDER, language, filename),"w") as html:
-            html.write(content)
-    return None
-
-def translator(lang):
-    translation_table = Contents.query.all()
-    keys = [ item.loc for item in translation_table ]
-    _translations = {}
-    for key in keys:
-        if lang == 'pl':
-            _translations[key] = Contents.query.filter(Contents.loc == key).first().body_pl
-        else:
-            _translations[key] = Contents.query.filter(Contents.loc == key).first().body_en
-    posts = Posts.query.all()
-    _translations["icstud"] = []
-    for post in posts:
-        post2 = []
-        if lang == "pl":
-            post2 = [post.head_pl, post.body_pl, post.timestamp]
-        else:
-            post2 = [post.head_en, post.body_en, post.timestamp]
-        _translations["icstud"].append(post2)
-    exp = Home.query.all()[-1]
-    if lang == "pl":
-        _translations["icexp"] = exp.body_pl
-    else:
-        _translations["icexp"] = exp.body_en
-    _translations["lang"] = lang
-    _translations.update(config.main)
-    return _translations
-
-def check_password(login, passwd):
-    user = Users.query.filter(Users.id == 0)
-    if len(user.all()) == 1 and user[0].id== 0:
-        salt, _hash = user[0].password_hash[:32], user[0].password_hash[32:]
-        _chash =  hashlib.pbkdf2_hmac("sha256", passwd.encode("utf-8"), salt, 100000)
-        if salt+_chash == salt+_hash:
-            return "Correct password. Dashboard unlocked.", True, user[0].id
-        else:
-            return "Wrong password. Try again.", False, None
-    else:
-        return "Wrong password. Try again.", False, None
-
 
 def list_events():
     events = Events.query.order_by(Events.time.desc()).all()
@@ -141,31 +81,3 @@ def list_members():
                 Members.affiliation == o.id).all()):
             affiliation[i][1].append(u)
     return affiliation
-
-
-def test_db():
-    pass
-
-
-###########
-# Session #
-###########
-
-def get_var(session):
-    var = {
-        "username": session["username"],
-        "status": session["status"],
-        "guest": session["guest"],
-        "login": session["logged_in"],
-        "admin": session["admin"],
-    }
-    return var
-
-
-def exp_imgs(folder):
-    _exp_images = ["bina{}.jpg".format(i) for i in range(1, 7)]
-    _exp_images2 = ["hbina{}.jpg".format(i) for i in range(1, 4)]
-    _exp_images2.append("logo.png")
-    exp_img = list(map(lambda x: os.path.join(
-        folder, x), _exp_images + _exp_images2))
-    return exp_img

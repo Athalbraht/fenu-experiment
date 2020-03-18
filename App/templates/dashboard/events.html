@@ -1,17 +1,12 @@
 {% extends "dashboard.html" %}
 {% block dashboard %}
 
-<nav aria-label="breadcrumb">
-	<ol class="breadcrumb">
-		<li class="breadcrumb-item"><a href="#">Events</a></li>
-		<li class="breadcrumb-item active" aria-current="page">Editing</li>
-	</ol>
-</nav>
 
-			<div class="btn-group" role="group" aria-label="First group">
-				<button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#modnew">New Event</button>
-			</div>
-
+<div class="card text-center">
+<div class="card-body">
+<div class="btn-group" role="group" aria-label="First group">
+	<button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#modnew">New Event</button>
+</div><hr>
 <div class="accordion" id="accordionExample">
 	{% for event in events %}
 	<div class="card">
@@ -24,7 +19,7 @@
 		</div>
 		<div id="collapse{{event.id}}" class="collapse" aria-labelledby="heading{{event.id}}" data-parent="#accordionExample">
 			<div class="card-body">
-				<div class="container" align=left>
+				<div align=left>
 						Members: {{ ", ".join(event.members.split()) }}<hr>
 						Description: {{ event.desc }}
 				</div>
@@ -33,7 +28,8 @@
 	</div>
 	{% endfor %}
 </div>
-
+</div>
+</div>
 
 
 

@@ -1,0 +1,28 @@
+{% extends "dashboard/forum/index.html" %}
+{% block dashboard_forum %}
+<div class="card text-center" style="margin-top:6px">
+<p class="lead"><a id="reply">New Thread</a></p>
+<form class="was-validated" method="post", enctype="multipart/form-data" style="margin:10px" >
+	<div class="form-group">
+		<label>Title</label>
+		<input type="text" class="form-control is-valid form-control-sm" id="validationServer01" name="title" required>
+		<div class="invalid-feedback">This field cannot be empty.</div>
+		<label>Author</label>
+		<input type="text" class="form-control is-valid form-control-sm" id="validationServer01" name="author" required>
+		<div class="invalid-feedback">This field cannot be empty.</div>
+    <label>Section</label>
+		<select class="custom-select is-invalid" id="validationServer04" name="section" required>
+		{% for category in forum.keys() %}
+		{% for topic in forum[category].keys() %}
+      <option value="{{forum[category][topic]["category"]}}">{{forum[category][topic]["category"]}}</option>
+    {% endfor %}
+    {% endfor %}
+		</select>
+		<label for="body">Your message</label>
+		<textarea class="form-control is-valid form-control-sm" id="body" rows="11" name="body" required></textarea>
+		<div class="invalid-feedback">This field cannot be empty.</div>
+	</div>
+	<button type="submit" class="btn btn-primary">New thread</button>
+</form>
+</div>
+{% endblock %}

@@ -1,16 +1,16 @@
 {% extends "dashboard/files.html" %}
 {% block dashboard_files %}
-<div class="container" align=left>
+<div align=left>
 
 			<div class="btn-group" role="group" aria-label="First group">
 				<button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#modnew">Add photos</button>
-			</div>
+			</div><hr>
 
 {% for type in types %}
 	<div class="row">
 		<div class="col">
 			<a class="nav-link active text-dark " href="/dashboard/gallery/{{type}}">
-			<i class="fa fa-folder-open-o" style="font-size:30px;color:red"></i>
+			<i class="fa fa-folder" style="font-size:30px;color:#343a40"></i>
 			<small><b>{{type}}</b></small>
 			</a>
 			<hr>
