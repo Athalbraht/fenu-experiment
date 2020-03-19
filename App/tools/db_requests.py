@@ -1,6 +1,7 @@
 # tools/db_requests.py
 
 from App.models import *
+import config
 
 def list_events():
     events = Events.query.order_by(Events.time.desc()).all()
@@ -81,3 +82,10 @@ def list_members():
                 Members.affiliation == o.id).all()):
             affiliation[i][1].append(u)
     return affiliation
+
+def get_members():
+    group = [{},{}]
+    group[1] = { "{}".format(org.id):[org.head, org.shortcut,org.link] for org in Organizations.query.all() }
+    for _type in config.MEMBERS_GROUP.keys():
+        group[0][_type] = [config.MEMBERS_GROUP[_type], Members.query.filter(Members.desc==_type).all()]
+    return group

@@ -20,6 +20,10 @@ FORUM_CATEGORIES = {  "Information":["Announcements", "Bug Reports & Suggestions
                     "Discussions":["Data Analysis", "Experiments", "Software"],
                     "Off-Topic":["General Discussions"]
                 }
+MEMBERS_GROUP = {  "sta"   : "Staff",
+                    "phd"   : "PhD Students",
+                    "stu"   : "Students",
+                }
 
 # Server config
 ORIGINS = ["*"]

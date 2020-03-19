@@ -1,26 +1,75 @@
 {% extends "index.html" %}
 {% block body %}
-	<div class="container">
-		<h2 class="mb-0 text-black lh-100">{{ lang["ihmem"] }}</h2>
-{% for org in organizations %}
-		<div class="my-3 p-3 bg-white rounded box-shadow">
-			<h6 class="border-bottom border-gray pb-2 mb-0">{{org[0].head}}</h6>
 
-{% for member in org[1] %}
-			<div class="media text-muted pt-3">
-				<img data-src="holder.js/32x32?theme=thumb&bg=007bff&fg=007bff&size=1" alt="" class="mr-2 rounded">
-				<div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-					<div class="d-flex justify-content-between align-items-center w-100">
-						<strong class="text-gray-dark">{{member.name}} {{member.surname}}</strong>
-						<!--<a href="#">Follow</a>-->
-					</div>
-					<span class="d-block">{{member.email}}</span>
+<h2 align="center">Collaboration Members</h2>
+
+<ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+  <li class="nav-item">
+    <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-all" role="tab" aria-controls="pills-home" aria-selected="true">All</a>
+  </li>
+	{% for member in members[0].keys() %}
+  <li class="nav-item">
+    <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills{{ member }}" role="tab" aria-controls="pills-profile" aria-selected="false">{{ members[0][member][0] }}</a>
+  </li>
+	{% endfor %}
+</ul>
+<div class="tab-content" id="pills-tabContent">
+  <div class="tab-pane fade show active" id="pills-all" role="tabpanel" aria-labelledby="pills-home-tab">
+		<div class="text-center">
+			<div class="row">
+			{% for member in members[0].keys() %}
+			{% for who in members[0][member][1] %}
+				<div class="col-lg-4">
+					<img class="rounded-circle" src="/img/avatar.png" alt="avatar" width="140" height="140"><br>
+					{{ who.title }}<br>{{ who.name }} {{ who.surname }}<br>
+
+					<small><a style="color:#575757;" href={{members[1][who.affiliation|string][2]}}>{{ members[1][who.affiliation|string][0] }}</a></small><br>
+
+					<a href="mailto:{{ who.email }}"><i class="fa fa-envelope"></i></a>
+					{% if who.orcid is not none %}
+					<a href="https://orcid.org/{{who.orcid}}"><i class="fab fa-orcid"></i></a>
+					{% endif %}
+					{% if who.rgate is not none %}
+					<a href="{{who.rgate}}"><i class="fab fa-researchgate"></i></a>
+					{% endif %}
+					{% if who.link is not none %}
+					<a href="{{ who.link }}"><i class="fa fa-user-tag"></i></a>
+					{% endif %}
+					<hr>
 				</div>
+			{% endfor %}
+			{% endfor %}
 			</div>
-{% endfor %}
 		</div>
-{% endfor %}
+	</div>
+	{% for member in members[0].keys() %}
+  <div class="tab-pane fade show" id="pills{{ member }}" role="tabpanel" aria-labelledby="pills-profile-tab">
+		<div class="text-center">
+			<div class="row">
+			{% for who in members[0][member][1] %}
+				<div class="col-lg-4">
+					<img class="rounded-circle" src="/img/avatar.png" alt="avatar" width="140" height="140"><br>
+					{{ who.title }}<br>{{ who.name }} {{ who.surname }}<br>
 
+					<small><a style="color:#575757;" href={{members[1][who.affiliation|string][2]}}>{{ members[1][who.affiliation|string][0] }}</a></small><br>
+
+					<a href="mailto:{{ who.email }}"><i class="fa fa-envelope"></i></a>
+					{% if who.orcid is not none %}
+					<a href="https://orcid.org/{{who.orcid}}"><i class="fab fa-orcid"></i></a>
+					{% endif %}
+					{% if who.rgate is not none %}
+					<a href="{{who.rgate}}"><i class="fab fa-researchgate"></i></a>
+					{% endif %}
+					{% if who.link is not none %}
+					<a href="{{ who.link }}"><i class="fa fa-user-tag"></i></a>
+					{% endif %}
+					<hr>
+				</div>
+			{% endfor %}
+			</div>
 		</div>
+	</div>
+	{% endfor %}
+
 	</div>
 {% endblock %}

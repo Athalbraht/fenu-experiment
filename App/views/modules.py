@@ -33,7 +33,7 @@ def deploy_homepage():
             publications_page = render_template("world/publications.html", **get_var(session),
                                             lang=translator(language), publications=list_papers("publications"))
             members_page = render_template("world/members.html", **get_var(session),
-                                            lang=translator(language), organizations=list_members())
+                                            lang=translator(language), members=get_members())
             export_html(language, "experiments", experiment_page)
             export_html(language, "students", students_page)
             export_html(language, "publications", publications_page)

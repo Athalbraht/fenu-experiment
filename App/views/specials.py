@@ -48,13 +48,14 @@ def invite():
         rgate = request.form["rgate"]
         page = request.form["page"]
         degree = request.form["degree"]
+        function = request.form["function"]
 
         status = check_password(passwd)
         if not status[1]:
             flash(status[0])
             return redirect(url_for("invite"))
         else:
-            new_member = Members(email=email, name=name, surname=surname, title=degree, affiliation=affil, orcid=orcid, rgate=rgate, link=page)
+            new_member = Members(email=email, name=name, surname=surname, title=degree, affiliation=affil, orcid=orcid, rgate=rgate, link=page, desc=function)
             try:
                 db.session.add(new_member)
                 db.session.commit()
