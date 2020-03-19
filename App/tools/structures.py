@@ -7,13 +7,29 @@ from datetime import datetime as dt
 class ForumStruct():
     def __init__(self):
         self.set_sections()
+        self.new_anwsers = self._new_anwsers1()
+        self.new_threads = self._new_threads1()
+        self.without_anwser = self._without_anwser1()
+
+    def _new_anwsers1(self, n=2):
+        _new = Anwsers.query.order_by(Anwsers.timestamp.desc()).all()[:n]
+        return _new
+
+    def _without_anwser1(self):
+        _all = Topics.query.all()
+        _empty = [ ]
+        for topic in _all:
+            if len(Anwsers.query.filter(Anwsers.topic==topic.id).all()) == 0:
+                _empty.append(topic)
+        return _empty
+
+    def _new_threads1(self,n=2):
+        _new = Topics.query.order_by(Topics.timestamp.desc()).all()[:n]
+        return _new
 
     def get_anwsers(self, topic_id):
         ans = Anwsers.query.filter(Anwsers.topic==topic_id).all()
-        if len(ans)==0:
-            return [Anwsers()]
-        else:
-            return ans
+        return ans
 
     def get_thread(self, topic_id):
         return {"anwsers"   : self.get_anwsers(topic_id),

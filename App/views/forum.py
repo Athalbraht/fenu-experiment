@@ -4,11 +4,15 @@ from .modules import *
 
 @app.route("/dashboard/forum")
 def dashboard_forum():
+    forum = ForumStruct()
     return render_template(
         **permission_check("dashboard/forum/sections.html",
                             **get_var(session)),
                             lang=translator(session["lang"]),
-                            forum=ForumStruct().forum_sections,
+                            forum=forum.forum_sections,
+                            new_ans=forum.new_anwsers,
+                            new_threads=forum.new_threads,
+                            without_ans=forum.without_anwser,
                             session=locale(nav_p="Forum",nav_c=""))
 
 
@@ -22,7 +26,7 @@ def dashboard_forum_topic(topic):
         try:
             db.session.add(new_anwser)
             db.session.commit()
-            flash("Added message: {}".format(title))
+            flash("Added anwser: Re:{}".format(_topic.title))
         except:
             flash("Failed!")
         finally:
@@ -50,7 +54,7 @@ def dashboard_forum_new():
             db.session.commit()
             flash("New Thread added: {}".format(title))
         except:
-            flash("Failed!")
+            flash("Failed")
         finally:
             redirect(url_for("dashboard_forum"))
     forum = ForumStruct()

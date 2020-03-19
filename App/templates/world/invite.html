@@ -19,12 +19,12 @@
 			<div class="form-row">
 				<div class="form-group col-md-6">
   					<label>Email address</label>
-  					<input type="text" class="form-control is-valid form-control-sm" id="name" name="name" placeholder="Enter email address"  required>
+  					<input type="text" class="form-control is-valid form-control-sm" id="email" name="email" placeholder="Enter email address"  required>
   					<div class="invalid-feedback">This field cannot be empty.</div>
 				</div>
   			<div class="form-group col-md-6">
   				<label>Affiliation</label>
-						<select class="custom-select is-invalid" id="title" name="title" required>
+						<select class="custom-select is-invalid" id="affil" name="affil" required>
               {% for place in afil %}
 							<option value="{{ place.id }}">{{ place.head }}</option>
               {% endfor %}
@@ -34,7 +34,7 @@
 			<div class="form-row">
 				<div class="form-group col-md-2">
   					<label> Degree</label>
-  					<input type="text" class="form-control" id="title" name="title" placeholder="">
+  					<input type="text" class="form-control" id="degree" name="degree" placeholder="">
 				</div>
 				<div class="form-group col-md-4">
   					<label>Name</label>
@@ -60,28 +60,29 @@
        <div class="card card-body">
     			<div class="form-group">
     				<label>ORCID number</label>
-    				<input type="text" class="form-control is-valid form-control-sm" id="orcid" placeholder="Your ORCID number" name="orcid">
+    				<input type="text" class="form-control is-valid form-control-sm" id="orcid" placeholder="Your ORCID number xxxx-xxxx-xxxx-xxxx" name="orcid">
     			</div>
     			<div class="form-group">
     				<label>ResearchGate profile</label>
-    				<input type="text" class="form-control is-valid form-control-sm" id="orcid" placeholder="Your RG profile" name="rgate">
+    				<input type="text" class="form-control is-valid form-control-sm" id="rgate" placeholder="Your RG profile" name="rgate">
     			</div>
     			<div class="form-group">
     				<label>Personal page</label>
-    				<input type="text" class="form-control is-valid form-control-sm" id="orcid" placeholder="Your own page" name="personal">
+    				<input type="text" class="form-control is-valid form-control-sm" id="page" placeholder="Your own page" name="page">
     			</div>
        </div>
      </div>
      <div class="collapse multi-collapse" id="npass">
        <div class="card card-body">
     			<div class="form-group">
-    				<label>Personal Password</label>
-    				<input type="password" class="form-control is-valid form-control-sm" id="orcid" placeholder="Your personal password" name="orcid">
+    				<label>Personal Password. </label>
+						Set up password to manage your own information.
+    				<input type="password" class="form-control is-valid form-control-sm" id="npassword" placeholder="Your personal password" name="npassword">
     			</div>
        </div>
      </div>
 <hr>
-			<button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+			<button class="btn btn-lg btn-primary btn-block" type="submit">Join</button>
 		</form>
 	</div>
 

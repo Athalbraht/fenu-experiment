@@ -20,7 +20,7 @@
 										</div>
 										<div class="col-sm-2" align="right">
                       <small>
-                      {{ thread["question"].timestamp }}
+                      {{ thread["question"].timestamp.strftime("%T %d %b %Y") }}
                       </small>
 										</div>
 									</div>
@@ -44,7 +44,7 @@
 										</div>
 										<div class="col-sm-2" align="right">
                       <small>
-                      {{ anwser.timestamp }}
+                      {{ anwser.timestamp.strftime("%T %d %b %Y") }}
                       </small>
 										</div>
 									</div>

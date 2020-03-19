@@ -15,7 +15,7 @@ from App.models import *
 from App.tools.security import *
 from App.tools.db_requests import *
 from App.tools.translator import *
-from App.tools.structures import * 
+from App.tools.structures import *
 
 from flask import render_template, request, redirect, url_for, session, flash, send_file, send_from_directory, g
 from werkzeug.utils import secure_filename
@@ -23,7 +23,7 @@ from werkzeug.utils import secure_filename
 def deploy_homepage():
     try:
         index_page = render_template("world/experiments.html", **get_var(session),
-                                        lang=translator('en'))
+                                        lang=translator('pl'))
         export_html(None, "index", index_page, index=True)
         for language in config.languages:
             experiment_page = render_template("world/experiments.html", **get_var(session),

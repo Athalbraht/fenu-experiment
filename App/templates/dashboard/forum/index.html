@@ -7,10 +7,10 @@
 		<div class="row">
 		  <div class="col-3">
 		    <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-					<a href="/dashboard/forum/new" type="button" class="btn btn-success">New Thread</a>
+					<a href="/dashboard/forum/new" type="button" class="btn btn-outline-success">New Thread</a>
 					{% for category in forum.keys() %}
 					<a class="nav-link pl-0 disabled" href="/dashboard/notes">
-						<span class="d-none d-md-inline"><hr><small>{{ category }}</small> </span>
+						<span class="d-none d-md-inline" style="color:#4f4f4f;"><hr><small>{{ category }}</small> </span>
 					</a>
 					{% for topic in forum[category].keys() %}
 		      <a class="nav-link" id="vt{{forum[category][topic]["id"]}}" data-toggle="pill" href="#v{{ forum[category][topic]["id"] }}" role="tab" aria-controls="v{{ forum[category][topic]["id"] }}" aria-selected="true">{{ topic }}</a>
@@ -49,10 +49,7 @@
 											<hr>
 										</div>
 										<div class="col" align="right">
-
-													{% for anwser in thread["anwsers"] %}
-														{{ anwser.title }}: {{ anwser.body }}
-													{% endfor %}
+            					{{ thread["question"].timestamp.strftime("%T %d %b %Y") }}
 										</div>
 									</div>
 									{% endfor %}

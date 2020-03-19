@@ -5,4 +5,93 @@
 <h2 align="center">Welcome to Fenu-Exp Forum</h2>
 
 </div>
+
+
+<div class="tab-pane fade show active" id="vv" role="tabpanel" aria-labelledby="vtv">
+	<div class="card text-center" style="margin-top:6px">
+		<div class="card-header">
+			<ul class="nav nav-tabs card-header-tabs">
+			  <li class="nav-item">
+			    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Last anwsers</a>
+			  </li>
+			</ul>
+		</div>
+		<div class="card-body">
+			<div align=left>
+				{% for anwser in new_ans %}
+				<div class="row">
+					<div class="col">
+						<a class="nav-link active text-dark " href="/dashboard/forum/{{ anwser.topic }}">
+							<i class="fa fa-reply-all" style="font-size:30px;color:#008cba"></i>
+							<b>{{ anwser.title }}<br><small>Author: {{ anwser.author }}</small></b>
+						</a>
+						<hr>
+					</div>
+					<div class="col" align="right">
+            {{ anwser.timestamp.strftime("%T %d %b %Y") }}
+					</div>
+				</div>
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+</div>
+<div class="tab-pane fade show active" id="vv" role="tabpanel" aria-labelledby="vtv">
+	<div class="card text-center" style="margin-top:6px">
+		<div class="card-header">
+			<ul class="nav nav-tabs card-header-tabs">
+			  <li class="nav-item">
+			    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">New Threads</a>
+			  </li>
+			</ul>
+		</div>
+		<div class="card-body">
+			<div align=left>
+				{% for thread in new_threads %}
+				<div class="row">
+					<div class="col">
+						<a class="nav-link active text-dark " href="/dashboard/forum/{{ thread.id }}">
+							<i class="fa fa-comment-alt" style="font-size:30px;color:#008cba"></i>
+							<b>{{ thread.title }}<br><small>Author: {{ thread.author }}</small></b>
+						</a>
+						<hr>
+					</div>
+					<div class="col" align="right">
+            {{ thread.timestamp.strftime("%T %d %b %Y") }}
+					</div>
+				</div>
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+</div>
+<div class="tab-pane fade show active" id="vv" role="tabpanel" aria-labelledby="vtv">
+	<div class="card text-center" style="margin-top:6px">
+		<div class="card-header">
+			<ul class="nav nav-tabs card-header-tabs">
+			  <li class="nav-item">
+			    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Without anwser</a>
+			  </li>
+			</ul>
+		</div>
+		<div class="card-body">
+			<div align=left>
+				{% for thread in without_ans %}
+				<div class="row">
+					<div class="col">
+						<a class="nav-link active text-dark " href="/dashboard/forum/{{ thread.id }}">
+							<i class="fa fa-comment-alt" style="font-size:30px;color:#008cba"></i>
+							<b>{{ thread.title }}<br><small>Author: {{ thread.author }}</small></b>
+						</a>
+						<hr>
+					</div>
+					<div class="col" align="right">
+            {{ thread.timestamp.strftime("%T %d %b %Y") }}
+					</div>
+				</div>
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+</div>
 {% endblock %}
