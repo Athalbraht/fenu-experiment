@@ -1,3 +1,3 @@
 __all__ = ["git"]
 
-from .git import get_repo
+from .git import *

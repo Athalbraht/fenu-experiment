@@ -174,3 +174,18 @@ class Repositories(db.Model):
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     def __repr__(self):
         return '<Content {}>'.format(self.title)
+
+class Commits(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    repository = db.Column(
+        db.Integer,
+        db.ForeignKey("repositories.id"))
+    title = db.Column(db.Text)
+    tag = db.Column(db.Text)
+    desc = db.Column(db.Text)
+    message = db.Column(db.Text)
+    branch = db.Column(db.Text)
+    targz = db.Column(db.LargeBinary)
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    def __repr__(self):
+        return '<Content {}>'.format(self.title)

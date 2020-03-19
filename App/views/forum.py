@@ -22,7 +22,8 @@ def dashboard_forum_topic(topic):
         author = request.form["author"]
         body = request.form["body"]
         _topic = Topics.query.filter(Topics.id==topic).first()
-        new_anwser = Anwsers(title="Re:"+_topic.title, body=body, category=_topic.category, author=author, topic=topic )
+
+        new_anwser = Anwsers(title="Re:"+_topic.title, body=body.replace('\n','<br>'), category=_topic.category, author=author, topic=topic )
         try:
             db.session.add(new_anwser)
             db.session.commit()
@@ -48,7 +49,7 @@ def dashboard_forum_new():
         author = request.form["author"]
         body = request.form["body"]
         category = request.form["section"]
-        new_thread = Topics(title=title, author=author, body=body, category=category)
+        new_thread = Topics(title=title, author=author, body=body.replace('\n','<br>'), category=category)
         try:
             db.session.add(new_thread)
             db.session.commit()

@@ -19,8 +19,8 @@
     {% endfor %}
 		</select>
 		<label for="body">Your message</label>
-		<textarea class="form-control is-valid form-control-sm" id="body" rows="11" name="body" required></textarea>
-		<div class="invalid-feedback">This field cannot be empty.</div>
+		<textarea class="form-control is-valid form-control-sm" id="body" rows="11" name="body" placeholder="You can use $\LaTeX$ and <html></html> formatting" required></textarea>
+		<small> Inserting image: &ltimg src="URL" class="img-fluid"&gt</small>
 	</div>
 	<button type="submit" class="btn btn-primary">New thread</button>
 </form>

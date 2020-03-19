@@ -1,26 +1,42 @@
-{% extends "dashboard/git/home.html" %}
-{% block dashboard_git_home %}
-<div class="container-fluid">
-	<div align=left>
+{% extends "dashboard/git/index.html" %}
+{% block dashboard_git %}
+						<div class="card text-center">
+							<div class="card-header">
+								<ul class="nav nav-tabs card-header-tabs">
 
-		<div class="row">
-  <div class="col-3">
-    <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-      <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">Home</a>
-      <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Profile</a>
-      <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">Messages</a>
-      <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">Settings</a>
-    </div>
-  </div>
-  <div class="col-9">
-    <div class="tab-content" id="v-pills-tabContent">
-      <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">.1..</div>
-      <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">.2..</div>
-    </div>
-  </div>
-</div>
+								  <li class="nav-item">
+								    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Commit: {{ comm.title }}</a>
+								  </li>
+								</ul>
+							</div>
 
-	</div>
-</div>
+							<div class="card-body">
+								<div align=left>
+									<div class="row">
+										<div class="col-sm-10">
+												<i class="fa fa-code" style="font-size:20px;color:#008cba"></i>
+                        <h5 align="center">{{ comm.title }} tag:{{comm.tag}}</h5>
 
+										</div>
+										<div class="col-sm-2" align="right">
+                      <small>
+                      branch:{{ comm.branch }}
+                      </small>
+										</div>
+									</div>
+                  <div class="row">
+                    <p style="text-align: justify; margin: 10px">
+                      Commit message: <br>{{ comm.message }}
+                    </p>
+                  </div>
+                  <div class="row">
+                    <p style="text-align: justify; margin: 10px">
+											<button class="btn btn-outline-success" name="button" href="/dashboard/git/clone/">Download .tar</button>
+                    </p>
+                  </div>
+                  <hr>
+
+								</div>
+							</div>
+						</div>
 {% endblock %}

@@ -10,7 +10,7 @@ def dashboard_edit_home():
         bodyen = request.form['bodyen']
         bodypl = request.form['bodypl']
         post = Posts(head_pl=headpl, head_en=headen,
-                    body_en=bodyen, body_pl=bodypl)
+                    body_en=bodyen.replace('\n','<br>'), body_pl=bodypl.replace('\n','<br>'))
         db.session.add(post)
         db.session.commit()
         flash("Added")
@@ -31,9 +31,9 @@ def dashboard_edit_home_post(post_id):
         bodyen = request.form['bodyen']
         bodypl = request.form['bodypl']
         post.head_en = headen
-        post.body_en = bodyen
+        post.body_en = bodyen.replace('\n','<br>')
         post.head_pl = headpl
-        post.body_pl = bodypl
+        post.body_pl = bodypl.replace('\n','<br>')
         db.session.commit()
         flash("Updated")
     return render_template(**permission_check("dashboard/edit/home.html", **get_var(session)),

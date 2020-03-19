@@ -41,14 +41,14 @@
 								<div align=left>
 									{% for thread in forum[category][topic]["topics"] %}
 									<div class="row">
-										<div class="col">
+										<div class="col-sm-10">
 											<a class="nav-link active text-dark " href="/dashboard/forum/{{ thread["question"].id }}">
 												<i class="fa fa-comment-alt" style="font-size:30px;color:#008cba"></i>
 												<b>{{ thread["question"].title }}<br><small>Author: {{ thread["question"].author }}</small></b>
 											</a>
 											<hr>
 										</div>
-										<div class="col" align="right">
+										<div class="col-sm-2" align="right">
             					{{ thread["question"].timestamp.strftime("%T %d %b %Y") }}
 										</div>
 									</div>

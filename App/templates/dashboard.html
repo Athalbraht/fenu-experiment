@@ -10,11 +10,15 @@
 		<link rel="stylesheet" href="/css/bootstrap.min.css">
 		<link rel="stylesheet" href="/css/fonts.min.css">
 		<script type="text/javascript" src="/js/fonts.min.js"></script>
-
-		<script type="text/javascript" src="/js/latexit.js"></script>
-		<script type="text/javascript">
-			LatexIT.add('p',true);
+		<script>
+		MathJax = {
+		  tex: {
+		    inlineMath: [['$', '$'], ['\\(', '\\)']]
+		  }
+		};
 		</script>
+		<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+		<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
 		<title>[INTERNAL] fenu-exp</title>
 		<link rel="shortcut icon" type="image/png" href="/img/favicon.png"/>

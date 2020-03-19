@@ -20,14 +20,14 @@
 			<div align=left>
 				{% for anwser in new_ans %}
 				<div class="row">
-					<div class="col">
+					<div class="col-sm-10">
 						<a class="nav-link active text-dark " href="/dashboard/forum/{{ anwser.topic }}">
 							<i class="fa fa-reply-all" style="font-size:30px;color:#008cba"></i>
-							<b>{{ anwser.title }}<br><small>Author: {{ anwser.author }}</small></b>
+							<b>{{ anwser.title|safe }}</b><br><small>Author: {{ anwser.author }}</small> <small>{{ anwser.category }}</small>
 						</a>
 						<hr>
 					</div>
-					<div class="col" align="right">
+					<div class="col-sm-2" align="right">
             {{ anwser.timestamp.strftime("%T %d %b %Y") }}
 					</div>
 				</div>
@@ -49,14 +49,14 @@
 			<div align=left>
 				{% for thread in new_threads %}
 				<div class="row">
-					<div class="col">
+					<div class="col-sm-10">
 						<a class="nav-link active text-dark " href="/dashboard/forum/{{ thread.id }}">
 							<i class="fa fa-comment-alt" style="font-size:30px;color:#008cba"></i>
-							<b>{{ thread.title }}<br><small>Author: {{ thread.author }}</small></b>
+							<b>{{ thread.title|safe }}</b><br><small>Author: {{ thread.author }}</small> <small>{{ thread.category }}</small>
 						</a>
 						<hr>
 					</div>
-					<div class="col" align="right">
+					<div class="col-sm-2" align="right">
             {{ thread.timestamp.strftime("%T %d %b %Y") }}
 					</div>
 				</div>
@@ -78,14 +78,14 @@
 			<div align=left>
 				{% for thread in without_ans %}
 				<div class="row">
-					<div class="col">
+					<div class="col-sm-10">
 						<a class="nav-link active text-dark " href="/dashboard/forum/{{ thread.id }}">
 							<i class="fa fa-comment-alt" style="font-size:30px;color:#008cba"></i>
-							<b>{{ thread.title }}<br><small>Author: {{ thread.author }}</small></b>
+							<b>{{ thread.title|safe }}</b><br><small>Author: {{ thread.author }}</small> <small>{{ thread.category }}</small>
 						</a>
 						<hr>
 					</div>
-					<div class="col" align="right">
+					<div class="col-sm-2" align="right">
             {{ thread.timestamp.strftime("%T %d %b %Y") }}
 					</div>
 				</div>

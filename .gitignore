@@ -1,6 +1,7 @@
 database/
 venv/
 App/static/homepage/
+App/static/repository/
 *__pycache__*
 *.pyc
 *.toc
@@ -8,3 +9,4 @@ App/static/homepage/
 *.aux
 *.out
 *.toc
+test.py

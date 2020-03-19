@@ -1,39 +1,19 @@
-{% extends "dashboard.html" %}
-{% block dashboard %}
-
-	<div class="row">
-		<div class="col-sm-2">
-			<div class="jumbotron">
-				d
-			</div>
-		</div>
-		<div class="col-sm-10">
-			<div class="card text-center">
-				<div class="card-header">
-					<ul class="nav nav-tabs card-header-tabs">
-
-					  <li class="nav-item">
-					    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Clone</a>
-					  </li>
-
-						<li class="nav-item dropdown">
-							<a class="nav-link  dropdown-toggle" id="navbarDropdown" data-toggle="dropdown"   href="#">Software</a>
-							<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-								<a class="dropdown-item" href="/dashboard/papers/publications">FBun</a>
-								<div class="dropdown-divider"></div>
-								<a class="dropdown-item" href="/dashboard/papers/manuals">BINA_SIM</a>
-							</div>
-						</li>
-
-					</ul>
-				</div>
-
-				<div class="card-body">
-					{% block dashboard_git_home %}{% endblock %}
-				</div>
-
-			</div>
-			</div>
-		</div>
-
+{% extends "dashboard/git/index.html" %}
+{% block dashboard_git %}
+<div class="card text-center" style="margin-top:6px">
+<p class="lead"><a id="reply">New program</a></p>
+<form class="was-validated" method="post", enctype="multipart/form-data" style="margin:10px" >
+	<div class="form-group">
+		<label>Name</label>
+		<input type="text" class="form-control is-valid form-control-sm" id="validationServer01" name="title" required>
+		<div class="invalid-feedback">This field cannot be empty.</div>
+		<label>Author</label>
+		<input type="text" class="form-control is-valid form-control-sm" id="validationServer01" name="author" required>
+		<div class="invalid-feedback">This field cannot be empty.</div>
+		<label for="body">Description</label>
+		<textarea class="form-control is-valid form-control-sm" id="body" rows="11" name="desc" placeholder="" required></textarea>
+	</div>
+	<button type="submit" class="btn btn-primary">Upload</button>
+</form>
+</div>
 {% endblock %}
