@@ -48,7 +48,8 @@ class ForumStruct():
                 _dic[category][section]["category"] = _category
                 _tab = []
                 for _topic in _topics.all():
-                    _tab.append({"question":_topic, "anwsers":self.get_anwsers(_topic.id)})
+                    _ans = self.get_anwsers(_topic.id)
+                    _tab.append({"question":_topic, "anwsers":_ans, "n_anwsers":len(_ans)})
                 _dic[category][section]["id"] = str(iid)
                 iid += 1
                 _dic[category][section]["topics"] = _tab
