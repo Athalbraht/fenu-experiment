@@ -26,13 +26,13 @@
 					<small><a style="color:#575757;" href={{members[1][who.affiliation|string][2]}}>{{ members[1][who.affiliation|string][0] }}</a></small><br>
 
 					<a href="mailto:{{ who.email }}"><i class="fa fa-envelope"></i></a>
-					{% if who.orcid is not none %}
+					{% if who.orcid|length %}
 					<a href="https://orcid.org/{{who.orcid}}"><i class="fab fa-orcid"></i></a>
 					{% endif %}
-					{% if who.rgate is not none %}
+					{% if who.rgate|length %}
 					<a href="{{who.rgate}}"><i class="fab fa-researchgate"></i></a>
 					{% endif %}
-					{% if who.link is not none %}
+					{% if who.link|length %}
 					<a href="{{ who.link }}"><i class="fa fa-user-tag"></i></a>
 					{% endif %}
 					<hr>
@@ -54,13 +54,13 @@
 					<small><a style="color:#575757;" href={{members[1][who.affiliation|string][2]}}>{{ members[1][who.affiliation|string][0] }}</a></small><br>
 
 					<a href="mailto:{{ who.email }}"><i class="fa fa-envelope"></i></a>
-					{% if who.orcid is not none %}
+					{% if who.orcid|length %}
 					<a href="https://orcid.org/{{who.orcid}}"><i class="fab fa-orcid"></i></a>
 					{% endif %}
-					{% if who.rgate is not none %}
+					{% if who.rgate|length %}
 					<a href="{{who.rgate}}"><i class="fab fa-researchgate"></i></a>
 					{% endif %}
-					{% if who.link is not none %}
+					{% if who.link|length %}
 					<a href="{{ who.link }}"><i class="fa fa-user-tag"></i></a>
 					{% endif %}
 					<hr>
