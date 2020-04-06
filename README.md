@@ -1,12 +1,10 @@
 # BINA-experiment page
 
-## App structure
-
-![structure](App/static/img/PageStructure.png)
+Web Service for the BINA Collaboration written in Flask microframework.
 
 ## Apache configuration
 
-TODO!
+Temporarily unavailable
 
 ## Starting dev. server
 
@@ -25,8 +23,15 @@ TODO!
 	- `flask db migrate`
 	- `flask db upgrade`
 
-3. Run server
+3. Create homepage
+	- `mkdir App/static/homepage`
+	- link git repository
+
+4. Run server
 	`python run.py` or `flask run -h <host> -p <port>`
 
 
+## App structure
+
+![structure](App/static/img/PageStructure.png)
 
