@@ -2,6 +2,7 @@ database/
 venv/
 App/static/homepage/
 App/static/repository/
+config_user.py
 *__pycache__*
 *.pyc
 *.toc

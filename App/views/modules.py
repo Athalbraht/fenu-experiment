@@ -22,17 +22,17 @@ from werkzeug.utils import secure_filename
 
 def deploy_homepage():
     try:
-        index_page = render_template("world/experiments.html", **get_var(session),
+        index_page = render_template("world/experiments.html", session,
                                         lang=translator('pl'))
         export_html(None, "index", index_page, index=True)
         for language in config.languages:
-            experiment_page = render_template("world/experiments.html", **get_var(session),
+            experiment_page = render_template("world/experiments.html", session,
                                             lang=translator(language))
-            students_page = render_template("world/home.html", **get_var(session),
+            students_page = render_template("world/home.html", session,
                                             lang=translator(language))
-            publications_page = render_template("world/publications.html", **get_var(session),
+            publications_page = render_template("world/publications.html", session,
                                             lang=translator(language), publications=list_papers("publications"))
-            members_page = render_template("world/members.html", **get_var(session),
+            members_page = render_template("world/members.html", session,
                                             lang=translator(language), members=get_members())
             export_html(language, "experiments", experiment_page)
             export_html(language, "students", students_page)
@@ -47,13 +47,15 @@ def deploy_homepage():
     return None
 
 
-def permission_check(template, *args, **kwargs):
-    if session["admin"]:
-        _kwargs = {"template_name_or_list": template}
-        _kwargs.update(kwargs)
+def permission_check(template, session):
+    print(session)
+    if "username" in session:
+        _kwargs = {
+                    "template_name_or_list" : template,
+                    "session"               : session,
+                    }
         return _kwargs
     else:
-        _kwargs = {"template_name_or_list": "index.html"}
-        _kwargs.update(get_var(session))
+        _kwargs = {"template_name_or_list": "404.html"}
         flash("Permission denied. Log in first.")
         return _kwargs

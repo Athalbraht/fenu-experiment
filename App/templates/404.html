@@ -1,5 +1,14 @@
 {% extends "index.html" %}
 {% block body %}
+
+{% with messages = get_flashed_messages() %}
+	{% if messages %}
+		{% for message in messages %}
+<div class="alert alert-primary" role="alert" style="margin-top:20px">{{message}}</div>
+		{% endfor %}
+	{% endif %}
+{% endwith %}
+
 <div class="container-fluid">
 	<center><h1>  <i class="fa fa-warning" style="font-size:40px;color:red">  </i></h1>
 		<h1>Error: 404<br>Page not found</h1>

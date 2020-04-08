@@ -9,28 +9,26 @@ def main():
 
 @app.route("/login", methods=['GET', "POST"])
 def login():
-    if session['status'] == "Log out":
+    if "username" in session:
         return redirect(url_for('dashboard_publications',paper='publications'))
     if request.method == "POST":
-        #login = request.form['login']
         password = request.form['password']
         user = check_password(password)
         if user[1]:
-            session["user"] = user[2]
             session["username"] = user[2]
-            session["status"] = "Log out"
+            session["admin"] = user[3]
             flash(user[0])
             return redirect(url_for('dashboard_publications',paper='publications'))
         else:
             flash(user[0])
-    return render_template("world/login.html", **get_var(session),lang=translator(session["lang"]))
+    return render_template("world/login.html", session=session, lang=translator(session["lang"]))
 
 
 @app.route("/logout", methods=['GET', "POST"])
 def logout():
-    lang = session["lang"]
-    session.pop("user", None)
-    session["lang"] = lang
+    # lang = session["lang"]
+    session.pop("username", None)
+    # session["lang"] = lang
     flash("Logged out")
     return redirect(url_for('login'))
 
@@ -74,7 +72,7 @@ def invite():
                 return redirect(url_for("login"))
 
     return render_template("world/invite.html",
-                            **get_var(session),
+                            session,
                             lang=translator(session["lang"]),
                             afil=Organizations.query.all())
 

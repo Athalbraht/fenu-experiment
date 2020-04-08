@@ -1,3 +1,3 @@
-__all__ = ["git"]
+__all__ = ["git", "github"]
 
 from .git import *

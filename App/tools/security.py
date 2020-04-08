@@ -18,19 +18,11 @@ def check_password(passwd, login="admin"):
     if len(user) == 1:
         salt, _hash = user[0].password_hash[:32], user[0].password_hash[32:]
         _chash =  hashlib.pbkdf2_hmac("sha256", passwd.encode("utf-8"), salt, 100000)
+        username = "FeNu_user"
         if salt+_chash == salt+_hash:
-            return "Correct password. Dashboard unlocked.", True, user[0].id
+            # return: Message, login status, username, admin
+            return "Correct password. Dashboard unlocked for {}".format(username), True, username, user[0].admin
         else:
-            return "Wrong password. Try again.", False, None
+            return "Wrong password. Try again.", False, None, False
     else:
-        return "Wrong password. Try again.", False, None
-
-def get_var(session):
-    var = {
-        "username": session["username"],
-        "status": session["status"],
-        "guest": session["guest"],
-        "login": session["logged_in"],
-        "admin": session["admin"],
-    }
-    return var
+        return "Wrong password. Try again.", False, None, False
