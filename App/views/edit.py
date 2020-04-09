@@ -91,3 +91,11 @@ def dashboard_edit_members():
         db.session.commit()
         flash("Added")
     return "Permission denied"
+
+@app.route("/dashboard/statistics")
+def dashboard_advanced_statistic():
+    return "Permission denied"
+
+@app.route("/dashboard/database")
+def dashboard_advanced_database():
+    return "Permission denied"
