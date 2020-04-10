@@ -26,9 +26,9 @@ def list_home():
 
 def list_presentation_groups(_type,search=None):
     _presentations = Documents.query.filter(Documents.type == "presentation-{}".format(_type))
-    print("presentation-{}".format(_type))
+    #print("presentation-{}".format(_type))
     if search != None:
-        presentations = _presentations.filter(Documents.title.contains(search["title"]), Documents.event.contains(search["tag"]), Documents.author.contains(search["author"])).order_by(Documents.timestamp.desc()).all()
+        presentations = _presentations.filter(Documents.title.contains(search["title"]), Documents.author.contains(search["author"])).order_by(Documents.timestamp.desc()).all()
     else:
         presentations = _presentations.all()
     tags = set([ i.event for i in presentations ])

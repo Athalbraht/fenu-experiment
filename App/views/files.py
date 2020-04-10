@@ -72,7 +72,7 @@ def dashboard_edit_document(f, item):
 
 @app.route("/dashboard/presentations/<presentation>", methods=['GET', "POST"])
 def dashboard_presentations(presentation):
-    searchOptions = {"author":"","title":"","tag":""}
+    searchOptions = {"author":"","title":""}
     if request.method == "POST":
         formname = request.form['form-name']
         if formname == "add":
@@ -85,12 +85,10 @@ def dashboard_presentations(presentation):
             db.session.add(publication)
             db.session.commit()
             flash("Added {}".format(title))
-        else:
-            search = request.form['form-name']
-            event = request.form['event']
+        elif formname == "search":
             author = request.form['author']
             title = request.form['title']
-            searchOptions = {"author":author,"title":title,"tag":tags}
+            searchOptions = {"author":author,"title":title}
     return render_template(**permission_check("dashboard/files/presentations.html".format(presentation),
                                               session),
                                               tags=list_presentation_groups(presentation,searchOptions),

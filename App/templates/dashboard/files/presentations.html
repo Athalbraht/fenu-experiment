@@ -11,13 +11,6 @@
 				<form  method="post", enctype="multipart/form-data">
 					<input type="hidden" name="form-name" value="search">
 					<div class="input-group"><hr>
-						<select class="custom-select" id="inputGroupSelect01" name="tags" value="x">
-							<option selected value="">Choose tag</option>
-							{% for tag in tags %}
-							<option value="{{tag.name}}">{{tag.name}}</option>
-							{% endfor %}
-						</select>
-
 						<input type="text" class="form-control" placeholder="Author" name="author" value="">
 						<input type="text" class="form-control" placeholder="Title" name="title" value="">
 
