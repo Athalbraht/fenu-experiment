@@ -28,7 +28,8 @@ def list_presentation_groups(_type,search=None):
     _presentations = Documents.query.filter(Documents.type == "presentation-{}".format(_type))
     #print("presentation-{}".format(_type))
     if search != None:
-        presentations = _presentations.filter(Documents.title.contains(search["title"]), Documents.author.contains(search["author"])).order_by(Documents.timestamp.desc()).all()
+        presentations = _presentations.filter(Documents.title.contains(search["title"]), Documents.author.contains(search["author"])).order_by(Documents.timestamp.asc()).all()
+        print(presentations)
     else:
         presentations = _presentations.all()
     tags = set([ i.event for i in presentations ])
@@ -49,7 +50,7 @@ def list_presentation_groups(_type,search=None):
                     "{}@{}  ({})".format(
                         _event.title, _event.localization, _event.time.strftime("%d-%m-%Y")),
                     sets))
-    return newtags
+    return newtags[::-1]
 
 def list_photos(_type,wc=True):
     folders = os.listdir(paths[_type])
