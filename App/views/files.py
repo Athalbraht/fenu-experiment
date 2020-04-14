@@ -30,8 +30,7 @@ def dashboard_publications(paper):
     return render_template(**permission_check("dashboard/files/papers.html".format(paper),
                                               session),
                                               publications=list_papers(paper,searchOptions),
-                                              section=paper,
-                                              lang=translator(session["lang"]))
+                                              section=paper)
 
 
 @app.route("/dashboard/<paper>/download/<fileid>", methods=['GET', "POST"])
@@ -42,11 +41,12 @@ def dashboard_download(paper,fileid):
 @app.route("/dashboard/delete/<f>/<item>", methods=['GET', "POST"])
 def dashboard_delete(f,item):
     _file = Documents.query.filter_by(id=item).one()
-    db.session.delete(_file)
+    #db.session.delete(_file)
+    _file.desc = "to delete"
     db.session.commit()
-    flash("deleted file")
-    return render_template(**permission_check("dashboard/files/papers.html", session),
-                            lang=translator(session["lang"]))
+    flash("Report sent")
+    return redirect(url_for('dashboard_publications',paper='publications'))
+    #return render_template(**permission_check("dashboard/files/papers.html", session))
 
 @app.route("/dashboard/edit/<f>/<item>", methods=["GET", "POST"])
 def dashboard_edit_document(f, item):
@@ -67,8 +67,7 @@ def dashboard_edit_document(f, item):
 
     return render_template(**permission_check("dashboard/edit/files.html",
                                               session),
-                                              edited=Documents.query.filter(Documents.id==item).first(),
-                                              lang=translator(session["lang"]))
+                                              edited=Documents.query.filter(Documents.id==item).first())
 
 @app.route("/dashboard/presentations/<presentation>", methods=['GET', "POST"])
 def dashboard_presentations(presentation):
@@ -93,8 +92,7 @@ def dashboard_presentations(presentation):
                                               session),
                                               tags=list_presentation_groups(presentation,searchOptions),
                                               section=presentation,
-                                              events=list_events(),
-                                              lang=translator(session["lang"]))
+                                              events=list_events())
 
 
 
@@ -110,15 +108,13 @@ def dashboard_gallery():
         flash("Uploaded")
     return render_template(**permission_check("dashboard/files/gallery.html",
                                               session),
-                                              types = config.PHOTOS_TYPE,
-                                              lang=translator(session["lang"]))
+                                              types = config.PHOTOS_TYPE)
 
 @app.route("/dashboard/gallery/<type>", methods=['GET', "POST"])
 def dashboard_gallery_type(type):
     return render_template(**permission_check("dashboard/files/photos.html",
                                               session),
-                                              collection = Photos.query.filter(Photos.type==type).all(),
-                                              lang=translator(session["lang"]))
+                                              collection = Photos.query.filter(Photos.type==type).all())
 
 @app.route("/dashboard/gallery/send/<photo>", methods=['GET', "POST"])
 def dashboard_gallery_return(photo):

@@ -1,8 +1,6 @@
 # views/modules.py
-
 import os
 import time
-
 
 from datetime import datetime as dt
 from io import BytesIO
@@ -48,11 +46,11 @@ def deploy_homepage():
 
 
 def permission_check(template, session):
-    print(session)
     if "username" in session:
         _kwargs = {
                     "template_name_or_list" : template,
                     "session"               : session,
+                    "state"                 : config.main
                     }
         return _kwargs
     else:

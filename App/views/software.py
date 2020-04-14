@@ -3,7 +3,6 @@
 from .modules import *
 from App.api import *
 
-
 @app.route("/dashboard/git/", methods=['GET', "POST"])
 def dashboard_git():
     repos = git.Repository()
