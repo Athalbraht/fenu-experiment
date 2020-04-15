@@ -2,11 +2,13 @@
 
 import os
 import hashlib
+import string
+import random
 from App import db
 from App.models import *
 
-def hash_password(passwd):
-    _salt = os.urandom(32)
+def hash_password(passwd, n=32):
+    _salt = os.urandom(n)
     _hash = hashlib.pbkdf2_hmac("sha256", passwd.encode("utf-8"), _salt, 100000)
     return _salt+_hash
 
@@ -26,3 +28,8 @@ def check_password(passwd, login="admin"):
             return "Wrong password. Try again.", False, None, False
     else:
         return "Wrong password. Try again.", False, None, False
+
+def get_random_string(_len):
+    letters = string.ascii_letters+"1234567890"
+    _string = [ random.choice(letters) for i in range(_len) ]
+    return "".join(_string)

@@ -7,7 +7,7 @@ main = {
     "author"    : "Albert Szadziński",
     "version"   : "v3.4",
     "domain"    : "https://fenu-exp.us.edu.pl",
-    "internal"  : "https://fenu-experiment.pl/",
+    "internal"  : "https://fenu-experiment.pl",
     "repo"      : "https://github.com/fenu-exp/fenu-exp.internal.git",
     "tags"      : "BINA, BINA detector, 3nf, space star, CCB, bronowice, nuclear forces, UŚ, UJ, IFJ PAN, experiments, 3-nucleon forces, breakup, elastic scattering, few nucleon systems",
     }

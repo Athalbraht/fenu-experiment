@@ -38,6 +38,24 @@ def dashboard_download(paper,fileid):
     _file = Documents.query.filter_by(id=fileid).first()
     return send_file(BytesIO(_file.file), attachment_filename=_file.filename+".pdf")
 
+@app.route("/dashboard/share/papers/<item>", methods=['GET', "POST"])
+def dashboard_share_paper(item):
+    _file = Documents.query.filter_by(id=item).one()
+    _string = get_random_string(20)
+    link = "{}/share/papers/{}".format(config.main["internal"], _string)
+    _file.link = _string
+    db.session.commit()
+    return redirect(url_for('dashboard_share_paper_send',item=_string))
+
+@app.route("/share/papers/<item>", methods=['GET', "POST"])
+def dashboard_share_paper_send(item):
+    _file = Documents.query.filter_by(link=item).all()
+    if len(_file) == 1:
+        _file = _file[0]
+        return send_file(BytesIO(_file.file), attachment_filename=_file.filename+".pdf")
+    else:
+        return "File not found"
+
 @app.route("/dashboard/delete/<f>/<item>", methods=['GET', "POST"])
 def dashboard_delete(f,item):
     _file = Documents.query.filter_by(id=item).one()
@@ -64,7 +82,6 @@ def dashboard_edit_document(f, item):
         doc.filename = filename
         db.session.commit()
         flash("Updated")
-
     return render_template(**permission_check("dashboard/edit/files.html",
                                               session),
                                               edited=Documents.query.filter(Documents.id==item).first())
