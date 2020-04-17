@@ -35,6 +35,9 @@ def dashboard_publications(paper):
 
 @app.route("/dashboard/<paper>/download/<fileid>", methods=['GET', "POST"])
 def dashboard_download(paper,fileid):
+    if not "username" in session:
+        flash("Permission denied. Log in first.")
+        return render_template("world/login.html", lang=translator(session["lang"]))
     _file = Documents.query.filter_by(id=fileid).first()
     return send_file(BytesIO(_file.file), attachment_filename=_file.filename+".pdf")
 

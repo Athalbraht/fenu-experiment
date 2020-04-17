@@ -8,7 +8,6 @@ def dashboard_forum():
     return render_template(
         **permission_check("dashboard/forum/sections.html",
                             session),
-                            lang=translator(session["lang"]),
                             forum=forum.forum_sections,
                             new_ans=forum.new_anwsers,
                             new_threads=forum.new_threads,
@@ -38,7 +37,6 @@ def dashboard_forum_topic(topic):
     return render_template(
         **permission_check("dashboard/forum/topic.html",
                             session),
-                            lang=translator(session["lang"]),
                             thread=thread,
                             forum=forum.forum_sections,
                             #session=locale(nav_p="Forum",nav_c="")
@@ -64,7 +62,6 @@ def dashboard_forum_new():
     return render_template(
         **permission_check("dashboard/forum/new_thread.html",
                             session),
-                            lang=translator(session["lang"]),
                             forum=forum.forum_sections,
                             #session=locale(nav_p="Forum",nav_c="new")
                             )

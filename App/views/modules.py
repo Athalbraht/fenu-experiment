@@ -54,6 +54,9 @@ def permission_check(template, session):
                     }
         return _kwargs
     else:
-        _kwargs = {"template_name_or_list": "404.html"}
+        _kwargs = {
+                    "template_name_or_list" : "404.html",
+                    "lang"                  : translator(session["lang"]),
+                    }
         flash("Permission denied. Log in first.")
         return _kwargs
