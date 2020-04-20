@@ -20,24 +20,25 @@ from werkzeug.utils import secure_filename
 
 def deploy_homepage():
     try:
-        index_page = render_template("world/experiments.html", session,
+        index_page = render_template("world/experiments.html",
                                         lang=translator('pl'))
         export_html(None, "index", index_page, index=True)
         for language in config.languages:
-            experiment_page = render_template("world/experiments.html", session,
+            experiment_page = render_template("world/experiments.html",
                                             lang=translator(language))
-            students_page = render_template("world/home.html", session,
+            students_page = render_template("world/home.html",
                                             lang=translator(language))
-            publications_page = render_template("world/publications.html", session,
+            publications_page = render_template("world/publications.html",
                                             lang=translator(language), publications=list_papers("publications"))
-            members_page = render_template("world/members.html", session,
+            members_page = render_template("world/members.html",
                                             lang=translator(language), members=get_members())
             export_html(language, "experiments", experiment_page)
             export_html(language, "students", students_page)
             export_html(language, "publications", publications_page)
             export_html(language, "members", members_page)
         flash("Deployed")
-    except:
+    except Exception as e:
+        print(e)
         flash("FAILED!")
         return None
     # TODO
