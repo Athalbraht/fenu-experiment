@@ -20,6 +20,12 @@ API = {
     "github"    : "/api/github",
     }
 
+RSS = {
+    "feeds_len" : 10,
+    "title"      : "Fenu-Exp",
+    "desc"      : "Fenu-Exp News"
+    }
+
 # Internal config
 PHOTOS_TYPE = ["BINA_window","Schemes", "Detector", "Others", "Target", "Public", "Production", "Salad", "Plans", "Target_chamber"]
 

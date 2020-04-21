@@ -23,6 +23,7 @@ def deploy_homepage():
         index_page = render_template("world/experiments.html",
                                         lang=translator('pl'))
         export_html(None, "index", index_page, index=True)
+        RSS_channel = get_rss(config.RSS["feeds_len"])
         for language in config.languages:
             experiment_page = render_template("world/experiments.html",
                                             lang=translator(language))

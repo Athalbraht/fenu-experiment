@@ -5,14 +5,16 @@
 		<div class="row">
 		<div class=" blog-main">
 			<h2 class="font-italic border-bottom">
-				{{lang["ihstud"]}}
-			</h2><br>
+				{{lang["ihstud"]}} <a  type="button" href="{{lang["domain"]}}/rss.xml"><i class="fa fa-rss-square" style="font-size:25px;color:orange"></i></a>
+			</h2>
+
+      <br>
 {% for post in lang["icstud"] %}
 			<div class="blog-post">
 				<h3 class="blog-post-title">{{post[0]}}</h3>
 					{{post[1]|safe}}
 			</div><hr>
-			<small><p class="blog-post-meta">Added: {{post[2] }}</p></small>
+			<small><p class="blog-post-meta">Added: {{post[2].strftime("%T %d %b %Y") }}</p></small>
 {% endfor %}
 		</div>
 	</div>
