@@ -44,7 +44,7 @@
 									<hr>
 								</div>
 								<div class="col" align="right">
-										<button type="button" class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#share{{ content.id }}"><i class="fa fa-share-alt" style="font-size:15px;color:#32a83e"></i> Share</button>
+										<button type="button" class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#share{{ content.id }}"><i class="fa fa-share-alt" style="font-size:15px;color:#32a83e"></i></button>
 										<a  type="button" href="/dashboard/edit/presentation/{{content.id}}" class="btn btn-outline-primary btn-sm"><i class="fa fa-edit" style="font-size:15px;color:#008cba"></i></a>
 										<button type="button" class="btn btn-outline-danger btn-sm" data-toggle="modal" data-target="#delete{{ content.id }}"><i class="fa fa-trash" style="font-size:15px;color:red"></i></button>
 
@@ -57,8 +57,11 @@
 																<span aria-hidden="true">&times;</span>
 															</button>
 													</div>
-													<div class="modal-body">
-														<br>The file will be deleted after admin confirmation.
+													<div class="modal-body" align="left">
+                                                                        					<p>The item will be permanently deleted after admin confirmation.</p>
+                                                                					</div>
+
+													<div class="modal-footer">
 														<a  type="button" href="/dashboard/delete/paper/{{content.id}}" class="btn btn-outline-danger btn-sm"><i class="fa fa-trash" style="font-size:15px;color:red"></i> Report</a>
 													</div>
 												</div>
@@ -69,13 +72,15 @@
 											<div class="modal-dialog modal-dialog-centered" role="document">
 												<div class="modal-content">
 													<div class="modal-header">
-														<h5 class="modal-title" id="exampleModalCenterTitle">Are you sure?</h5>
+														<h5 class="modal-title" id="exampleModalCenterTitle">Share file</h5>
 															<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 																<span aria-hidden="true">&times;</span>
 															</button>
 													</div>
-													<div class="modal-body">
-														<br>The file will be visable without login.
+													<div class="modal-body" align="left">
+														<p>Are you sure?<br>Anyone who has the link can access. No sign-in required.</p>
+													</div>
+													<div class="modal-footer">
 														<a  type="button" href="/dashboard/share/papers/{{content.id}}" class="btn btn-outline-success btn-sm"><i class="fa fa-share-alt" style="font-size:15px;color:green"></i> Generate link</a>
 													</div>
 												</div>
