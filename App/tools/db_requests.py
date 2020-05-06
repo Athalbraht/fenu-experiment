@@ -29,7 +29,6 @@ def list_presentation_groups(_type,search=None):
     #print("presentation-{}".format(_type))
     if search != None:
         presentations = _presentations.filter(Documents.title.contains(search["title"]), Documents.author.contains(search["author"])).order_by(Documents.timestamp.asc()).all()
-        print(presentations)
     else:
         presentations = _presentations.all()
     tags = set([ i.event for i in presentations ])
