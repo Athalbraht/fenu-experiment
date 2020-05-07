@@ -28,24 +28,46 @@ def dashboard_publications(paper):
             title = request.form['title']
             searchOptions = {"author":author,"title":title,"year":year}
     return render_template(**permission_check("dashboard/files/papers.html".format(paper),
-                                              **get_var(session)),
+                                              session),
                                               publications=list_papers(paper,searchOptions),
-                                              section=paper,
-                                              lang=translator(session["lang"]))
+                                              section=paper)
 
 
 @app.route("/dashboard/<paper>/download/<fileid>", methods=['GET', "POST"])
 def dashboard_download(paper,fileid):
+    if not "username" in session:
+        flash("Permission denied. Log in first.")
+        return render_template("world/login.html", lang=translator(session["lang"]))
     _file = Documents.query.filter_by(id=fileid).first()
     return send_file(BytesIO(_file.file), attachment_filename=_file.filename+".pdf")
+
+@app.route("/dashboard/share/papers/<item>", methods=['GET', "POST"])
+def dashboard_share_paper(item):
+    _file = Documents.query.filter_by(id=item).one()
+    _string = get_random_string(20)
+    link = "{}/share/papers/{}".format(config.main["internal"], _string)
+    _file.link = _string
+    db.session.commit()
+    return redirect(url_for('dashboard_share_paper_send',item=_string))
+
+@app.route("/share/papers/<item>", methods=['GET', "POST"])
+def dashboard_share_paper_send(item):
+    _file = Documents.query.filter_by(link=item).all()
+    if len(_file) == 1:
+        _file = _file[0]
+        return send_file(BytesIO(_file.file), attachment_filename=_file.filename+".pdf")
+    else:
+        return "File not found"
 
 @app.route("/dashboard/delete/<f>/<item>", methods=['GET', "POST"])
 def dashboard_delete(f,item):
     _file = Documents.query.filter_by(id=item).one()
-    db.session.delete(_file)
+    #db.session.delete(_file)
+    _file.desc = "to delete"
     db.session.commit()
-    flash("deleted file")
-    return render_template(**permission_check("dashboard/files/papers.html"),lang=translator(session["lang"]))
+    flash("Report sent")
+    return redirect(url_for('dashboard_publications',paper='publications'))
+    #return render_template(**permission_check("dashboard/files/papers.html", session))
 
 @app.route("/dashboard/edit/<f>/<item>", methods=["GET", "POST"])
 def dashboard_edit_document(f, item):
@@ -63,15 +85,13 @@ def dashboard_edit_document(f, item):
         doc.filename = filename
         db.session.commit()
         flash("Updated")
-
     return render_template(**permission_check("dashboard/edit/files.html",
-                                              **get_var(session)),
-                                              edited=Documents.query.filter(Documents.id==item).first(),
-                                              lang=translator(session["lang"]))
+                                              session),
+                                              edited=Documents.query.filter(Documents.id==item).first())
 
 @app.route("/dashboard/presentations/<presentation>", methods=['GET', "POST"])
 def dashboard_presentations(presentation):
-    searchOptions = {"author":"","title":"","tag":""}
+    searchOptions = {"author":"","title":""}
     if request.method == "POST":
         formname = request.form['form-name']
         if formname == "add":
@@ -84,18 +104,15 @@ def dashboard_presentations(presentation):
             db.session.add(publication)
             db.session.commit()
             flash("Added {}".format(title))
-        else:
-            search = request.form['form-name']
-            event = request.form['event']
+        elif formname == "search":
             author = request.form['author']
             title = request.form['title']
-            searchOptions = {"author":author,"title":title,"tag":tags}
+            searchOptions = {"author":author,"title":title}
     return render_template(**permission_check("dashboard/files/presentations.html".format(presentation),
-                                              **get_var(session)),
+                                              session),
                                               tags=list_presentation_groups(presentation,searchOptions),
                                               section=presentation,
-                                              events=list_events(),
-                                              lang=translator(session["lang"]))
+                                              events=list_events())
 
 
 
@@ -110,16 +127,14 @@ def dashboard_gallery():
             db.session.commit()
         flash("Uploaded")
     return render_template(**permission_check("dashboard/files/gallery.html",
-                                              **get_var(session)),
-                                              types = config.PHOTOS_TYPE,
-                                              lang=translator(session["lang"]))
+                                              session),
+                                              types = config.PHOTOS_TYPE)
 
 @app.route("/dashboard/gallery/<type>", methods=['GET', "POST"])
 def dashboard_gallery_type(type):
     return render_template(**permission_check("dashboard/files/photos.html",
-                                              **get_var(session)),
-                                              collection = Photos.query.filter(Photos.type==type).all(),
-                                              lang=translator(session["lang"]))
+                                              session),
+                                              collection = Photos.query.filter(Photos.type==type).all())
 
 @app.route("/dashboard/gallery/send/<photo>", methods=['GET', "POST"])
 def dashboard_gallery_return(photo):

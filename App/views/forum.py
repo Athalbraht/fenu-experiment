@@ -7,13 +7,13 @@ def dashboard_forum():
     forum = ForumStruct()
     return render_template(
         **permission_check("dashboard/forum/sections.html",
-                            **get_var(session)),
-                            lang=translator(session["lang"]),
+                            session),
                             forum=forum.forum_sections,
                             new_ans=forum.new_anwsers,
                             new_threads=forum.new_threads,
                             without_ans=forum.without_anwser,
-                            session=locale(nav_p="Forum",nav_c=""))
+                            #session=locale(nav_p="Forum",nav_c="")
+                            )
 
 
 @app.route("/dashboard/forum/<topic>", methods=['GET', "POST"])
@@ -36,11 +36,11 @@ def dashboard_forum_topic(topic):
     thread = forum.get_thread(topic)
     return render_template(
         **permission_check("dashboard/forum/topic.html",
-                            **get_var(session)),
-                            lang=translator(session["lang"]),
+                            session),
                             thread=thread,
                             forum=forum.forum_sections,
-                            session=locale(nav_p="Forum",nav_c=""))
+                            #session=locale(nav_p="Forum",nav_c="")
+                            )
 
 @app.route("/dashboard/forum/new", methods=['GET', "POST"])
 def dashboard_forum_new():
@@ -61,7 +61,7 @@ def dashboard_forum_new():
     forum = ForumStruct()
     return render_template(
         **permission_check("dashboard/forum/new_thread.html",
-                            **get_var(session)),
-                            lang=translator(session["lang"]),
+                            session),
                             forum=forum.forum_sections,
-                            session=locale(nav_p="Forum",nav_c="new"))
+                            #session=locale(nav_p="Forum",nav_c="new")
+                            )

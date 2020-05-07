@@ -10,16 +10,16 @@ def dashboard_edit_home():
         bodyen = request.form['bodyen']
         bodypl = request.form['bodypl']
         post = Posts(head_pl=headpl, head_en=headen,
-                    body_en=bodyen.replace('\n','<br>'), body_pl=bodypl.replace('\n','<br>'))
+                    body_en=bodyen.replace('\n',''), body_pl=bodypl.replace('\n',''))
         db.session.add(post)
         db.session.commit()
         flash("Added")
-    return render_template(**permission_check("dashboard/edit/home.html", **
-                                              get_var(session)),
-                                              posts=list_posts(),
-                                              edit_header="Add new message",
-                                              edited=None,
-                                              lang=translator(session["lang"]))
+    return render_template(
+                      **permission_check("dashboard/edit/home.html", session),
+                      posts=list_posts(),
+                      edit_header="Add new message",
+                      edited=None,
+                      )
 
 
 @app.route("/dashboard/edit/home/<post_id>", methods=['GET', "POST"])
@@ -31,16 +31,17 @@ def dashboard_edit_home_post(post_id):
         bodyen = request.form['bodyen']
         bodypl = request.form['bodypl']
         post.head_en = headen
-        post.body_en = bodyen.replace('\n','<br>')
+        post.body_en = bodyen.replace('\n',"")
         post.head_pl = headpl
-        post.body_pl = bodypl.replace('\n','<br>')
+        post.body_pl = bodypl.replace('\n',"")
         db.session.commit()
         flash("Updated")
-    return render_template(**permission_check("dashboard/edit/home.html", **get_var(session)),
+    return render_template(
+                           **permission_check("dashboard/edit/home.html", session),
                            posts=list_posts(),
                            edit_header="Editing message {}".format(post.id),
                            edited=post,
-                           lang=translator(session["lang"]))
+			   )
 
 
 @app.route("/dashboard/edit/experiment", methods=['GET', "POST"])
@@ -54,11 +55,11 @@ def dashboard_edit_experiment():
         db.session.commit()
         flash("Added")
         deploy_homepage()
-    return render_template(**permission_check("dashboard/edit/experiment.html", **
-                                              get_var(session)), posts=list_home(),
-                                              edit_header="New Experiment description",
-                                              edited=None,
-                                              lang=translator(session["lang"]))
+    return render_template(**permission_check("dashboard/edit/experiment.html", session),
+                              posts=list_home(),
+                              edit_header="New Experiment description",
+                              edited=None,
+                            )
 
 
 @app.route("/dashboard/edit/experiment/<post_id>", methods=['GET', "POST"])
@@ -72,11 +73,11 @@ def dashboard_edit_experiment_post(post_id):
         db.session.commit()
         flash("Updated")
         deploy_homepage()
-    return render_template(**permission_check("dashboard/edit/experiment.html", **get_var(session)),
+    return render_template(**permission_check("dashboard/edit/experiment.html", session),
                            posts=list_home(),
                            edit_header="Editing info {}".format(post.id),
                            edited=post,
-                           lang=translator(session["lang"]))
+                           )
 
 
 @app.route("/dashboard/edit/members", methods=['GET', "POST"])
@@ -88,4 +89,12 @@ def dashboard_edit_members():
         db.session.add(post)
         db.session.commit()
         flash("Added")
+    return "Permission denied"
+
+@app.route("/dashboard/statistics")
+def dashboard_advanced_statistic():
+    return "Permission denied"
+
+@app.route("/dashboard/database")
+def dashboard_advanced_database():
     return "Permission denied"

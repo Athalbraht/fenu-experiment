@@ -17,8 +17,8 @@ def dashboard_calendar():
         db.session.commit()
         flash("Added")
     return render_template(
-        **permission_check("dashboard/events.html",
-                            **get_var(session)),
+                            **permission_check("dashboard/events.html", session),
                             events = list_events(),
                             members=Members.query.all(),
-                            lang=translator(session["lang"]))
+                            lang=translator(session["lang"])
+                            )

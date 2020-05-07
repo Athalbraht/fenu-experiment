@@ -33,7 +33,7 @@
 					<ul class="flex-md-column flex-row navbar-nav w-100 justify-content-between">
 
 						<li class="nav-item">
-							<a class="nav-link pl-0 text-nowrap" href="{{ lang["domain"] }}"><h5><i class="fa fa-backward"></i> <span class="font-weight-bold">Back</h5></span></a>
+							<a class="nav-link pl-0 text-nowrap" href="{{ state["domain"] }}"><h5><i class="fa fa-backward"></i> <span class="font-weight-bold">Back</h5></span></a>
 						</li>
 
 						<li class="nav-item">
@@ -62,6 +62,9 @@
 								<li class="nav-item">
 									<a class="dropdown-item" href="/dashboard/database"><i class="fa fa-database"></i> <span class="d-md-inline">Database</span></a>
 								</li>
+								<li class="nav-item">
+									<a class="dropdown-item" href="{{ state["local-dev"] }}"><i class="fa fa-radiation"></i> <span class="d-md-inline">dev-server</span></a>
+								</li>
 							</div>
 						</div>
 
@@ -75,7 +78,7 @@
 							<a class="nav-link pl-0" href="/dashboard/events"><i class="fa fa-calendar-alt"></i> <span class="d-none d-md-inline">Events</span></a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link pl-0" href="/dashboard/git"><i class="fa fa-microchip"></i> <span class="d-none d-md-inline">Software</span></a>
+							<a class="nav-link pl-0 disabled" href="/dashboard/git"><i class="fa fa-microchip"></i> <span class="d-none d-md-inline">Software</span></a>
 						</li>
 						<li class="nav-item">
 							<a class="nav-link pl-0" href="/dashboard/forum"><i class="fa fa-comments"></i> <span class="d-none d-md-inline">Forum</span></a>

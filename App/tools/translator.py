@@ -1,6 +1,8 @@
 # tools/translator.py
 
 import config
+from feedgen.feed import FeedGenerator
+
 from App.models import *
 
 def locale(**kwargs):
@@ -17,7 +19,7 @@ def translator(lang):
             _translations[key] = Contents.query.filter(Contents.loc == key).first().body_en
     posts = Posts.query.all()
     _translations["icstud"] = []
-    for post in posts:
+    for post in posts[::-1]:
         post2 = []
         if lang == "pl":
             post2 = [post.head_pl, post.body_pl, post.timestamp]
@@ -41,4 +43,22 @@ def export_html(language, filename, content, index=False):
     else:
         with open("{}/{}/{}.html".format(config.HOMEPAGE_FOLDER, language, filename),"w") as html:
             html.write(content)
+    return None
+
+def get_rss(feeds_len):
+    fg = FeedGenerator()
+    fg.title(config.RSS["title"])
+    fg.description(config.RSS["desc"])
+    fg.link(href="{}/rss.xml".format(config.main["domain"]))
+    feed = []
+    posts = Posts.query.all()
+    for item in posts[:feeds_len]:
+        fe = fg.add_entry()
+        fe.title("{} {}".format(item.head_pl, item.head_en))
+        fe.description("{}\n\n{}".format(item.body_pl,item.body_en))
+        fe.link(href="{}/rss.xml".format(config.main["domain"]))
+        feed.append(fe)
+    # return fg.rss_str(pretty=True).decode()
+    print("Saving RSS file")
+    fg.rss_file("{}/rss.xml".format(config.HOMEPAGE_FOLDER))
     return None
