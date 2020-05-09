@@ -6,16 +6,19 @@
 			<table class="table table-striped table-sm">
 				<thead>
 					<tr>
-						<th>{{ lang["icpub-year"] }}</th>
 						<th>{{ lang["icpub-title"] }}</th>
+						<th>{{ lang["icpub-year"] }}</th>
 						<!--<th>{{ lang["icpub-download"] }}</th>-->
 					</tr>
 				</thead>
 				<tbody>
 					{% for pub in publications %}
 					<tr>
+						<td align="left">
+							<b style="margin-left:13px">{{pub.title}}</b>
+							<br><small style="margin-left:14px">{{pub.reference}}</small>
+						</td>
 						<td>{{pub.year|int}}</td>
-						<td>{{pub.title}} <br> <small>{{pub.reference}}</small></td>
 						<!--
 						<td>
 							<a class="dropdown-item"href="{{pub.doi}}"><i class="fa fa-cloud-download fa-fw"></i></a>
