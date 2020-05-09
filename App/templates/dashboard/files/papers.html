@@ -23,8 +23,8 @@
 	<table class="table table-striped">
 		<thead>
 			<tr>
-				<th>Author</th>
 				<th>Title</th>
+				<th>Author</th>
 				<th>Year</th>
 				<th>Options</th>
 			</tr>
@@ -32,8 +32,11 @@
 		<tbody>
 			{% for pub in publications %}
 			<tr>
-				<td>{{pub.author}}</td>
-				<td><b><a  href="/dashboard/{{section}}/download/{{pub.id}}">{{pub.title}}</a></b><br><small>{{pub.reference}}</small></td>
+				<td align="left">
+					<b style="margin-left:12px"><a  href="/dashboard/{{section}}/download/{{pub.id}}">{{pub.title}}</a></b>
+					<br><small style="margin-left:12px">{{pub.reference}}</small>
+				</td>
+				<td align="left">{{pub.author}}</td>
 				<td>{{pub.year|int}}</td>
 				<td>
 					<button type="button" class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#share{{ pub.id }}"><i class="fa fa-share-alt" style="font-size:15px;color:#32a83e"></i></button>
