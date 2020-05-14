@@ -41,7 +41,7 @@ def invite():
                 return redirect(url_for("login"))
 
     return render_template("world/invite.html",
-                            session,
+                            session=session,
                             lang=translator(session["lang"]),
                             afil=Organizations.query.all())
 
