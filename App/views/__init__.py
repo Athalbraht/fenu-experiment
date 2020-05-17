@@ -1,5 +1,7 @@
 # views/__init__.py
 
+'''
+
 from .advanced import *
 from .events import *
 from .files import *
@@ -12,3 +14,4 @@ from .wiki import *
 @app.route("/")
 def main():
     return redirect(url_for('login'))
+'''

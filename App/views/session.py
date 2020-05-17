@@ -1,5 +1,7 @@
 # views/session.py
 
+'''
+
 from .modules import *
 
 @app.before_request
@@ -42,3 +44,4 @@ def logout():
     # session["lang"] = lang
     flash("Logged out")
     return redirect(url_for('login'))
+'''

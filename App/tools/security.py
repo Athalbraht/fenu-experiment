@@ -1,5 +1,6 @@
 # tools/security.py
 
+'''
 import os
 import hashlib
 import string
@@ -33,3 +34,4 @@ def get_random_string(_len):
     letters = string.ascii_letters+"1234567890"
     _string = [ random.choice(letters) for i in range(_len) ]
     return "".join(_string)
+'''

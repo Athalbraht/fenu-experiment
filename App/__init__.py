@@ -1,3 +1,4 @@
+'''
 import logging
 import os
 import config
@@ -19,3 +20,4 @@ log.disabled = not config.LOGS
 
 from App import models
 from App import views
+'''

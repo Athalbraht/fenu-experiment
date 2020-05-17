@@ -1,4 +1,6 @@
 # views/modules.py
+
+'''
 import os
 import time
 
@@ -62,3 +64,4 @@ def permission_check(template, session):
                     }
         flash("Permission denied. Log in first.")
         return _kwargs
+'''
