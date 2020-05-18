@@ -1,35 +1,74 @@
 # BINA-experiment page
 
+![tag](https://img.shields.io/github/tag-date/fenu-exp/fenu-exp.internal.svg)
+![commit](https://img.shields.io/github/last-commit/fenu-exp/fenu-exp.internal.svg)
+![license](https://img.shields.io/github/license/fenu-exp/fenu-exp.internal.svg)
+
+![status](https://img.shields.io/badge/build-passing-green.svg?style=flat&logo=Linux) ![status](https://img.shields.io/badge/build-falling-red.svg?style=flat&logo=Windows)
+
+---
+
 Web Service for the BINA Collaboration written in Flask microframework.
 
-## Apache configuration
+## Table of contents
 
-Temporarily unavailable
+- [Installation](#Installation)
+	- [Developer](#Developer)
+	- [Apache](#Apache)
+- [Configuration](#Configuration)
+	- [Server config](#Server)
+	- [Internal config](#Internal)
+- [App Structure](#App-structure)
+- [Releases](#Releases)
 
-## Starting dev. server
+## Installation
+
+### Developer
+
+Attention. **Do not use it in a production deployment for security reasons.**
 
 1. Prepare python  environment
 	- Create and activate virtual env
-	`virtualenv venv && source vanv/bin/activate`
+	`$: virtualenv venv`
+	`$: source venv/bin/activate`
 	- Install required modules
-	`pip3 install -r requirements.txt`
+	`(venv)$: pip3 install -r requirements.txt`
 	- Set local variables
-	`export FLASK_APP=run.py`
+	`(venv)$: export FLASK_APP=run.py`
 	- Customize config.py and run.py
 
 2. Create database
-	- `mkdir database`
-	- `flask db init`
-	- `flask db migrate`
-	- `flask db upgrade`
+	- `(venv)S: mkdir database`
+	- `(venv)$: flask db init`
+	- `(venv)$: flask db migrate`
+	- `(venv)$: flask db upgrade`
 
 3. Create homepage
 	- `mkdir App/static/homepage`
 	- link git repository
 
 4. Run server
-	`python run.py` or `flask run -h <host> -p <port>`
+	`(venv)$: python run.py` or `flask run -h <host> -p <port>`
 
+### Apache
+
+Temporarily unavailable
+
+## Configuration
+
+The configuration file consists of 2 parts, "server" and "internal".
+"server" specifies e.g. secret keys, address binds, names, enviroment config.
+The second part allows you to specify the app structue and layout like header names, options, variables etc.
+
+### Server
+
+### Internal
+
+## Releases
+
+- [v4.0](https://github.com/fenu-exp/fenu-exp.internal/releases/tag/v4.0) - first release of 4 version. App is a complete rewrite.
+- [v3.5](https://github.com/fenu-exp/fenu-exp.internal/releases/tag/v3.5) - last release of 3.* version.
+- ...outdated...
 
 ## App structure
 
