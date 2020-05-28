@@ -15,8 +15,11 @@ def dashboard_publications(paper):
             link = request.form['link']
             desc = request.form['desc']
             _file = request.files['file']
-
-            publication = Documents(type="paper-{}".format(paper), title=title, author=author, reference=ref, year=int(year), desc=desc, link=link, filename=_file.filename, file=_file.read())
+            _type = request.form.get('type')
+            if _type == "proceedings":
+                publication = Documents(type="paper-{}".format(_type), title=title, author=author, reference=ref, year=int(year), desc=desc, link=link, filename=_file.filename, file=_file.read())
+            else:
+                publication = Documents(type="paper-{}".format(paper), title=title, author=author, reference=ref, year=int(year), desc=desc, link=link, filename=_file.filename, file=_file.read())
             db.session.add(publication)
             db.session.commit()
             flash("Added {}".format(title))
@@ -27,9 +30,13 @@ def dashboard_publications(paper):
             author = request.form['author']
             title = request.form['title']
             searchOptions = {"author":author,"title":title,"year":year}
+    if paper == "publications":
+        _stype = 2
+    else:
+        _stype = 1
     return render_template(**permission_check("dashboard/files/papers.html".format(paper),
                                               session),
-                                              publications=list_papers(paper,searchOptions),
+                                              publications=list_papers(paper,searchOptions, _stype),
                                               section=paper)
 
 

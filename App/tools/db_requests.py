@@ -7,14 +7,29 @@ def list_events():
     events = Events.query.order_by(Events.time.desc()).all()
     return events
 
-def list_papers(_type,search=None):
-    _pubs = Documents.query.filter(Documents.type == "paper-{}".format(_type))
+def list_papers(_type, search=None, splitted=1):
+    if splitted == 2 or splitted == 3:
+        _pubs = Documents.query.filter((Documents.type == "paper-publications") | (Documents.type == "paper-proceedings"))
+    else:
+        _pubs = Documents.query.filter(Documents.type == "paper-{}".format(_type))
     if search != None:
         pubs = _pubs.filter(Documents.title.contains(search["title"]), Documents.year.contains(search["year"]), Documents.author.contains(search["author"]))
     else:
         pubs = _pubs
-    _sort = pubs.order_by(Documents.year.desc()).all()
+    if splitted == 1 or splitted == 3:
+        _sort = [pubs.order_by(Documents.year.desc()).all()]
+    elif splitted == 2:
+        _sort = list_papers2(_type, search)
+    else:
+        _sort = [[],[],[]]
     return(_sort)
+
+def list_papers2(_type, search=None):
+    _pubs = list_papers("publications", search)[0]
+    _proceedings = list_papers("proceedings", search)[0]
+    _all = list_papers(None, search, 3)[0]
+    return [_all, _pubs, _proceedings]
+
 
 def list_posts():
     posts = Posts.query.order_by(Posts.id.desc()).all()

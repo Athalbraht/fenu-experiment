@@ -7,6 +7,19 @@
 				<button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#modnew">Send file</button>
 
 			</div>
+			{% if section == "publications" %}
+			<ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+				<li class="nav-item">
+					<a type="button" class="nav-link btn btn-outline-warning active" id="pills-home-tab" data-toggle="pill" href="#pills-all" role="tab" aria-controls="pills-home" aria-selected="true">All</a>
+				</li>
+				<li class="nav-item">
+					<a type="button" class="nav-link btn btn-outline-warning" id="pills-profile-tab" data-toggle="pill" href="#pills0" role="tab" aria-controls="pills-profile" aria-selected="false">Publications</a>
+				</li>
+				<li class="nav-item">
+					<a type="button" class="nav-link btn btn-outline-warning" id="pills-profile-tab" data-toggle="pill" href="#pills1" role="tab" aria-controls="pills-profile" aria-selected="false">Proceedings</a>
+				</li>
+			</ul>
+			{% endif %}
 			<div >
 				<form  method="post", enctype="multipart/form-data">
 					<input type="hidden" name="form-name" value="search">
@@ -20,75 +33,154 @@
 				</form>
 			</div>
 		</div><br>
-	<table class="table table-striped">
-		<thead>
-			<tr>
-				<th>Title</th>
-				<th>Author</th>
-				<th>Year</th>
-				<th>Options</th>
-			</tr>
-		</thead>
-		<tbody>
-			{% for pub in publications %}
-			<tr>
-				<td align="left">
-					<b style="margin-left:12px"><a  href="/dashboard/{{section}}/download/{{pub.id}}">{{pub.title}}</a></b>
-					<br><small style="margin-left:12px">{{pub.reference}}</small>
-				</td>
-				<td align="left">{{pub.author}}</td>
-				<td>{{pub.year|int}}</td>
-				<td>
-					<button type="button" class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#share{{ pub.id }}"><i class="fa fa-share-alt" style="font-size:15px;color:#32a83e"></i></button>
-					<a  type="button" href="/dashboard/edit/paper/{{pub.id}}" class="btn btn-outline-primary btn-sm"><i class="fa fa-edit" style="font-size:15px;color:#008cba"></i></a>
-					<button type="button" class="btn btn-outline-danger btn-sm" data-toggle="modal" data-target="#delete{{ pub.id }}"><i class="fa fa-trash" style="font-size:15px;color:red"></i></button>
+	<div class="tab-content" id="pills-tabContent">
+		<div class="tab-pane fade show active" id="pills-all" role="tabpanel" aria-labelledby="pills-home-tab">
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>Title</th>
+						<th>Author</th>
+						<th>Year</th>
+						<th>Options</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for pub in publications[0] %}
+					<tr>
+						<td align="left">
+							<b style="margin-left:12px"><a  href="/dashboard/{{section}}/download/{{pub.id}}">{{pub.title}}</a></b>
+							<br><small style="margin-left:12px">{{pub.reference}}</small>
+						</td>
+						<td align="left">{{pub.author}}</td>
+						<td>{{pub.year|int}}</td>
+						<td>
+							<button type="button" class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#share{{ pub.id }}"><i class="fa fa-share-alt" style="font-size:15px;color:#32a83e"></i></button>
+							<a  type="button" href="/dashboard/edit/paper/{{pub.id}}" class="btn btn-outline-primary btn-sm"><i class="fa fa-edit" style="font-size:15px;color:#008cba"></i></a>
+							<button type="button" class="btn btn-outline-danger btn-sm" data-toggle="modal" data-target="#delete{{ pub.id }}"><i class="fa fa-trash" style="font-size:15px;color:red"></i></button>
 
-					<div class="modal fade" id="delete{{ pub.id }}" tabindex="-1" role="dialog" aria-hidden="true">
-						<div class="modal-dialog modal-dialog-centered" role="document">
-							<div class="modal-content">
-								<div class="modal-header">
-									<h5 class="modal-title" id="exampleModalCenterTitle">Are you sure?</h5>
-										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-											<span aria-hidden="true">&times;</span>
-										</button>
-								</div>
-								<div class="modal-body" align="left">
-									<p>The item will be permanently deleted after admin confirmation.</p>
-                                                                </div>
-								<div class="modal-footer">
-									<a  type="button" href="/dashboard/delete/paper/{{pub.id}}" class="btn btn-outline-danger btn-sm"><i class="fa fa-trash" style="font-size:15px;color:red"></i> Report</a>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<div class="modal fade" id="share{{ pub.id }}" tabindex="-1" role="dialog" aria-hidden="true">
-						<div class="modal-dialog modal-dialog-centered" role="document">
-							<div class="modal-content">
-								<div class="modal-header">
-									<h5 class="modal-title" id="exampleModalCenterTitle">Share file</h5>
-										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-											<span aria-hidden="true">&times;</span>
-										</button>
-								</div>
-								<div class="modal-body" align="left">
-									<p>Are you sure?<br>Anyone who has the link can access. No sign-in required.</p>
-                                                                </div>
-
-
-								<div class="modal-footer">
-									<a  type="button" href="/dashboard/share/papers/{{pub.id}}" class="btn btn-outline-success btn-sm"><i class="fa fa-share-alt" style="font-size:15px;color:green"></i> Generate link</a>
+							<div class="modal fade" id="delete{{ pub.id }}" tabindex="-1" role="dialog" aria-hidden="true">
+								<div class="modal-dialog modal-dialog-centered" role="document">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h5 class="modal-title" id="exampleModalCenterTitle">Are you sure?</h5>
+												<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+													<span aria-hidden="true">&times;</span>
+												</button>
+										</div>
+										<div class="modal-body" align="left">
+											<p>The item will be permanently deleted after admin confirmation.</p>
+		                                                                </div>
+										<div class="modal-footer">
+											<a  type="button" href="/dashboard/delete/paper/{{pub.id}}" class="btn btn-outline-danger btn-sm"><i class="fa fa-trash" style="font-size:15px;color:red"></i> Report</a>
+										</div>
+									</div>
 								</div>
 							</div>
-						</div>
-					</div>
+
+							<div class="modal fade" id="share{{ pub.id }}" tabindex="-1" role="dialog" aria-hidden="true">
+								<div class="modal-dialog modal-dialog-centered" role="document">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h5 class="modal-title" id="exampleModalCenterTitle">Share file</h5>
+												<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+													<span aria-hidden="true">&times;</span>
+												</button>
+										</div>
+										<div class="modal-body" align="left">
+											<p>Are you sure?<br>Anyone who has the link can access. No sign-in required.</p>
+		                                                                </div>
 
 
-				</td>
-			</tr>
-			{% endfor %}
-		</tbody>
-	</table>
+										<div class="modal-footer">
+											<a  type="button" href="/dashboard/share/papers/{{pub.id}}" class="btn btn-outline-success btn-sm"><i class="fa fa-share-alt" style="font-size:15px;color:green"></i> Generate link</a>
+										</div>
+									</div>
+								</div>
+							</div>
+
+
+						</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+		{% if section == "publications" %}
+		{% for pubs in publications[1:] %}
+		<div class="tab-pane fade show" id="pills{{loop.index-1}}" role="tabpanel" aria-labelledby="pills-profile-tab">
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>Title</th>
+						<th>Author</th>
+						<th>Year</th>
+						<th>Options</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for pub in pubs %}
+					<tr>
+						<td align="left">
+							<b style="margin-left:12px"><a  href="/dashboard/{{section}}/download/{{pub.id}}">{{pub.title}}</a></b>
+							<br><small style="margin-left:12px">{{pub.reference}}</small>
+						</td>
+						<td align="left">{{pub.author}}</td>
+						<td>{{pub.year|int}}</td>
+						<td>
+							<button type="button" class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#share{{ pub.id }}"><i class="fa fa-share-alt" style="font-size:15px;color:#32a83e"></i></button>
+							<a  type="button" href="/dashboard/edit/paper/{{pub.id}}" class="btn btn-outline-primary btn-sm"><i class="fa fa-edit" style="font-size:15px;color:#008cba"></i></a>
+							<button type="button" class="btn btn-outline-danger btn-sm" data-toggle="modal" data-target="#delete{{ pub.id }}"><i class="fa fa-trash" style="font-size:15px;color:red"></i></button>
+
+							<div class="modal fade" id="delete{{ pub.id }}" tabindex="-1" role="dialog" aria-hidden="true">
+								<div class="modal-dialog modal-dialog-centered" role="document">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h5 class="modal-title" id="exampleModalCenterTitle">Are you sure?</h5>
+												<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+													<span aria-hidden="true">&times;</span>
+												</button>
+										</div>
+										<div class="modal-body" align="left">
+											<p>The item will be permanently deleted after admin confirmation.</p>
+		                                                                </div>
+										<div class="modal-footer">
+											<a  type="button" href="/dashboard/delete/paper/{{pub.id}}" class="btn btn-outline-danger btn-sm"><i class="fa fa-trash" style="font-size:15px;color:red"></i> Report</a>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="modal fade" id="share{{ pub.id }}" tabindex="-1" role="dialog" aria-hidden="true">
+								<div class="modal-dialog modal-dialog-centered" role="document">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h5 class="modal-title" id="exampleModalCenterTitle">Share file</h5>
+												<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+													<span aria-hidden="true">&times;</span>
+												</button>
+										</div>
+										<div class="modal-body" align="left">
+											<p>Are you sure?<br>Anyone who has the link can access. No sign-in required.</p>
+		                                                                </div>
+
+
+										<div class="modal-footer">
+											<a  type="button" href="/dashboard/share/papers/{{pub.id}}" class="btn btn-outline-success btn-sm"><i class="fa fa-share-alt" style="font-size:15px;color:green"></i> Generate link</a>
+										</div>
+									</div>
+								</div>
+							</div>
+
+
+						</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+		{% endfor %}
+		{% endif %}
+	</div>
 </div>
 
 <div class="modal fade" id="modnew" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -153,6 +245,11 @@
 								<div class="invalid-feedback">This field cannot be empty.</div>
 							</div>
 						</div>
+					</div>
+
+					<div class="form-check">
+						<input type="checkbox" class="form-check-input" id="Check1" name="type" value="proceedings">
+						<label class="form-check-label" for="Check1">Proceedings</label>
 					</div>
 					<hr>
 					<button type="submit" class="btn btn-primary">Add</button>
