@@ -3,13 +3,13 @@
 from .modules import *
 from App.api import *
 
-@app.route("/dashboard/git/", methods=['GET', "POST"])
+@app.route("/dashboard/gitlab/", methods=['GET', "POST"])
 def dashboard_git():
-    repos = git.Repository()
+    #repos = git.Repository()
     return render_template(
-        **permission_check("dashboard/git/home.html",
+        **permission_check("dashboard/git/index.html",
                             session),
-                            repos=repos.get_repos(),
+                            #repos=repos.get_repos(),
                             #session=locale(nav_p="Software",nav_c="New"),
                             lang=translator(session["lang"]))
 
