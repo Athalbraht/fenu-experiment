@@ -1,0 +1,25 @@
+V3.5
+    - Migration to Docker container
+    - Added GitLab Instance
+    - Added NexCloud Instance
+    - Added Calendar
+    - Moved Media section to Fenu-Exp Hub
+    - Broken docs sorting algorithm 
+
+V3.4
+    Main page
+    - Miscellaneous
+    - [x] Added: RSS link
+
+    Dashboard
+    - Documents
+    - [x] Added: share option + QR
+    - [x] Added: to delete button (report)
+    - [x] Deleted: delete button
+    - Engine
+    - [x] Fixed: sorting func.
+    - [x] Updated: config & address bind
+    - [x] Updated: Session manager
+
+    Security
+    - [x] Fixed: docs leaks 
