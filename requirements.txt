@@ -5,7 +5,7 @@ Flask==1.1.1
 Flask-Migrate==2.5.2
 Flask-SQLAlchemy==2.4.1
 gitdb==4.0.2
-GitPython==3.1.0
+GitPython==3.1.30
 itsdangerous==1.1.0
 Jinja2==2.11.3
 lxml==4.9.1
