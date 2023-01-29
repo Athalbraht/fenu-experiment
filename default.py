@@ -5,9 +5,9 @@ import os
 # main information
 main = {
     "author"     : "Albert Szadziński",
-    "version"    : "v3.4",
+    "version"    : "v3.5",
     "domain"     : "https://fenu-exp.us.edu.pl",
-    "internal"   : "https://fenu-experiment.pl",
+    "internal"   : "https://interfenu.szadzinski.pl",
     "local-home" : "local-home-server",
     "local-dev"	 : "your-dev-server",
     "repo"       : "https://github.com/fenu-exp/fenu-exp.internal.git",
@@ -45,7 +45,7 @@ MEMBERS_GROUP = {
 
 # Server config
 ORIGINS = ["*"]
-SECRET_KEY = "ad39defhkasdf0avfdsiav90AOD0DFs1"
+SECRET_KEY = "ad4dwaf0defhkafawfsfevfdsiav90AOD0DFs1"
 PORT = 8000
 DEBUG = True
 TESTING = False
