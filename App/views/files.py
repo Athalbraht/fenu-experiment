@@ -62,7 +62,7 @@ def dashboard_share_paper_send(item):
     _file = Documents.query.filter_by(link=item).all()
     if len(_file) == 1:
         _file = _file[0]
-        return send_file(BytesIO(_file.file), attachment_filename=_file.filename+".pdf")
+        return send_file(BytesIO(_file.file), download_name=_file.filename+".pdf")
     else:
         return "File not found"
 
