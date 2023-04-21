@@ -146,4 +146,4 @@ def dashboard_gallery_type(type):
 @app.route("/dashboard/gallery/send/<photo>", methods=['GET', "POST"])
 def dashboard_gallery_return(photo):
     _file = Photos.query.filter_by(id=photo).first()
-    return send_file(BytesIO(_file.file), attachment_filename=_file.filename)
+    return send_file(BytesIO(_file.file), download_name=_file.filename)
